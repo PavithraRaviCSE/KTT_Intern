@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="author name">
+    <meta name="description" content="Html bascis">
+    <meta name="keywords" content="html, basics">
+    <meta name="robots" content="noindex, nofollow">
+    <!-- <meta name="refersh" content="30"> refresh in 30 seconds -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=0.5"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
+    <link rel="icon" href="images/book.png" type="images/x-icon">
+</head>
+
+<body>
+    
+    <p id = "bookmark1">bookmark1</p>
+    <p>hii in japnese : こんにちは</p>
+
+
+    <!-- Headings -->
+    <h1>Headings</h1>
+    <h1>h1</h1>
+    <h2>h2</h2>
+    <h3>h3</h3>
+    <h4>h4</h4>
+    <h5>h5</h5>
+    <h6>h6</h6>
+
+    hidden Headings
+    <h1 class="headings" id="hidden" hidden>hidden heading</h1>
+    <h1 title="headings titile" contenteditable="true">title editable</h1>
+
+    <hr>
+
+    <!-- parageaph -->
+    <p class="paratag " id="para1" style="color: blue;">para tag </p>
+    <p draggable="true">draggable para</p>
+    <p draggable="false">non draggable para</p>
+    <hr>
+
+
+    <!-- pre tag -->
+    <pre>
+            pretag
+                    example
+
+        </pre>
+
+    <hr>
+    <!-- style attribute -->
+
+    <p style="background-color: blue;">Style bg : blue</p>
+
+
+    <hr>
+    <h1>Formatting</h1>
+    <p><b>B</b> Bold</p>
+    <p><strong>strong</strong> strong</p>
+    <p><i>I</i> Italic</p>
+    <p><em>em</em> emphasized schreen reader stress the word</p>
+    <p><mark>mark</mark> marked</p>
+    <p><small>small</small> small</p>
+    <p><del>del</del> delete</p>
+    <p><ins>ins</ins> inserted</p>
+    <p><sub>sub</sub>subscript</p>
+    <p><sup>sup</sup>superscript</p>
+
+    <hr>
+    <p style="user-select: none;">cannot copy</p>
+    <hr>
+
+
+
+    <p>
+    <blockquote>blockquote</blockquote>
+    <q>Quotes</q></blockquote>
+    </p>
+    <p>abbrivation <abbr title="abbrivation">abbr</abbr></p>
+    <p> <bdo dir="ltr">THE TEXT IS READ FROM LEFT TO RIGHT</bdo> </p>
+    <p> <bdo dir="rtl">THE TEXT IS READ FROM RIGHT TO LEFT</bdo> </p>
+
+
+    <hr>
+
+    <h2>Link Target Examples</h2>
+
+    
+
+    <ul>
+        <li><a href="https://example.com" target="_self">_self (Default - Open in same tab)</a></li>
+        <li><a href="https://example.com" target="_blank">_blank (Open in new tab)</a></li>
+        <li><a href="https://example.com" target="_parent">_parent (Open in parent frame)</a></li>
+        <li><a href="https://example.com" target="_top">_top (Open in full body, breaking frames)</a></li>
+    </ul>
+
+
+    <h2>book mark on links</h2>
+    <a href="#bookmark1">bookmark1</a>
+    <a href="sample.html#name">bookmark2</a>
+    <hr>
+
+
+    <h2>images</h2>
+
+    <img src="images/html.jpeg" alt="html image">
+    <img src="images/html.jpeg" alt="html image" height="100" width="100" >
+    <img src="images/html.jpeg" alt="html image" style="height: 10cm; width: 10cm;">
+    error in image src
+    <img src="images/htl.jpeg" alt="html image" height="100" width="100" >
+
+
+    <br><br>
+    <h2>image map</h2>
+
+    <img src="images/workplace.jpg" alt="workplace image" usemap="#workmap">
+
+    <map name="workmap">
+        <area shape="rect" coords="34,44,270,350" alt="Computer" href="#bookmark1">
+        <area shape="rect" coords="290,172,333,250" alt="Phone" href="#bookmark1">
+        <area shape="circle" coords="337,300,44" alt="Coffee" href="#bookmark1">
+    </map>
+
+
+    <h2 style="background-image: url('images/book.png');">background image</h2>
+    <h2 style="background-image: url('images/book.png');background-repeat: no-repeat;">background image</h2>
+    
+    <picture>
+        <source media="(min-width: 650px)" srcset="images/html.jpeg">
+        <source media="(min-width: 465px)" srcset="images/workplace.jpg">
+        <img src="images/book.png">
+    </picture>
+
+    <figure>
+        <img src="images/book.png" alt="Image">
+        <figcaption>Image Description</figcaption>
+    </figure>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAAOElEQVQ4jWNgoBAwUqifARJwIokPjD4D5Z8UR3IxIYkAaQD4P8AqpH8N9gM4DoAABMeAWP2roI/wAAAABJRU5ErkJggg==" alt="Embedded Image">
+
+
+    
+    <script>
+
+        console.log(navigator.userAgent);
+
+    </script>
+</body>
+
+</html>

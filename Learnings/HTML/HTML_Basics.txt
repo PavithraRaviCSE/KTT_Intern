@@ -15,3 +15,88 @@
 6. Geolocation API
 7. WebSockets & Web Workers  
  
+
+Browser working: 
+
+    UI
+    Browser Engine
+    rendering engine
+    js engine
+    networking, timers
+    data stroage
+
+
+html - DOM
+css - CSSOM
+
+1. HTML Processing
+Parser: HTML5 Parser (Converts HTML into a DOM Tree).
+
+Engine: Rendering Engine (Renders the DOM visually).
+
+2. CSS Processing
+Parser: CSSOM Parser (Converts CSS into a CSSOM Tree).
+
+Engine: Rendering Engine (Applies styles from CSSOM + DOM).
+
+3. JavaScript Processing
+Parser: JavaScript AST Parser (Converts JS into an Abstract Syntax Tree).
+
+Engine: JavaScript Engine (V8, SpiderMonkey, JavaScriptCore) (Executes JavaScript code). 
+
+
+Rendering Engine: Blick, WebKit, GecKo
+
+Elements:
+
+empty elements: br, hr, link, meta
+semantic elements, non semantic elements
+
+
+semantic and corresponding non semantic elements
+
+Semantic → Non-Semantic Elements
+<em> → <i>
+
+<strong> → <b>
+
+<ins> → <u>
+
+<del> → <s>
+
+<mark> → <span>
+
+<time> → <span>
+
+<th> → <td>
+
+<figure> → <div>
+
+<figcaption> → <div>
+
+<address> → <p>
+
+<article> → <div>
+
+<section> → <div>
+
+<nav> → <div>
+
+<header> → <div>
+
+<footer> → <div>
+
+<aside> → <div>
+
+
+href = to link other page
+src = to embed content in the page
+
+
+
+head 
+    meta
+    link
+    style
+    title
+    script
