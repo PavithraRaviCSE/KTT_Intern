@@ -1,0 +1,17 @@
+<P> Case insensitive </P>
+<p> Case insensitive </p>
+
+
+ element
+ element -> {openting tag  content  closing tag}
+
+ HTML 5 features
+ 
+1. New Semantic Elements 
+2. Multimedia Support
+3. New Input Types & Attributes  
+4. Canvas & SVG for Graphics  
+5. Local Storage & Session Storage
+6. Geolocation API
+7. WebSockets & Web Workers  
+ 
