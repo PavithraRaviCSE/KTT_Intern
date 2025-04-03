@@ -15,8 +15,8 @@
 </head>
 
 <body>
-    
-    <p id = "bookmark1">bookmark1</p>
+
+    <p id="bookmark1">bookmark1</p>
     <p>hii in japnese : こんにちは</p>
 
 
@@ -87,14 +87,17 @@
 
     <h2>Link Target Examples</h2>
 
-    
 
-    <ul>
-        <li><a href="https://example.com" target="_self">_self (Default - Open in same tab)</a></li>
-        <li><a href="https://example.com" target="_blank">_blank (Open in new tab)</a></li>
-        <li><a href="https://example.com" target="_parent">_parent (Open in parent frame)</a></li>
-        <li><a href="https://example.com" target="_top">_top (Open in full body, breaking frames)</a></li>
-    </ul>
+
+    <div style="height: 200px; width: 200px;">
+        <ul>
+            <li><a href="https://example.com" target="_self">_self (Default - Open in same tab)</a></li>
+            <li><a href="https://example.com" target="_blank">_blank (Open in new tab)</a></li>
+            <li><a href="https://example.com" target="_parent">_parent (Open in parent frame)</a></li>
+            <li><a href="https://example.com" target="_top">_top (Open in full body)</a></li>
+
+        </ul>
+    </div>
 
 
     <h2>book mark on links</h2>
@@ -106,10 +109,10 @@
     <h2>images</h2>
 
     <img src="images/html.jpeg" alt="html image">
-    <img src="images/html.jpeg" alt="html image" height="100" width="100" >
+    <img src="images/html.jpeg" alt="html image" height="100" width="100">
     <img src="images/html.jpeg" alt="html image" style="height: 10cm; width: 10cm;">
     error in image src
-    <img src="images/htl.jpeg" alt="html image" height="100" width="100" >
+    <img src="images/htl.jpeg" alt="html image" height="100" width="100">
 
 
     <br><br>
@@ -124,9 +127,12 @@
     </map>
 
 
-    <h2 style="background-image: url('images/book.png');">background image</h2>
-    <h2 style="background-image: url('images/book.png');background-repeat: no-repeat;">background image</h2>
-    
+    <h2 style="background-image: url('images/book.png');">background image repeat</h2>
+    <h2 style="background-image: url('images/book.png');background-repeat: no-repeat;">background image no repeat</h2>
+
+
+    <hr>
+    <h2>Picture changed based on the size of the device</h2>
     <picture>
         <source media="(min-width: 650px)" srcset="images/html.jpeg">
         <source media="(min-width: 465px)" srcset="images/workplace.jpg">
@@ -137,10 +143,177 @@
         <img src="images/book.png" alt="Image">
         <figcaption>Image Description</figcaption>
     </figure>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAAOElEQVQ4jWNgoBAwUqifARJwIokPjD4D5Z8UR3IxIYkAaQD4P8AqpH8N9gM4DoAABMeAWP2roI/wAAAABJRU5ErkJggg==" alt="Embedded Image">
+
+    <!-- <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAAOElEQVQ4jWNgoBAwUqifARJwIokPjD4D5Z8UR3IxIYkAaQD4P8AqpH8N9gM4DoAABMeAWP2roI/wAAAABJRU5ErkJggg==" -->
+        <!-- alt="Embedded Image"> -->
 
 
-    
+    <hr>
+
+    <!-- Table using <table>, <tr>, <th>, <td> -->
+    <table border="1">
+        <tr>
+            <th>Header 1</th>
+            <th>Header 2</th>
+        </tr>
+        <tr>
+            <td>Data 1</td>
+            <td>Data 2</td>
+        </tr>
+    </table>
+
+    <!-- Table with colspan and rowspan -->
+    <table border="1">
+        <tr>
+            <th colspan="2">Merged Header</th>
+        </tr>
+        <tr>
+            <td rowspan="2">Merged Cell</td>
+            <td>Data 1</td>
+        </tr>
+        <tr>
+            <td>Data 2</td>
+
+        </tr>
+    </table>
+
+    <!-- Table with <thead>, <tbody>, <tfoot> -->
+    <table border="1" >
+        <thead>
+            <tr>
+                <th style="border: 2px dotted blue;" colspan="2">Header 1 dotted</th>
+                <th style="border: 4px double red;" >Header 2  double</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="border: 4px groove green; ">Data 1 groove</td>
+                <td  style="border: 4px inset purple;">Data 2 inset</td>
+                <td style=" border: 2px solid black;" >Data 3 solid</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">Footer</td>
+            </tr>
+        </tfoot>
+    </table>
+
+
+<table border="1" style="border-collapse: collapse;">
+    <thead>
+        <th>h1</th>
+        <th>h2</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>d1</td>
+            <td>d2</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr>
+
+    <!-- Unordered List -->
+
+    <h2>List</h2>
+    <ul>
+        <h4>default styledisc type</h4>
+        <li>Item 1</li>
+        <li>Item 2</li>
+    </ul>
+
+    <ul style="list-style-type: circle;" >
+        <li>Item 1</li>
+        <li>Item 2</li>
+    </ul>
+
+    <ul style="list-style-type: none;">
+        <li>Item 1</li>
+        <li>Item 2</li>
+    </ul>
+
+   
+
+    <!-- Ordered List -->
+     <h4>Ordered list</h4>
+    <ol>
+        <li>Item 1</li>
+        <li>Item 2</li>
+    </ol>
+
+    <ol style="list-style-type: armenian;">
+        <li>Item 1</li>
+        <li>Item 2</li>
+    </ol>
+    <ol style="list-style-type: lower-alpha;">
+        <li>Item 1</li>
+        <li>Item 2</li>
+    </ol>
+    <ol style="list-style-type: upper-alpha;">
+        <li>Item 1</li>
+        <li>Item 2</li>
+    </ol>
+
+
+    <!-- Description List -->
+    <dl>
+        <dt>Term 1</dt>
+        <dd>Definition 1</dd>
+        <dt>Term 2</dt>
+        <dd>Definition 2</dd>
+    </dl>
+
+    <!-- Nested Lists -->
+    <ul>
+        <li>Item 1
+            <ul>
+                <li>Sub-item 1</li>
+                <li>Sub-item 2</li>
+            </ul>
+        </li>
+        <li>Item 2</li>
+    </ul>
+
+
+    <hr>
+
+
+    <h2>Block and inline elements</h2>
+
+    <h1 style="background-color: lightcoral;">Heading h1 to h2</h1>
+    <p style="background-color: lightgreen;">p1</p>
+    <p style="background-color: lightsalmon;">p2</p>
+    <div style="background-color: lightseagreen;">div</div>
+    <img src="images/book.png" alt="book" style="background-color: lightgray;">
+    <ul style="background-color: lightpink;">
+        <li style="background-color: lightgoldenrodyellow;">list</li>
+    </ul>
+
+    <h2>Inline elements</h2>
+
+    <span style="background-color: violet;">span</span>
+    Formatting elements:
+    <b style="background-color: tomato;">bold</b>
+    <i style="background-color: skyblue;">italic</i>
+    <small style="background-color: lightgray;">small</small>
+    <strong style="background-color: lightcoral;">strong</strong>
+    <em style="background-color: lightcyan;">emphasized</em>
+    <mark style="background-color: yellow;">marked text</mark>
+    <del style="background-color: lightpink;">deleted</del>
+    <ins style="background-color: lightgreen;">inserted</ins>
+    <sub style="background-color: lightblue;">subscript</sub>
+    <sup style="background-color: lightgoldenrodyellow;">superscript</sup>
+    <code style="background-color: lightgray;">code</code>
+    <abbr title="Hypertext Markup Language" style="background-color: lightcoral;">abbr</abbr>
+    <cite style="background-color: lightcyan;">citation</cite>
+    <q style="background-color: lightgray;">short quote</q>
+    <time style="background-color: lightgoldenrodyellow;">time</time>
+    <a href="#" style="background-color: lightpink;">anchor</a>
+    <bdo dir="rtl" style="background-color: lightgreen;">bdo</bdo>
+
+
     <script>
 
         console.log(navigator.userAgent);
