@@ -94,9 +94,22 @@ src = to embed content in the page
 
 
 
+
 head 
     meta
     link
     style
     title
     script
+
+
+
+iframe: 
+    sandbox:
+    Value	Effect
+    allow-scripts	Enables JavaScript execution inside the iframe.
+    allow-forms	    Allows form submissions inside the iframe.
+    allow-popups	Allows the iframe to open new tabs or pop-ups.
+    allow-same-origin	Allows iframe to access cookies and storage from its own domain.
+    allow-modals	Allows modal dialogs inside the iframe.
+    allow-downloads	Enables file downloads from the iframe.
