@@ -113,3 +113,26 @@ iframe:
     allow-same-origin	Allows iframe to access cookies and storage from its own domain.
     allow-modals	Allows modal dialogs inside the iframe.
     allow-downloads	Enables file downloads from the iframe.
+
+
+form attributes:
+    action
+    method
+    target
+    autocomplete = "on" or "off"
+    novalidate
+
+
+form elements:
+    <input>
+    <label>
+    <select>
+    <textarea>
+    <button>
+    <fieldset>
+    <legend>
+    <datalist>
+    <output>
+    <option>
+    <optgroup>
+

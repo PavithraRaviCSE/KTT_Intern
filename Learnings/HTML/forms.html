@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Methods used in forms post and get  -->
+    <!-- usig js we can use other methods like delete, put , patch-->
+
+
+    <h3>get method</h3>
+    <form action="#" method="get">
+        <input type="hidden" name="user" value="pavi">
+        <input type="submit" value="submit">
+    </form>
+
+    <h3>post method</h3>
+    <form action="#" method="post" onv>
+        <input type="hidden" name="user" value="pavi">
+        <input type="submit" value="submit">
+    </form>
+
+
+    <form action="#" method="post" enctype="multipart/form-data">
+
+        <!-- Text Inputs -->
+
+        <fieldset>
+            <legend>legend:</legend>
+            <label for="text">Text:</label>
+            <input type="text" id="text" name="text"><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password"><br><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email"><br><br>
+
+            <label for="url">URL:</label>
+            <input type="url" id="url" name="url"><br><br>
+
+        </fieldset>
+        <label for="tel">Phone:</label>
+        <input type="tel" id="tel" name="tel"><br><br>
+
+        <label for="search">Search:</label>
+        <input type="search" id="search" name="search"><br><br>
+
+        <label for="search">hidden input:</label>
+        <input type="hidden" value="hidden"><br><br>
+        <label for="image">submit</label>
+        <input type="image" src="images/book.png" name="image"><br><br>
+        <label for="color">choose color:</label>
+        <input type="color" name="color"><br><br>
+
+        <!-- Number & Range -->
+        <label for="number">Number:</label>
+        <input type="number" id="number" name="number"><br><br>
+
+        <label for="range">Range:</label>
+        <input type="range" list="tickmarks" step="10" value="10" id="range" name="range" min="0" max="10"><br><br>
+        <datalist id="tickmarks">
+            <option value="0"></option>
+            <option value="25"></option>
+            <option value="50"></option>
+            <option value="75"></option>
+            <option value="100"></option>
+        </datalist>
+
+
+        <!-- Date & Time -->
+        <label for="date">Date:</label>
+        <input type="date" min="2025-01-01" max="2025-04-31" id="date" name="date"><br><br>
+
+        <label for="datetime-local">Date & Time:</label>
+        <input type="datetime-local" id="datetime-local" name="datetime-local"><br><br>
+
+        <label for="month">Month:</label>
+        <input type="month" id="month" name="month"><br><br>
+
+        <label for="week">Week:</label>
+        <input type="week" id="week" name="week"><br><br>
+
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time"><br><br>
+
+        <label>Gender:</label>
+        <input type="radio" name="gender" value="male"> Male
+        <input type="radio" name="gender" value="female"> Female<br><br>
+
+        <label>Hobbies:</label>
+        <input type="checkbox" name="hobby1" value="reading"> Reading
+        <input type="checkbox" name="hobby2" value="sports"> Sports<br><br>
+
+        <label for="select">Choose an option:</label>
+        <select id="select" name="select">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+        </select><br><br>
+
+        <!-- File Upload -->
+        <label for="file">Upload File:</label>
+        <input type="file" id="file" name="file"><br><br>
+
+        <!-- Buttons -->
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+
+    </form>
+ 
+    <video src="videos/video.mp4" height="400px" controls ></video>
+</body>
+
+</html>
