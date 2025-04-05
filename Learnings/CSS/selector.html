@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Registration</title>
+    <style>
+        * {
+            padding: 10px;
+            font-size: 20px;
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+            box-sizing: border-box;
+        }
+
+        header ul {
+            list-style: none;
+            display: flex;
+            justify-content: space-around;
+            background-color: beige
+        }
+
+        header ul li:hover {
+            background-color: rgb(207, 207, 130)
+        }
+
+
+        h1 {
+            font-size: 30px;
+            text-align: center;
+        }
+
+        .section-title {
+            background-color: beige;
+            font-weight: bold;
+        }
+
+        #notice {
+            background-color: #fff568b4;
+            padding: 10px;
+        }
+
+        form {
+            border-radius: 3px;
+            box-shadow: rgba(0, 0, 0, 0.5) 1.95px 1.95px 10px;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        input,
+        textarea {
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 300px;
+            display: block;
+        }
+
+        input[type="text"] {
+            background-color: palegreen;
+        }
+
+        input[type="number"] {
+            background-color: paleturquoise;
+        }
+
+        input[type="email"] {
+
+            background-color: lightyellow;
+        }
+
+        input[type="date"] {
+            background-color: lightcyan;
+        }
+
+        textarea {
+            display: block;
+            background-color: lavenderblush;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        #submit {
+            justify-content: center;
+            display: flex;
+            margin-left: auto;
+            margin-right: auto;
+            width: 150px;
+            height: 40px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #submit:hover {
+            background-color: rgb(29, 28, 28);
+        }
+
+        ul li:first-child {
+            background-color: plum;
+        }
+
+        ul li:last-child {
+            background-color: rgb(140, 121, 158);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th {
+            background-color: rgb(167, 152, 131) !important;
+        }
+
+        tr:nth-child(even) {
+            background-color: burlywood;
+        }
+
+        tr:nth-child(odd) {
+            background-color: rgb(223, 221, 218);
+        }
+
+        td:last-child {
+            background-color: pink;
+        }
+
+        tr:hover,
+        tr:hover td:last-child {
+            background-color: grey;
+        }
+
+        [data-para] {
+            background-color: rgb(107, 185, 185);
+        }
+
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+
+        form div input {
+            width: 100%;
+        }
+
+
+        @media screen and (max-width:600px) {
+            header ul  {
+                display: flex;
+                /* flex-wrap: wrap; */
+                flex-direction: column;
+                
+            }
+        }
+
+
+        @media screen and (min-width: 601px) {
+            .form-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+                /* spacing between columns and rows */
+            }
+
+            .form-group.full-width {
+                grid-column: span 2;
+            }
+
+
+
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <ul>
+            <li>Home</li>
+            <li>About</li>
+            <li>Courses</li>
+            <li>Register</li>
+            <li>Students</li>
+            <li>Contact</li>
+        </ul>
+    </header>
+
+
+    <h1>Student Registration</h1>
+
+    <p class="section-title">Personal Information</p>
+
+    <form class="form-container">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name">
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" placeholder="Enter your age">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email">
+        </div>
+
+        <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob">
+        </div>
+
+        <div class="form-group full-width">
+            <label for="address">Address</label>
+            <textarea id="address" name="address" rows="4" placeholder="Enter your address"></textarea>
+        </div>
+
+        <div class="form-group full-width">
+            <button id="submit">submit</button>
+        </div>
+    </form>
+
+    <p id="notice">⚠️ Please carefully fill the form.</p>
+    <p data-para="true">Note: Once submitted, you can't edit your info.</p>
+
+
+    <h3>colors</h3>
+    <ul style="list-style: none;padding: 30px; background-color: palegoldenrod;">
+        <li style="background-color: #f00;">id</li>
+        <li style="background-color: #0f0;">name</li>
+        <li style="background-color: #00f;">age</li>
+        <li style="background-color:rgb(90,10,110)">class</li>
+        <li style="background-color: rgba(90, 10, 110, 0.4)">subject</li>
+        <li style="background-color:hsl(178, 39%, 39%)">class</li>
+        <li style="background-color: rgba(90, 10, 110, 0.2)">subject</li>
+    </ul>
+
+    <ul>
+        <li>Step 1: Fill form</li>
+        <li>Step 2: Submit</li>
+        <li>Step 3: Confirmation</li>
+        <li>
+            <ul>
+                <li>Receive mail</li>
+                <li>Visit campus</li>
+                <li>Orientation</li>
+                <li>Start class</li>
+                <li>Feedback</li>
+            </ul>
+        </li>
+    </ul>
+
+    <p class="section-title">Registered Students</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Course</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Alice</td>
+                <td>20</td>
+                <td>CS</td>
+                <td>Confirmed</td>
+            </tr>
+            <tr>
+                <td style="background-color: beige;">Bob</td>
+                <td>22</td>
+                <td>IT</td>
+                <td>Pending</td>
+            </tr>
+            <tr>
+                <td>Charlie</td>
+                <td>19</td>
+                <td>ECE</td>
+                <td>Confirmed</td>
+            </tr>
+            <tr>
+                <td>Daisy</td>
+                <td>21</td>
+                <td>MECH</td>
+                <td>Confirmed</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <script>
+        const colors = ["palegreen", "paleturquoise", "lightyellow", "lightcyan", "lavender", "mistyrose"];
+
+        document.querySelectorAll("input").forEach(input => {
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            input.style.backgroundColor = randomColor;
+        });
+    </script>
+
+
+</body>
+
+</html>
