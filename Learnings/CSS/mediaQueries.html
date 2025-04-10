@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: palegreen;
+
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+
+        }
+
+        nav ul li {
+            padding: 10px;
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        nav ul li:hover {
+            background-color: rgb(101, 197, 101);
+
+        }
+
+        #menu-btn {
+            display: none;
+            font-size: 26px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            #menu-btn {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 10px 0;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+        }
+
+        .contents{
+            display: grid;
+            grid-template-columns: auto auto;
+        }
+        .contents .para {
+            padding: 20px; 
+        }
+
+        @media screen and (max-width:600px) {
+
+            .contents{
+                display: block;
+            }
+            
+        }
+
+        @media print {
+            #printBlue {
+                color: blue;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <img height="35px" src="../HTML/images/book.png" alt="logo" />
+        <button id="menu-btn">☰</button>
+
+        <ul id="nav-items">
+            <li>home</li>
+            <li>about</li>
+            <li>profile</li>
+        </ul>
+    </nav>
+
+    <div class="contents">
+        <div class="para">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint incidunt repellat recusandae
+            totam, nesciunt officia aliquam provident dolor praesentium vero est vel pariatur nulla iste eum omnis quas
+            tempore dolorem?</div>
+        <div class="para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus expedita quae, vero soluta nisi
+            perspiciatis reiciendis obcaecati alias consequatur quisquam atque eligendi aliquid dolores itaque magnam
+            cum? Doloremque, repudiandae quas.</div>
+        <div class="para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur repellendus veritatis animi
+            consequuntur provident, saepe odit dolorum, non magni ipsum, neque eum incidunt at. Fugit labore sunt
+            aliquam ipsum ab?</div>
+        <div class="para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias architecto cum voluptatum
+            ipsum, natus quibusdam repellat pariatur, voluptatibus rerum vitae, veniam facere accusamus nemo dolorem
+            quisquam eaque harum? Quisquam, nesciunt?</div>
+    </div>
+
+    <h1 id="printBlue">blue in print</h1>
+
+    <script>
+        const btn = document.getElementById("menu-btn"); // 🔁 corrected ID name
+        const navList = document.getElementById("nav-items");
+
+        btn.addEventListener("click", () => {
+            navList.classList.toggle("show");
+        });
+    </script>
+</body>
+
+</html>
