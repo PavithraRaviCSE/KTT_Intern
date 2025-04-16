@@ -95,3 +95,31 @@ clone.next = clone;
 nextedClone = structuredClone(clone);
 
 console.log('̥nextesClone', nextedClone);
+
+
+// factory function
+
+function createUser(firstName, lastName) {
+    return {
+        firstName,
+        lastName,
+        getFullName() {
+            return firstName + " " + lastName;
+        }
+    };
+}
+let user1 = createUser("pavi", "r");
+console.log('user1:', user1, user1.getFullName()); // "pavi r"
+
+// constructor function
+
+const User = function (firstName, lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.fullName = function () {
+        return this.firstName + " " + this.lastName;
+    };
+};
+
+let user5 = new User("pavi", "r"); // use `new`
+console.log('user2:', user5, user5.fullName()); // "pavi r"
