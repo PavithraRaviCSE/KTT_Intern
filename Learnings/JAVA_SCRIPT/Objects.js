@@ -67,7 +67,6 @@ const original = {
     name: "Pavi",
     age: 22,
     skills: ["JS", "HTML"],
-    nested: { level: 1 },
     date: new Date(),
     map: new Map([["key", "value"]]),
     set: new Set([1, 2, 3])
@@ -123,3 +122,38 @@ const User = function (firstName, lastName) {
 
 let user5 = new User("pavi", "r"); // use `new`
 console.log('user2:', user5, user5.fullName()); // "pavi r"
+
+
+// object creation methods
+// Using new Object()
+let obj1 = new Object();
+obj1.id = 1;
+
+// Using object literal
+let obj2 = {};
+obj2.id = 1;
+
+// Using factory function
+const FactoryFunctionObj = function fn(id, name) {
+    return {
+        id,
+        name
+    };
+};
+let obj3 = FactoryFunctionObj(1, "pavi"); // no 'new' needed for factory function
+
+// Using constructor function
+function constructorFunctionObj(id, name) {
+    this.id = id;
+    this.name = name;
+}
+let obj4 = new constructorFunctionObj(1, "pavi"); // 'new' is required
+
+// Using ES6 class
+class Person {
+    constructor(id, name) {
+        this.id = id;
+        this.name = name;
+    }
+}
+let obj5 = new Person(1, "pavi"); // 'new' is required
