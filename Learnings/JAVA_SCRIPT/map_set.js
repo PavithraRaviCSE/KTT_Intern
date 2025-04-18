@@ -37,3 +37,6 @@ set.add(user4);
 console.log('weakset.has(user3)',weakset.has(user3) );
 user3 = null;
 console.log('weakset.has(user3)',weakset.has(user3) );
+
+let a = null;
+console.log('̥a',a);

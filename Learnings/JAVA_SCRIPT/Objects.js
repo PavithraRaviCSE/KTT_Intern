@@ -157,3 +157,76 @@ class Person {
     }
 }
 let obj5 = new Person(1, "pavi"); // 'new' is required
+
+
+// sample student object
+const Student = (name, dept, dob) => {
+    return {
+        name,
+        dept,
+        dob,
+
+        get data() {
+            return this.name + " " + this.dept;
+        }
+
+    };
+};
+
+let nive = Student("nive", "cse", "01/10/2004");
+let moni = Student("moni", "cse", "01/10/2004");
+
+console.log('̥nive', nive, nive.data);
+console.log('moni', JSON.stringify(moni));
+
+
+function Customer(name, age) {
+        this.name = name,
+        this.age = age,
+        this.data = () => {
+            name + age;
+        }
+        Object.defineProperty(this, 'dept', {
+            get: function () {
+                return "cse";
+            }
+        });
+
+        this.toJSON = function () {
+            return {
+                name: this.name,
+                age: this.age,
+                data: this.data(),
+                dept: this.dept
+            };
+        };
+}
+
+let customer1 = new Customer("Nive", 20);
+let c2 = Customer("nive", 23);
+console.log('̥customer1', JSON.stringify(customer1), customer1.name);
+// console.log('c2', c2.name);
+console.log('c2', c2?.name, typeof(c2));
+
+const obj = null;
+console.log(obj?.someProperty); 
+console.log("End");
+
+console.log('̥get keys', Object.keys(customer1));
+console.log('̥get values', Object.values(customer1));
+console.log('̥get entries', Object.entries(customer1));
+
+customer1.lastname = "r";
+console.log('̥customer1',customer1);
+Object.freeze(customer1);
+customer1.lastname = "K";
+console.log('̥customer1',customer1);
+console.log(customer1.hasOwnProperty("age"));
+
+
+
+
+
+
+
+

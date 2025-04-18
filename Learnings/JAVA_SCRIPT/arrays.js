@@ -52,7 +52,7 @@ let updateduser = users.map(user => {
     return user;
 });
 
-console.log('updated: ', updateduser2, "user: ", users);
+console.log('updated: ', updateduser, "user: ", users);
 console.log();
 
 
@@ -92,6 +92,7 @@ numbers = numbers.map(num => num * num);
 console.log(numbers);
 
 
-
+let a = "Hello";
+console.log('̥a[0]', a[12]);
 
 
