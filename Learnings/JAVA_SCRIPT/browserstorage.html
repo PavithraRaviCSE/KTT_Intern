@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        localStorage.setItem("name", "pavi");
+        let name = localStorage.getItem("name");
+        console.log('local storage:', name);
+
+        sessionStorage.setItem("name", "pavi");
+        let name2 = sessionStorage.getItem("name");
+        console.log('session storage:', name2);
+
+        document.cookie = "sessionId=12345";
+        let cookies = document.cookie;
+        console.log('cookies:', cookies);
+
+        function getCookie(name) {
+            let cookieArr = document.cookie.split("; ");
+            for (let i = 0; i < cookieArr.length; i++) {
+                let pair = cookieArr[i].split("=");
+                if (pair[0] === name) {
+                    return pair[1];
+                }
+            }
+            return null;
+        }
+
+        let sessionId = getCookie("sessionId");
+        console.log('session id:', sessionId);
+
+        console.log('localStorage: ', localStorage.setItem("key", "value"));
+        console.log(localStorage.getItem("key"));
+        console.log(localStorage.removeItem("key"));
+        console.log(localStorage.clear());
+        console.log(localStorage.length);
+
+        console.log('session: ', sessionStorage.setItem("key", "value"));
+        console.log(sessionStorage.getItem("key"));
+        console.log(sessionStorage.removeItem("key"));
+        console.log(sessionStorage.clear());
+        console.log(sessionStorage.length);
+
+        document.cookie = "key=value";
+        console.log('cookie', document.cookie);
+        document.cookie = "key=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+
+
+    </script>
+</body>
+
+</html>
