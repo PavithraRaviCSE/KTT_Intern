@@ -6,9 +6,9 @@ let obj2 = {
 }
 
 
-console.log("obj1 + obj2: " ,obj1 + obj2);
-console.log("obj1 + obj2: " ,obj1 + obj2);
-console.log("obj1.toString(): " ,obj1.toString());
+console.log("obj1 + obj2: ", obj1 + obj2);
+console.log("obj1 + obj2: ", obj1 + obj2);
+console.log("obj1.toString(): ", obj1.toString());
 
 
 const user = {
@@ -40,5 +40,15 @@ const productA = {
 
 console.log('productA + 50 =', +productA + 50);
 console.log('productA + " R" =', productA + " R");
-console.log(' 50 + productA =',   50 + productA);
+console.log(' 50 + productA =', 50 + productA);
 
+const { original } = require("./Objects.js");
+
+console.log('importing object form objects.js: ', original);
+
+// dynamic import
+
+
+import("./modulesamplefunction.mjs").then(({ print }) => {
+    print();
+});

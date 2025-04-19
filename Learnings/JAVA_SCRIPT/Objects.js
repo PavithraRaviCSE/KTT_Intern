@@ -72,6 +72,9 @@ const original = {
     set: new Set([1, 2, 3])
 };
 
+module.exports = {original};
+
+
 // JSON clone
 const jsonClone = JSON.parse(JSON.stringify(original));
 
@@ -222,6 +225,7 @@ Object.freeze(customer1);
 customer1.lastname = "K";
 console.log('̥customer1',customer1);
 console.log(customer1.hasOwnProperty("age"));
+
 
 
 
