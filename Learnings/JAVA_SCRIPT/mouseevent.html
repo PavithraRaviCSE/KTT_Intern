@@ -1,0 +1,41 @@
+<button onclick="alert('Clicked!')" onmousedown="console.log('Mouse Down')" onmouseup="console.log('Mouse Up')"
+    onmousemove="console.log('Mouse Moving')">
+    Click me
+</button><br>
+<div id="hoverBox" style="width:200px;height:100px;background:lightblue;margin-top:10px;"></div>
+
+<script>
+    const box = document.getElementById("hoverBox");
+
+    box.addEventListener("mouseover", () => console.log("mouseover"));
+    box.addEventListener("mouseout", () => console.log("mouseout"));
+    box.addEventListener("mouseenter", () => console.log("mouseenter"));
+    box.addEventListener("mouseleave", () => console.log("mouseleave")); 
+</script>
+<div id="drag" draggable="true" style="width:100px;height:100px;background:orange;">Drag me</div>
+<div id="drop" style="width:150px;height:150px;background:lightgreen;margin-top:10px;">Drop here</div>
+
+<script>
+    const drag = document.getElementById("drag");
+    const drop = document.getElementById("drop");
+
+    drag.addEventListener("dragstart", () => console.log("Drag started"));
+    drop.addEventListener("dragover", e => e.preventDefault());
+    drop.addEventListener("drop", () => console.log("Dropped!"));
+</script>
+<div id="pointer" style="width:100px;height:100px;background:pink;margin-top:10px;">Click Me</div>
+
+<script>
+    document.getElementById("pointer").addEventListener("pointerdown", () => console.log("Pointer down"));
+    document.getElementById("pointer").addEventListener("pointerup", () => console.log("Pointer up"));
+</script>
+<input type="text" onkeydown="console.log('Key Down')" onkeyup="console.log('Key Up')" placeholder="Type here" />
+<div class="scroller" style="height:100px;overflow:auto;border:1px solid black;">
+    <div style="height:300px;">Scroll inside this box!</div>
+</div>
+
+<script>
+    document.querySelector(".scroller").addEventListener("scroll", () => {
+        console.log("Scrolled");
+    });
+</script>
