@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <button onclick="saveData()">Save Name</button>
+  <button onclick="getData()">Get Name</button>
+
+  <script>
+    let request = indexedDB.open("SimpleDB", 1);
+
+    request.onupgradeneeded = function (e) {
+      let db = e.target.result;
+      db.createObjectStore("names", { keyPath: "id" });
+    };
+
+    function saveData() {
+      let dbReq = indexedDB.open("SimpleDB", 1);
+
+      dbReq.onsuccess = function (e) {
+        let db = e.target.result;
+        let tx = db.transaction("names", "readwrite");
+        let store = tx.objectStore("names");
+
+        store.put({ id: 1, name: "John" });
+        store.put({ id: 1, name: "John" });
+
+        tx.oncomplete = () => {
+          db.close();
+          alert("Name saved!");
+        };
+      };
+    }
+
+    function getData() {
+      let dbReq = indexedDB.open("SimpleDB", 1);
+
+      dbReq.onsuccess = function (e) {
+        let db = e.target.result;
+        let tx = db.transaction("names", "readonly");
+        let store = tx.objectStore("names");
+
+        let getReq = store.get(1);
+
+        getReq.onsuccess = () => {
+          alert("Name: " + getReq.result.name);
+          db.close();
+        };
+      };
+    }
+  </script>
+</body>
+</html>
