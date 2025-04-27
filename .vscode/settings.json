@@ -9,6 +9,16 @@
             "database": "Students",
             "password": "1234",
             "username": "postgres"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "postgres connection 2",
+            "database": "QT",
+            "username": "postgres",
+            "password": "1234"
         }
     ]
 }

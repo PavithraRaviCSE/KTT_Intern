@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Table</title>
+    <link rel="stylesheet" href="//cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
+</head>
+<body>
+
+    <h2>Student List</h2>
+    <table id="studentTable" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Marks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>101</td>
+                <td>Alice</td>
+                <td>Math</td>
+                <td>85</td>
+            </tr>
+            <tr>
+                <td>102</td>
+                <td>Bob</td>
+                <td>Science</td>
+                <td>78</td>
+            </tr>
+            <tr>
+                <td>103</td>
+                <td>Charlie</td>
+                <td>History</td>
+                <td>92</td>
+            </tr>
+            <tr>
+                <td>104</td>
+                <td>Diana</td>
+                <td>English</td>
+                <td>88</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#studentTable').DataTable({
+                paging: false,
+                searching: false,
+            columnDefs: [
+                { orderable: false, targets: 1 }
+            ]
+        });
+        });
+
+        $(document).ready(function(){
+            $('studenttable').DataTable({
+
+            });
+        })
+    </script>
+
+</body>
+</html>
