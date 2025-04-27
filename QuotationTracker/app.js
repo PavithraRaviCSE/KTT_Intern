@@ -20,7 +20,7 @@ app.post('/login', async (req, res) => {
     const response = await authUser.authUser(req, res);  
     if (response) {
       console.log('Login success..........');
-     
+       
     }
   } catch (error) {
     console.log('Server error...........', error);

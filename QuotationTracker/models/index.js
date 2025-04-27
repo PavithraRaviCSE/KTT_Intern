@@ -1,27 +1,31 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('./database');
-
-const User = require('./user')(sequelize, DataTypes);
-const UserRole = require('./userrole')(sequelize, DataTypes);
+const { sequelize, DataTypes } = require('./database');
+const createUserModel = require('./user');
+const createUserRoleModel = require('./userrole');
 const seedDefaultData = require('./seedDefaultData');
 
-User.belongsTo(UserRole);
-UserRole.hasMany(User);
+const UserRole = createUserRoleModel(sequelize, DataTypes);
+const User = createUserModel(sequelize, DataTypes);
 
-// sequelize.sync({ alter: true })
-//   .then(() => {
-//     console.log('Tables created successfully');
-//   })
-//   .catch((err) => {
-//     console.error('Unable to create tables:', err);
-//   });
 
-const models = {
-    User,
-    UserRole,
-    seedDefaultData,
-    sequelize,
-    Sequelize
-};
 
-module.exports = models;
+User.belongsTo(UserRole, {
+    foreignKey: {
+        name: 'userRoleId',
+        allowNull: false
+    },
+    onDelete: 'CASCADE'
+});
+UserRole.hasMany(User, {
+    foreignKey: 'userRoleId'
+});
+
+sequelize.sync({ force: false })
+    .then(async () => {
+        console.log('Database & tables created successfully!');
+        await seedDefaultData(UserRole, User);
+    })
+    .catch((error) => {
+        console.error('Error creating database & tables:', error);
+    });
+
+module.exports = { User, UserRole };

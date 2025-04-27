@@ -1,4 +1,4 @@
-const {Sequelize} = require("sequelize");
+const {Sequelize,DataTypes} = require("sequelize");
 
 const sequelize = new Sequelize('quotationtracker','postgres','1234',{
     host:"localhost",
@@ -6,4 +6,4 @@ const sequelize = new Sequelize('quotationtracker','postgres','1234',{
 });
 
 
-module.exports = sequelize;
+module.exports = {sequelize,DataTypes};

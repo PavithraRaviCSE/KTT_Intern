@@ -1,29 +1,44 @@
-const { User, UserRole } = require('./index');  
-const { encryptPassword } = require('../api/authUser'); 
+const bcrypt = require('bcrypt');
 
-async function seedDefaultData() {
+async function seedDefaultData(UserRole, User) {
     try {
-        const roleCount = await UserRole.count();
-        if (roleCount === 0) {
-            await UserRole.bulkCreate([
-                { name: 'Admin' },
-                { name: 'User' },
-            ]);
-            console.log('Default roles inserted');
-        }
+        const [adminRole, userRole] = await Promise.all([
+            UserRole.findOrCreate({
+                where: { name: 'Admin' },
+                defaults: { name: 'Admin', status: 1 }
+            }),
+            UserRole.findOrCreate({
+                where: { name: 'User' },
+                defaults: { name: 'User', status: 1 }
+            })
+        ]);
 
-        const password = await encryptPassword("admin");
+        const hashedPassword = await bcrypt.hash('admin', 10); 
+        const hashedPassword2 = await bcrypt.hash('user', 10); 
 
-        const userCount = await User.count();
-        if (userCount === 0) {
-            await User.create({
-                name: 'Admin',
-                email: 'admin@example.com',
-                password: password,
-                roleId: 1,  
-            });
-            console.log('Default admin user inserted');
-        }
+        const adminRoleId = adminRole[0].id;  
+        const userRoleId = userRole[0].id;  
+
+        console.log('̥*****************ADMINROLE  iD',adminRoleId, "USER ROLE ID***********************" , userRoleId );
+        await User.create({
+            name: 'admin',
+            email: 'admin@example.com',
+            password: hashedPassword, 
+            phone: '9876543210',
+            status: 1,
+            UserRoleId: adminRoleId,  // Make sure this key matches your model's foreign key
+        });
+
+        await User.create({
+            name: 'user',
+            email: 'user@example.com',
+            password: hashedPassword2, 
+            phone: '1234567890',
+            status: 1,
+            UserRoleId: userRoleId,  // Make sure this key matches your model's foreign key
+        });
+
+        console.log('Seeded default data successfully!');
     } catch (error) {
         console.error('Error seeding default data:', error);
     }
