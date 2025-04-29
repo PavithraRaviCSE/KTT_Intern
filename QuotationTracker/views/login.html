@@ -11,13 +11,11 @@
 
     <title>QT - Login</title>
 
-    <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
@@ -26,14 +24,12 @@
 
     <div class="container">
 
-        <!-- Outer Row -->
         <div class="row justify-content-center">
 
             <div class="col-xl-10 col-lg-12 col-md-9">
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
                             <div class="col-lg-6">
@@ -43,9 +39,9 @@
                                     </div>
                                     <form class="user" id="userLogin">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="email"
-                                                aria-describedby="emailHelp" placeholder="Enter Email Address..."
-                                                required>
+                                            <input type="text" class="form-control form-control-user"
+                                                id="emailOrUserName" aria-describedby="emailHelp"
+                                                placeholder="Enter Email Address or Username..." required>
                                             <span id="incorrectUser"></span>
                                         </div>
                                         <div class="form-group">
@@ -74,41 +70,38 @@
 
     </div>
 
-    <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
 
     <script>
         document.querySelector('form').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent the default form submission
-            const email = document.getElementById('email').value;
+            event.preventDefault();
+            const emailOrUserName = document.getElementById('emailOrUserName').value;
             const password = document.getElementById('password').value;
 
-            fetch('/login', {
+            fetch('login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ emailOrUserName, password })
             })
                 .then(async (res) => {
-                    // Clear previous error messages
                     document.getElementById('incorrectUser').innerText = "";
                     document.getElementById('incorrectPass').innerText = "";
 
                     if (res.ok) {
                         console.log('Login successful');
-                        window.location.href = '/dashboard'; // Redirect to dashboard
+                        window.location.href = 'index';
+
                     } else {
                         const error = await res.json();
 
-                        if (error.field === 'email') {
+                        if (error.field === 'emailOrUserName') {
                             document.getElementById('incorrectUser').innerText = error.message;
                         } else {
                             document.getElementById('incorrectUser').innerText = ""; // Clear incorrect email field

@@ -1,31 +1,29 @@
-const { sequelize, DataTypes } = require('./database');
-const createUserModel = require('./user');
-const createUserRoleModel = require('./userrole');
-const seedDefaultData = require('./seedDefaultData');
+const { sequelize, DataTypes } = require('./database.js');
+const createUserRoleModel = require('./userrole.js');
+const createUserModel = require('./user.js');
 
-const UserRole = createUserRoleModel(sequelize, DataTypes);
-const User = createUserModel(sequelize, DataTypes);
+const models = {};
+
+models.UserRole = createUserRoleModel(sequelize, DataTypes);
+models.User = createUserModel(sequelize, DataTypes);
+
+if (models.UserRole.associate) {
+  models.UserRole.associate(models);
+}
+if (models.User.associate) {
+  models.User.associate(models);
+}
 
 
 
-User.belongsTo(UserRole, {
-    foreignKey: {
-        name: 'userRoleId',
-        allowNull: false
-    },
-    onDelete: 'CASCADE'
-});
-UserRole.hasMany(User, {
-    foreignKey: 'userRoleId'
-});
-
-sequelize.sync({ force: false })
-    .then(async () => {
-        console.log('Database & tables created successfully!');
-        await seedDefaultData(UserRole, User);
+models.sync = function () {
+  return sequelize.sync({ force: false })
+    .then(() => {
+      console.log('Database synced successfully.');
     })
-    .catch((error) => {
-        console.error('Error creating database & tables:', error);
+    .catch((err) => {
+      console.error('Failed to sync database:', err);
     });
+};
 
-module.exports = { User, UserRole };
+module.exports = models;

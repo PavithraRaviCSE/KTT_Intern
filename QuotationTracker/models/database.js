@@ -1,9 +1,9 @@
-const {Sequelize,DataTypes} = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
 
-const sequelize = new Sequelize('quotationtracker','postgres','1234',{
-    host:"localhost",
-    dialect:"postgres"
+const sequelize = new Sequelize('QuotationTracker', 'postgres', 'Password', {
+    host: "localhost",
+    dialect: "postgres"
 });
 
 
-module.exports = {sequelize,DataTypes};
+module.exports = {sequelize, DataTypes};

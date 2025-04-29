@@ -5,7 +5,7 @@
             "server": "localhost",
             "port": 5432,
             "driver": "PostgreSQL",
-            "name": "postgres connection ",
+            "name": "PostgresConnection",
             "database": "QuotationTracker",
             "username": "postgres",
             "password": "Password"

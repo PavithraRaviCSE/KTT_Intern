@@ -1,1 +1,1 @@
-use QT;
+select * from "Users";
