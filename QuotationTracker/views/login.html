@@ -40,8 +40,8 @@
                                     <form class="user" id="userLogin">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
-                                                id="emailOrUserName" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address or Username..." required>
+                                                id="userName" aria-describedby="emailHelp"
+                                                placeholder="Enter Username..." required>
                                             <span id="incorrectUser"></span>
                                         </div>
                                         <div class="form-group">
@@ -80,15 +80,15 @@
     <script>
         document.querySelector('form').addEventListener('submit', function (event) {
             event.preventDefault();
-            const emailOrUserName = document.getElementById('emailOrUserName').value;
+            const userName = document.getElementById('userName').value;
             const password = document.getElementById('password').value;
 
-            fetch('login', {
+            fetch('/api/users/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ emailOrUserName, password })
+                body: JSON.stringify({ userName, password })
             })
                 .then(async (res) => {
                     document.getElementById('incorrectUser').innerText = "";
@@ -101,7 +101,7 @@
                     } else {
                         const error = await res.json();
 
-                        if (error.field === 'emailOrUserName') {
+                        if (error.field === 'userName') {
                             document.getElementById('incorrectUser').innerText = error.message;
                         } else {
                             document.getElementById('incorrectUser').innerText = ""; // Clear incorrect email field
@@ -115,7 +115,8 @@
                     }
                 })
                 .catch((err) => {
-                    console.error('Error:', err);
+                    console.log(("error", err));
+                    
                     document.getElementById('incorrectPass').innerText = 'Something went wrong.';
                 });
         });

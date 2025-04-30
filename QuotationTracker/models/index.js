@@ -4,6 +4,8 @@ const createUserModel = require('./user.js');
 
 const models = {};
 
+console.log("model index is called.........");
+
 models.UserRole = createUserRoleModel(sequelize, DataTypes);
 models.User = createUserModel(sequelize, DataTypes);
 
@@ -14,16 +16,13 @@ if (models.User.associate) {
   models.User.associate(models);
 }
 
-
-
-models.sync = function () {
-  return sequelize.sync({ force: false })
-    .then(() => {
-      console.log('Database synced successfully.');
-    })
-    .catch((err) => {
-      console.error('Failed to sync database:', err);
-    });
+models.sync = async function () {
+  try {
+    await sequelize.sync({ force: false }); 
+    console.log('Database synced successfully.');
+  } catch (err) {
+    console.error('Failed to sync database:', err);
+  }
 };
 
 module.exports = models;

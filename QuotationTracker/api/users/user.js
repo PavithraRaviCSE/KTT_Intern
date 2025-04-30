@@ -1,7 +1,8 @@
 const { User } = require('../../models/index.js');
 const path = require('path');
 const bcrypt = require('bcrypt');
-
+const jwt = require('jsonwebtoken');
+const JWE_SECRET_KEY = "secretKey";
 
 const getUser = async (req, res) => {
     try {
@@ -48,17 +49,18 @@ const login = async (req, res) => {
     try {
         const { userName, password } = req.body;
 
+        console.log("userpass: ", userName, password);
+
         const user = await User.findOne({
             where: { userName },
-            attributes: ['userName', 'password','UserRoleId']
+            attributes: ['userName', 'password', 'UserRoleId']
         });
-
 
 
         console.log('user data:   ', user);
 
         if (!user) {
-            return res.status(401).json({ field: 'emailOrUserName', message: 'email Or UserName not found' });
+            return res.status(401).json({ field: 'userName', message: 'username not found' });
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -69,47 +71,31 @@ const login = async (req, res) => {
             return res.status(401).json({ field: 'password', message: 'Incorrect password' });
         }
 
-        // const token = jwt.sign(
-        //     { id: user.id, UserRoleId: user.UserRoleId },
-        //     JWT_SECRET,
-        //     { expiresIn: '1h' }
-        // );
+        const token = jwt.sign(
+            { id: user.id, UserRoleId: user.UserRoleId, userName: user.userName },
+            JWE_SECRET_KEY,
+            { expiresIn: '1h' }
+        );
+
+        res.cookie('auth_token', token, {
+            httpOnly: true,
+            maxAge: 3600000,
+            sameSite: 'Strict',
+        });
 
         return res.status(200).json({
             message: 'Login successful',
-            // token: token 
+            token: token
         });
 
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Internal server error' +err});
+        return res.status(500).json({ message: 'Internal server error' + err });
     }
 };
 
-const getLoginPage = (req, res) => {
-    res.sendFile(path.join(__dirname, "../../views/login.html"));
-}
-
-
-const getIndexPage = (req, res) => {
-    res.sendFile(path.join(__dirname, "../../views/index.html"));
-}
-const getUserTable = (req, res) => {
-    res.sendFile(path.join(__dirname, "../../views/userTable.html"));
-}
-const getUserRoleTable = (req, res) => {
-    res.sendFile(path.join(__dirname, "../../views/userRoleTable.html"));
-}
-const getTable = (req, res) => {
-    res.sendFile(path.join(__dirname, "../../views/tables.html"));
-}
 module.exports = {
     getUser,
     getUserById,
-    getIndexPage,
-    getUserTable,
-    getUserRoleTable,
-    getTable,
-    login,
-    getLoginPage
+    login
 };
