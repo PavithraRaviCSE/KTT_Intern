@@ -17,6 +17,8 @@
         rel="stylesheet">
 
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+
 
 </head>
 
@@ -39,15 +41,14 @@
                                     </div>
                                     <form class="user" id="userLogin">
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user"
-                                                id="userName" aria-describedby="emailHelp"
-                                                placeholder="Enter Username..." required>
-                                            <span id="incorrectUser"></span>
+                                            <input type="text" class="form-control form-control-user" id="userName"
+                                                aria-describedby="emailHelp" placeholder="Enter Username..." required>
+                                            <span class="text-danger" id="incorrectUser"></span>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user" id="password"
                                                 placeholder="Password" required>
-                                            <span id="incorrectPass"></span>
+                                            <span class="text-danger" id="incorrectPass"></span>
 
                                         </div>
 
@@ -77,48 +78,60 @@
 
     <script src="/js/sb-admin-2.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+
     <script>
-        document.querySelector('form').addEventListener('submit', function (event) {
+        document.querySelector('form').addEventListener('submit', async function (event) {
             event.preventDefault();
             const userName = document.getElementById('userName').value;
             const password = document.getElementById('password').value;
 
-            fetch('/api/users/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ userName, password })
-            })
-                .then(async (res) => {
-                    document.getElementById('incorrectUser').innerText = "";
-                    document.getElementById('incorrectPass').innerText = "";
 
-                    if (res.ok) {
-                        console.log('Login successful');
-                        window.location.href = 'index';
-
-                    } else {
-                        const error = await res.json();
-
-                        if (error.field === 'userName') {
-                            document.getElementById('incorrectUser').innerText = error.message;
-                        } else {
-                            document.getElementById('incorrectUser').innerText = ""; // Clear incorrect email field
-                        }
-
-                        if (error.field === 'password') {
-                            document.getElementById('incorrectPass').innerText = error.message;
-                        } else {
-                            document.getElementById('incorrectPass').innerText = ""; // Clear incorrect password field
-                        }
-                    }
-                })
-                .catch((err) => {
-                    console.log(("error", err));
-                    
-                    document.getElementById('incorrectPass').innerText = 'Something went wrong.';
+            try {
+                const res = await fetch('/api/users/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ userName, password })
                 });
+
+                document.getElementById('incorrectUser').innerText = "";
+                document.getElementById('incorrectPass').innerText = "";
+
+                if (res.ok) {
+                    const data = await res.json(); // Get the response JSON
+                    console.log('Login successful', data.message, data.auth_token);
+
+                    const authToken = data.auth_token;
+                    if (authToken) {
+                        const jwtToken = jwt_decode(authToken);
+                        alert(jwtToken);
+
+                        console.log('auth_token dytuytuecoded: ', JSON.stringify(jwtToken.userName));
+
+                        window.location.href = 'index';
+                    }
+                } else {
+                    const error = await res.json();
+
+                    if (error.field === 'userName') {
+                        document.getElementById('incorrectUser').innerText = error.message;
+                    } else {
+                        document.getElementById('incorrectUser').innerText = "";
+                    }
+
+                    if (error.field === 'password') {
+                        document.getElementById('incorrectPass').innerText = error.message;
+                    } else {
+                        document.getElementById('incorrectPass').innerText = "";
+                    }
+                }
+            } catch (err) {
+                console.error("error", err);
+                document.getElementById('incorrectPass').innerText = 'Something went wrong.';
+            }
+
         });
     </script>
 
