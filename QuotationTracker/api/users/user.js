@@ -85,7 +85,7 @@ const login = async (req, res) => {
 
         return res.status(200).json({
             message: 'Login successful',
-            token: token
+            auth_token: token
         });
 
     } catch (err) {
@@ -94,8 +94,24 @@ const login = async (req, res) => {
     }
 };
 
+const logout = async (req, res) => {
+    try {
+      res.clearCookie('auth_token', {
+        httpOnly: true, 
+        sameSite: 'Strict', 
+        path: '/',  
+      });
+ 
+      res.status(200).json({ message: 'Logged out successfully' });
+    } catch (error) {
+      console.error('Error during logout:', error);
+      res.status(500).json({ message: 'An error occurred during logout' });
+    }
+};
+
 module.exports = {
     getUser,
     getUserById,
-    login
+    login,
+    logout
 };

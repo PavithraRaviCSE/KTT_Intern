@@ -92,12 +92,7 @@
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
-            <!-- Sidebar Message -->
-            <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
-            </div>
+           
 
         </ul>
         <!-- End of Sidebar -->
@@ -117,7 +112,7 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
+                   <!--  <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
@@ -128,7 +123,7 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </form> -->
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -537,7 +532,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="login.html" id="logoutBtn">Logout</a>
                 </div>
             </div>
         </div>
@@ -559,6 +554,16 @@
     <!-- Page level custom scripts -->
     <script src="/js/demo/chart-pie-demo.js"></script>
 
+    <script>
+
+        
+document.getElementById('logoutBtn').addEventListener('click', function (e) {
+            e.preventDefault();
+            sessionStorage.removeItem('auth_token');
+            window.location.href = 'login.html';
+        });
+    
+    </script>
 </body>
 
 </html>
