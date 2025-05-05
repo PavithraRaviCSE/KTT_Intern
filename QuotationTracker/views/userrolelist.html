@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>QT - Tables</title>
+    <title>userrole</title>
 
     <!-- Custom fonts for this template -->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -34,7 +34,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard">
 
                 <div class="sidebar-brand-text mx-3">QT</div>
             </a>
@@ -44,7 +44,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="dashboard">
 
                     <span>Dashboard</span></a>
             </li>
@@ -84,7 +84,7 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
+                        <a class="collapse-item" href="login">Login</a>
                         <a class="collapse-item" href="register.html">Register</a>
 
                         <div class="collapse-divider"></div>
@@ -180,7 +180,8 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span id="loggedInUser" class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas
+                                    McGee</span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -219,12 +220,28 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">User Role </h6>
+                            <h6 class="m-0 font-weight-bold text-primary">User Role </h6>\
+                            <!-- <div> -->
+                            <!-- <div class="btn-group"> -->
+                            <button type="button" class="btn btn-primary btn-round dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-download"></i> Download
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#" id="downloadCsv">Download Excel</a>
+                                <a class="dropdown-item" href="#" id="downloadPdf">Download PDF</a>
+                            </div>
+                            <!-- </div> -->
+
                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#userRoleModal">
-                                add
+                                Add <i class="fas fa-plus"></i>
                             </button>
                         </div>
+
+
+
+
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -287,7 +304,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html" id="logoutBtn">Logout</a>
+                    <a class="btn btn-primary" href="logout" id="logoutBtn">Logout</a>
                 </div>
             </div>
         </div>
@@ -384,7 +401,25 @@
     <!-- <script src="/js/demo/datatables-demo.js"></script> -->
 
 
+    <!-- pdf library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <script>
+
+
+        let authToken;
+        document.addEventListener("DOMContentLoaded", async function () {
+            authToken = sessionStorage.getItem("auth_token");
+            if (!authToken) {
+                window.location.href = "login";
+            } else {
+                authToken = JSON.parse(authToken);
+                let user = authToken.userName;
+                document.getElementById("loggedInUser").textContent = user;
+            }
+        });
+
+
 
         // *************************DATA TABLE****************************
 
@@ -418,22 +453,25 @@
                     let updateBtn;
                     let deleteBtn
                     if (id == 1) {
-                        updateBtn = `<button class="btn btn-sm btn-primary "  onclick="showUpdateModal(${id}, '${name}', '${status}')" disabled>Update</button>`;
-                        deleteBtn = `<button class="btn btn-sm btn-danger"  onclick="showDeleteModal(${id})" disabled>Delete</button>`;
+                        updateBtn = `<button class="btn btn-sm btn-primary "  onclick="showUpdateModal(${id}, '${name}', '${status}')" disabled><i
+                                                class="fas fa-pen"></i> </button>`;
+                        deleteBtn = `<button class="btn btn-sm btn-danger"  onclick="showDeleteModal(${id})" disabled><i
+                                                class="fas fa-trash-alt"></i></button>`;
                     }
                     else {
-                        updateBtn = `<button class="btn btn-sm btn-primary" onclick="showUpdateModal(${id}, '${name}', '${status}')">Update</button>`;
-                        deleteBtn = `<button class="btn btn-sm btn-danger" onclick="showDeleteModal(${id})">Delete</button>`;
+                        updateBtn = `<button class="btn btn-sm btn-primary" onclick="showUpdateModal(${id}, '${name}', '${status}')"><i
+                                                class="fas fa-pen"></i> </button>`;
+                        deleteBtn = `<button class="btn btn-sm btn-danger" onclick="showDeleteModal(${id})"><i
+                                                class="fas fa-trash-alt"></i></button>`;
 
                     }
 
 
                     const actionBtns = `
-        <div class="d-flex flex-wrap justify-content-start">
-          <div class="me-2 mb-2">${updateBtn}</div>
-          <div class="me-2 mb-2">${deleteBtn}</div>
-        </div>`;
-
+  <div class="d-flex flex-wrap justify-content-start">
+    <div class="mr-2 mb-2">${updateBtn}</div>
+    <div class="mr-2 mb-2">${deleteBtn}</div>
+  </div>`;
                     const rowData = [id, name, status, actionBtns];
                     table.row.add(rowData).draw();
                 });
@@ -564,11 +602,8 @@
 
                 if (authToken) {
                     const response = await fetch('/api/logout', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${authToken}`
-                        }
+                        method: 'GET',
+
                     });
 
                     if (!response.ok) {
@@ -576,17 +611,84 @@
                     }
 
                     const data = await response.json();
-                    console.log(data.message || 'Logged out successfully');
+                    alert("logged out..");
+                    // console.log(data.message || 'Logged out successfully');
+                    sessionStorage.removeItem('auth_token');
+                    window.location.href = 'login';
                 }
 
-                sessionStorage.removeItem('auth_token');
 
-                window.location.href = 'login';
             } catch (error) {
                 console.error('Error during logout:', error);
                 alert('An error occurred. Please try again later.');
             }
         });
+
+        // *************************************Download*********************************
+        // Download CSV (Excel)
+        $('#downloadCsv').on('click', function (e) {
+            e.preventDefault();
+            const data = table.data().toArray();
+
+            const csvRows = [
+                ['ID', 'Name', 'Status'].join(','), // Header row
+                ...data.map(row => {
+                    const id = row[0];
+                    const roleName = `"${String(row[1]).replace(/"/g, '""')}"`; // Safely escape quotes
+                    const status = row[2];
+
+                    console.log(id, roleName, status);
+
+                    return [id, roleName, status].join(',');
+                })
+            ];
+
+            const csvString = csvRows.join('\n');
+            console.log(csvString);
+
+            const blob = new Blob([csvString], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', 'User_roles_list.csv');
+            a.click();
+            window.URL.revokeObjectURL(url);
+        });
+
+
+        // Download PDF
+        $('#downloadPdf').on('click', function (e) {
+            e.preventDefault();
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.setFontSize(16);
+            doc.text('User Roles List', 10, 10);
+            doc.setFontSize(12);
+
+            const data = table.data().toArray(); // array of arrays
+            let y = 20;
+            console.log("data for pdf", data);
+
+
+            // Header
+            doc.text('ID  |  Role Name  |  Status', 10, y);
+            y += 5;
+            doc.line(10, y, 200, y);
+            y += 10;
+
+            // Rows
+            data.forEach(row => {
+                const id = row[0];
+                const roleName = row[1];
+                const status = row[2];
+                doc.text(`${id}  |  ${roleName}  |  ${status}`, 10, y);
+                y += 10;
+            });
+
+            doc.save('User_roles_list.pdf');
+        });
+
     </script>
 </body>
 

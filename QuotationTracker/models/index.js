@@ -1,6 +1,12 @@
-const { sequelize, DataTypes } = require('./database.js');
 const createUserRoleModel = require('./userrole.js');
 const createUserModel = require('./user.js');
+
+const { Sequelize, DataTypes } = require("sequelize");
+
+const sequelize = new Sequelize('QuotationTracker', 'postgres', 'Password', {
+  host: "localhost",
+  dialect: "postgres"
+});
 
 const models = {};
 
@@ -18,7 +24,7 @@ if (models.User.associate) {
 
 models.sync = async function () {
   try {
-    await sequelize.sync({ force: false }); 
+    await sequelize.sync({ force: false });
     console.log('Database synced successfully.');
   } catch (err) {
     console.error('Failed to sync database:', err);

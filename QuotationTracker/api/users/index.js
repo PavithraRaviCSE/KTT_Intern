@@ -1,14 +1,15 @@
 const express = require("express");
-const { authUser, authAdmin } = require("../auth.js");
-const user = require("./user");
+const controller = require("./user.js");
 
 const router = express.Router();
 
 console.log("user router is....... ");
 
-router.get('/', authUser, user.getUser);
-router.get('/:id', authUser, user.getUserById);
-router.post('/login', user.login);
+router.get('/', controller.get);
+router.get('/:id', controller.getById);
+router.put('/:id', controller.update);
+router.post('/', controller.create);
+router.delete('/:id', controller.delete);
 
 
 module.exports = router;

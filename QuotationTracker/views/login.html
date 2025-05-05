@@ -88,7 +88,7 @@
 
 
             try {
-                const res = await fetch('/api/users/login', {
+                const res = await fetch('/api/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -103,15 +103,17 @@
                     const data = await res.json(); // Get the response JSON
                     console.log('Login successful', data.message, data.auth_token);
 
-                    const authToken = data.auth_token;
-                    if (authToken) {
-                        const jwtToken = jwt_decode(authToken);
-                        alert(jwtToken);
+                    const jwtToken = data.auth_token;
+                    if (jwtToken) {
+                        const decoded = jwt_decode(jwtToken);
 
-                        console.log('auth_token dytuytuecoded: ', JSON.stringify(jwtToken.userName));
+                        alert("decoded: " , decoded, "authtoken" , jwtToken);
 
-                        window.location.href = 'index';
+                        sessionStorage.setItem('auth_token', JSON.stringify(decoded));
+                        sessionStorage.setItem('jwt_raw', JSON.stringify(jwtToken));
+                        window.location.href = 'dashboard';
                     }
+
                 } else {
                     const error = await res.json();
 

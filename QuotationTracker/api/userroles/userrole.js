@@ -1,7 +1,7 @@
 const { UserRole } = require('../../models/index.js');
 const path = require('path');
 
-const getUserRole = async (req, res) => {
+exports.get = async (req, res) => {
     try {
         console.log("user model: ", UserRole);
         const userRoles = await UserRole.findAll({ attributes: ['id', 'status', 'name'] });
@@ -17,7 +17,7 @@ const getUserRole = async (req, res) => {
 };
 
 
-const getUserRoleById = async (req, res) => {
+exports.getById = async (req, res) => {
     try {
         console.log("user model: ", UserRole);
         const userRoleId = req.params.id;
@@ -38,7 +38,7 @@ const getUserRoleById = async (req, res) => {
         return res.status(500).json({ message: "An error occurred while fetching userRoles" });
     }
 };
-const updateRole = async (req, res) => {
+exports.update = async (req, res) => {
     try {
 
         console.log("update method is called.......");
@@ -74,7 +74,7 @@ const updateRole = async (req, res) => {
 
 
 
-const addRole = async (req, res) => {
+exports.create = async (req, res) => {
     try {
         const { name } = req.body;
         if (!name) {
@@ -99,7 +99,7 @@ const addRole = async (req, res) => {
     }
 };
 
-const deleteRole = async (req, res) => {
+exports.delete = async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -115,6 +115,12 @@ const deleteRole = async (req, res) => {
 
         await userRole.destroy();
 
+        const remainingRoles = await UserRole.count();
+        if (remainingRoles === 0) {
+            await sequelize.query('ALTER SEQUENCE "UserRoles_id_seq" RESTART WITH 1;');
+            console.log("Sequence reset to 1");
+        }
+        
         return res.status(200).json({ message: "Role deleted successfully" });
 
     } catch (err) {
@@ -123,11 +129,3 @@ const deleteRole = async (req, res) => {
     }
 };
 
-
-module.exports = {
-    getUserRole,
-    getUserRoleById,
-    addRole,
-    updateRole,
-    deleteRole
-};

@@ -1,25 +1,30 @@
 const express = require("express");
 const path = require("path");
-const { auth } = require("./auth.js");
 const router = express.Router();
-const user = require("./users/user.js");
+const controller = require("./users/user.js");
 
 const checkIfLoggedIn = (req, res, next) => {
     const token = req.cookies.auth_token;
     if (!token) {
         return next();
     }
-    if (auth(token)) {
-        res.redirect("index");
+    if (controller.auth(token)) {
+        res.sendFile("index");
     }
     else {
         next();
     }
 };
 
-router.get("/logout",
-    user.logout
-);
+router.get("/", checkIfLoggedIn, (req, res) => {
+    res.sendFile(path.join(__dirname, "../views/login.html"));
+});
+router.get("/logout", controller.logout);
+router.get("/login", checkIfLoggedIn, (req, res) => {
+    res.sendFile(path.join(__dirname, "../views/login.html"));
+});
+
+
 
 router.use("/table", (req, res) => {
     res.sendFile(path.join(__dirname, "../views/tables.html"));
@@ -28,20 +33,20 @@ router.use("/table", (req, res) => {
 router.use("/users", require("./users/index.js"));
 router.use("/userroles", require("./userroles/index.js"));
 
-router.get("/login", checkIfLoggedIn, (req, res) => {
-    res.sendFile(path.join(__dirname, "../views/login.html"));
-});
 
-router.get("/index", (req, res) => {
-    res.sendFile(path.join(__dirname, "../views/index.html"));
+
+router.post("/login", controller.login);
+
+router.get("/dashboard", (req, res) => {
+    res.sendFile(path.join(__dirname, "../views/dashboard.html"));
 });
 
 router.get("/userlist", (req, res) => {
-    res.sendFile(path.join(__dirname, "../views/userTable.html"));
+    res.sendFile(path.join(__dirname, "../views/userlist.html"));
 });
 
 router.get("/userrolelist", (req, res) => {
-    res.sendFile(path.join(__dirname, "../views/userRoleTable.html"));
+    res.sendFile(path.join(__dirname, "../views/userrolelist.html"));
 });
 
-module.exports = router; 
+module.exports = router;

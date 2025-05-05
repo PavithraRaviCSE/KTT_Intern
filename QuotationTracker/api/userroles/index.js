@@ -5,11 +5,11 @@ const router = Router();
 
 console.log("user role router called......");
 
-router.get("/", userRole.getUserRole);
-router.get("/:id", userRole.getUserRoleById);
-router.post("/", userRole.addRole);
-router.put("/:id", userRole.updateRole);
-router.delete("/:id", userRole.deleteRole);
+router.get("/", userRole.get);
+router.get("/:id", userRole.getById);
+router.post("/", userRole.create);
+router.put("/:id", userRole.update);
+router.delete("/:id", userRole.delete);
 
 
 module.exports = router;
