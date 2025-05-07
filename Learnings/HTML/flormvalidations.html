@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <form action="" onsubmit="return validateForm()">
+        <label>
+            <input type="checkbox" id="user"> User
+        </label>
+        <label>
+            <input type="checkbox" id="admin"> Admin
+        </label><br>
+
+        <select name="select" id="status">
+            <option value="">Select Status</option>
+            <option value="1">Active</option>
+            <option value="2">Inactive</option>
+        </select><br>
+
+        <label>
+            <input type="radio" value="user" name="role" id="userRadio"> User
+        </label>
+        <label>
+            <input type="radio" value="admin" name="role" id="adminRadio"> Admin
+        </label><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function validateForm() {
+            const userCheckbox = document.getElementById('user');
+            const adminCheckbox = document.getElementById('admin');
+            if (!userCheckbox.checked && !adminCheckbox.checked) {
+                alert('Please select at least one checkbox (User or Admin).');
+                return false;
+            }
+
+            const checkboxes = document.querySelector('input[type="checkbox"]');
+            cehckboxes.forEach(element => {
+                select atleast one check box
+            });
+
+            const statusSelect = document.getElementById('status');
+            if (statusSelect.value === "") {
+                alert('Please select a status.');
+                return false;
+            }
+
+            const roleRadios = document.getElementsByName('role');
+            let roleSelected = false;
+            for (const radio of roleRadios) {
+                if (radio.checked) {
+                    roleSelected = true;
+                    break;
+                }
+            }
+            if (!roleSelected) {
+                alert('Please select a role (User or Admin).');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
+</body>
+
+</html>
