@@ -66,8 +66,8 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="userrolelist">User Role</a>
-                        <a class="collapse-item" href="userlist">User</a>
+                        <a class="collapse-item" href="userrolelist">User Roles</a>
+                        <a class="collapse-item" href="userlist">Users</a>
 
                     </div>
                 </div>
@@ -98,12 +98,11 @@
 
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item active">
-                <a class="nav-link" href="table">
+             <li class="nav-item active">
+                <a class="nav-link" href="/api/clientList">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>Client</span></a>
             </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -220,17 +219,17 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                            <h6 class="m-0 font-weight-bold text-primary">User Role </h6>\
+                            <h6 class="m-0 font-weight-bold text-primary">User Roles </h6>
                             <!-- <div> -->
                             <!-- <div class="btn-group"> -->
-                            <button type="button" class="btn btn-primary btn-round dropdown-toggle"
+                            <!-- <button type="button" class="btn btn-primary btn-round dropdown-toggle"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-download"></i> Download
                             </button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#" id="downloadCsv">Download Excel</a>
                                 <a class="dropdown-item" href="#" id="downloadPdf">Download PDF</a>
-                            </div>
+                            </div> -->
                             <!-- </div> -->
 
                             <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -313,30 +312,39 @@
     <!-- userRoleModal -->
     <div class="modal fade" id="userRoleModal" tabindex="-1" role="dialog" aria-labelledby="userRoleModalLabel"
         aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog " role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="userRoleModalLabel">Add User Role</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="userRoleForm">
+                <form id="userRoleForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="userRoleModalLabel">Add User Role</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            onclick="resetRoleForm()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
                         <div class="form-group">
                             <label for="roleName">User Role</label>
                             <input type="text" class="form-control" id="roleName" name="roleName"
-                                placeholder="Enter role" required>
+                                placeholder="Enter role" required pattern="^[A-Z][a-zA-Z]{1,}$"
+                                title="Only letters allowed. Must start with a capital letter and be at least 2 characters long.">
+                            <span id="roleError" class="text-danger d-none"></span>
+
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer ">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" id="addRoleBtn" class="btn btn-primary">Add</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            onclick="resetRoleForm()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+
+
+
+
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -364,13 +372,16 @@
                     <input type="hidden" id="updateId">
                     <div class="form-group">
                         <label for="updateName">Name</label>
-                        <input type="text" class="form-control" id="updateName" required>
+                        <input type="text" class="form-control" id="updateName" name="updateName" required
+                            pattern="^[A-Z][a-zA-Z]{1,}$"
+                            title="Only letters allowed. Must start with a capital letter and be at least 2 characters long.">
+                        <span id="roleErrorMsg" class="text-danger d-none"></span>
                     </div>
                     <div class="form-group">
                         <label for="updateStatus">Status</label>
                         <select id="updateStatus" class="form-control">
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
+                            <option value="1">Active</option>
+                            <option value="2">Inactive</option>
                         </select>
                     </div>
                 </div>
@@ -405,6 +416,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <script>
+
+        function resetRoleForm() {
+            document.getElementById('userRoleForm').reset();
+        }
 
 
         let authToken;
@@ -444,15 +459,15 @@
 
                 console.log("Fetched data:", data);
 
-                data.forEach(role => {
+                data.data.forEach(role => {
                     let { id, name, status } = role;
 
 
 
-                    status = (status == 1) ? "active" : "inactive";
+
                     let updateBtn;
                     let deleteBtn
-                    if (id == 1) {
+                    if (name == 'admin') {
                         updateBtn = `<button class="btn btn-sm btn-primary "  onclick="showUpdateModal(${id}, '${name}', '${status}')" disabled><i
                                                 class="fas fa-pen"></i> </button>`;
                         deleteBtn = `<button class="btn btn-sm btn-danger"  onclick="showDeleteModal(${id})" disabled><i
@@ -467,6 +482,8 @@
                     }
 
 
+                    status = (status == 1) ? "Active" : "Inactive";
+
                     const actionBtns = `
   <div class="d-flex flex-wrap justify-content-start">
     <div class="mr-2 mb-2">${updateBtn}</div>
@@ -478,7 +495,9 @@
             } catch (error) {
                 console.error('Error fetching user roles:', error);
             }
-        }
+        };
+
+        //update role
 
         function showUpdateModal(id, name, status) {
             document.getElementById('updateId').value = id;
@@ -490,13 +509,17 @@
         document.getElementById('updateForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
+            const errorSpan = document.getElementById('roleErrorMsg');
+            errorSpan.innerText = "";
+            errorSpan.classList.add('d-none');
+
             const id = document.getElementById('updateId').value;
             const name = document.getElementById('updateName').value;
             let status = document.getElementById('updateStatus').value;
 
 
 
-            status = (status == "active") ? 1 : 2;
+
             try {
                 console.log("update the data", id, name, status);
 
@@ -506,14 +529,25 @@
                     body: JSON.stringify({ name, status })
                 });
 
-                if (!response.ok) {
+                const data = await response.json();
+                console.log("response: ", data.status, data.error);
+
+                if (response.status === 409) {
+
+                    errorSpan.innerText = data.error;
+                    errorSpan.classList.remove('d-none');
+
+                }
+                else if (!response.ok) {
                     throw new Error("Could not update, try again later.", response);
                 }
+                else {
 
-                table.clear().draw();
-                await fetchDataAndPopulate();
+                    table.clear().draw();
+                    await fetchDataAndPopulate();
 
-                $('#updateModal').modal('hide');
+                    $('#updateModal').modal('hide');
+                }
             } catch (error) {
                 console.error(error);
                 alert("Error: " + error.message);
@@ -521,6 +555,8 @@
         });
 
 
+
+        //delete role
         function showDeleteModal(id) {
             deleteId = id;
             $('#deleteModal').modal('show');
@@ -533,45 +569,19 @@
             $('#deleteModal').modal('hide');
         });
 
-        // *************************************************************************************************
-
-        const currentPath = window.location.pathname.split("/").pop();
-
-        const collapseUtilities = document.getElementById("collapseUtilities");
-        const masterToggle = document.querySelector('a[data-target="#collapseUtilities"]');
-
-        if (["userrolelist", "userlist"].includes(currentPath)) {
-            if (collapseUtilities && masterToggle) {
-                collapseUtilities.classList.add("show");
-                masterToggle.classList.remove("collapsed");
-                masterToggle.setAttribute("aria-expanded", "true");
-            }
-
-            const collapseItems = collapseUtilities.querySelectorAll(".collapse-item");
-            collapseItems.forEach(link => {
-                if (link.getAttribute("href") === currentPath) {
-                    link.classList.add("active");
-                }
-            });
-        }
-
-        const navLinks = document.querySelectorAll(".nav-link[href]");
-        navLinks.forEach(link => {
-            const linkPath = link.getAttribute("href");
-            if (linkPath === currentPath) {
-                link.classList.add("active");
-            }
-        });
 
 
-        // *****************************************Modals*****************************
 
-        document.getElementById('addRoleBtn').addEventListener('click', async function () {
+        //create 
+
+        document.getElementById('userRoleForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
             const roleName = document.getElementById('roleName').value;
 
             if (roleName) {
                 try {
-                    const response = await fetch('/api/userroles/', {
+                    const response = await fetch('/api/userroles', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -579,20 +589,33 @@
                         body: JSON.stringify({ name: roleName })
                     });
 
-                    if (!response.ok) {
-                        throw new Error('Failed to add role');
+                    const data = await response.json();
+
+                    if (response.status === 409) {
+                        const rolespan = document.getElementById('roleError');
+                        rolespan.innerText = data.error;
+                        rolespan.classList.remove('d-none');
+                        return;
                     }
-                    $('#userRoleModal').modal('hide');
-                    document.getElementById('roleName').value = '';
-                    table.clear().draw();
-                    fetchDataAndPopulate();
+
+                    if (!response.ok) {
+                        throw new Error(data.error || 'Failed to add role');
+                    }
+                    else {
+                        resetRoleForm();
+                        $('#userRoleModal').modal('hide');
+                        table.clear().draw();
+                        fetchDataAndPopulate();
+                    }
                 } catch (error) {
-                    alert('Error: ' + error.message);
+                    alert("error: ", error);
                 }
             }
         });
 
 
+
+        //logout
 
         document.getElementById('logoutBtn').addEventListener('click', async function (e) {
             e.preventDefault();
@@ -621,6 +644,37 @@
             } catch (error) {
                 console.error('Error during logout:', error);
                 alert('An error occurred. Please try again later.');
+            }
+        });
+
+
+        // *************************************************************************************************
+
+        const currentPath = window.location.pathname.split("/").pop();
+
+        const collapseUtilities = document.getElementById("collapseUtilities");
+        const masterToggle = document.querySelector('a[data-target="#collapseUtilities"]');
+
+        if (["userrolelist", "userlist"].includes(currentPath)) {
+            if (collapseUtilities && masterToggle) {
+                collapseUtilities.classList.add("show");
+                masterToggle.classList.remove("collapsed");
+                masterToggle.setAttribute("aria-expanded", "true");
+            }
+
+            const collapseItems = collapseUtilities.querySelectorAll(".collapse-item");
+            collapseItems.forEach(link => {
+                if (link.getAttribute("href") === currentPath) {
+                    link.classList.add("active");
+                }
+            });
+        }
+
+        const navLinks = document.querySelectorAll(".nav-link[href]");
+        navLinks.forEach(link => {
+            const linkPath = link.getAttribute("href");
+            if (linkPath === currentPath) {
+                link.classList.add("active");
             }
         });
 
