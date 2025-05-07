@@ -25,7 +25,10 @@ router.get("/login", checkIfLoggedIn, (req, res) => {
 });
 
 
+router.get("/clientList", (req, res) => {
+    res.sendFile(path.join(__dirname, "../views/clientList.html"));
 
+});
 router.use("/table", (req, res) => {
     res.sendFile(path.join(__dirname, "../views/tables.html"));
 });

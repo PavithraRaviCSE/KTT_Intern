@@ -43,12 +43,12 @@
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" id="userName"
                                                 aria-describedby="emailHelp" placeholder="Enter Username..." required>
-                                            <span class="text-danger" id="incorrectUser"></span>
+                                            <span class="text-danger ml-1" id="incorrectUser"></span>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user" id="password"
                                                 placeholder="Password" required>
-                                            <span class="text-danger" id="incorrectPass"></span>
+                                            <span class="text-danger ml-2" id="incorrectPass"></span>
 
                                         </div>
 
@@ -106,9 +106,6 @@
                     const jwtToken = data.auth_token;
                     if (jwtToken) {
                         const decoded = jwt_decode(jwtToken);
-
-                        alert("decoded: " , decoded, "authtoken" , jwtToken);
-
                         sessionStorage.setItem('auth_token', JSON.stringify(decoded));
                         sessionStorage.setItem('jwt_raw', JSON.stringify(jwtToken));
                         window.location.href = 'dashboard';
@@ -118,13 +115,13 @@
                     const error = await res.json();
 
                     if (error.field === 'userName') {
-                        document.getElementById('incorrectUser').innerText = error.message;
+                        document.getElementById('incorrectUser').innerText = error.error;
                     } else {
                         document.getElementById('incorrectUser').innerText = "";
                     }
 
                     if (error.field === 'password') {
-                        document.getElementById('incorrectPass').innerText = error.message;
+                        document.getElementById('incorrectPass').innerText = error.error;
                     } else {
                         document.getElementById('incorrectPass').innerText = "";
                     }
