@@ -92,11 +92,29 @@ exports.logout = async (req, res) => {
 		res.status(500).send({ status: false, error: error.message });
 	}
 };
-
 exports.get = async (req, res) => {
 	try {
-		const users = await models.User.findAll({ attributes: ['id', 'firstName', 'lastName', 'userName', 'UserRoleId', 'email', 'phone', 'status'] });
-		if (!users.length) return res.status(404).send({ status: false, error: 'No users found' });
+		const usersData = await models.User.findAll({
+			attributes: ['id', 'firstName', 'lastName', 'userName', 'email', 'phone', 'status', 'UserRoleId'],
+			include: [{
+				model: models.UserRole,
+				attributes: ['name']
+			}]
+		});
+
+		if (!usersData.length) return res.status(404).send({ status: false, error: 'No users found' });
+
+		const users = usersData.map(user => ({
+			id: user.id,
+			firstName: user.firstName,
+			lastName: user.lastName,
+			userName: user.userName,
+			email: user.email,
+			phone: user.phone,
+			status: user.status,
+			userRoleId: user.UserRoleId,
+			userRole: user.UserRole.name || 'Unknown'
+		}));
 
 		res.status(200).json({ status: true, users });
 	} catch (error) {
@@ -104,6 +122,8 @@ exports.get = async (req, res) => {
 		return res.status(500).send({ status: false, error: error.message });
 	}
 };
+
+
 
 exports.getById = async (req, res) => {
 	try {
@@ -136,17 +156,36 @@ exports.create = async (req, res) => {
 			}
 		});
 
+		let errors = [];
+
 		if (existingUser) {
 			if (existingUser.userName === req.body.userName) {
-				return res.status(409).send({ status: false, error: "Username already in use." });
+				errors.push({
+					field: 'userName',
+					error: 'Username already in use.'
+				});
 			}
 			if (existingUser.email === req.body.email) {
-				return res.status(409).send({ status: false, error: "Email already in use." });
+				errors.push({
+					field: 'email',
+					error: 'Email already in use.'
+				});
 			}
 			if (existingUser.phone === req.body.phone) {
-				return res.status(409).send({ status: false, error: "Phone number already in use." });
+				errors.push({
+					field: 'phone',
+					error: 'Phone number already in use.'
+				});
 			}
 		}
+
+		if (errors.length > 0) {
+			return res.status(409).send({
+				status: false,
+				errors: errors
+			});
+		}
+
 
 		const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -172,12 +211,45 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
 	try {
-		const userId = req.params.id;
+		const userId = parseInt(req.params.id, 10);
 		const userData = req.body;
+
+		console.log("current user id:", userId);
 
 		const user = await models.User.findByPk(userId);
 		if (!user) {
 			return res.status(404).send({ status: false, error: "User not found" });
+		}
+
+		let errors = [];
+
+		const existingUser = await models.User.findOne({
+			where: {
+				[Op.or]: [
+					{ userName: userData.userName, id: { [Op.ne]: userId } },
+					{ email: userData.email, id: { [Op.ne]: userId } },
+					{ phone: userData.phone, id: { [Op.ne]: userId } }
+				]
+			}
+		});
+
+		if (existingUser) {
+			if (existingUser.userName === userData.userName) {
+				errors.push({ field: 'userName', error: 'Username already in use.' });
+			}
+			if (existingUser.email === userData.email) {
+				errors.push({ field: 'email', error: 'Email already in use.' });
+			}
+			if (existingUser.phone === userData.phone) {
+				errors.push({ field: 'phone', error: 'Phone number already in use.' });
+			}
+		}
+
+		if (errors.length > 0) {
+			return res.status(409).send({
+				status: false,
+				errors: errors
+			});
 		}
 
 		if (userData.password) {
@@ -193,7 +265,6 @@ exports.update = async (req, res) => {
 		return res.status(500).send({ status: false, error: error.message });
 	}
 };
-
 
 exports.delete = async (req, res) => {
 	try {
