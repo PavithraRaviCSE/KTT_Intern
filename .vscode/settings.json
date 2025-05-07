@@ -9,6 +9,16 @@
             "database": "QuotationTracker",
             "username": "postgres",
             "password": "Password"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "sampleconnection",
+            "database": "sample",
+            "username": "postgres",
+            "password": "Password"
         }
     ]
 }
