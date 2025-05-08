@@ -22,6 +22,8 @@
 
     <!-- Custom styles for this page -->
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.3.0/css/dataTables.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.2.3/css/buttons.dataTables.css">
 
 </head>
 
@@ -98,7 +100,7 @@
 
 
             <!-- Nav Item - Tables -->
-             <li class="nav-item active">
+            <li class="nav-item active">
                 <a class="nav-link" href="/api/clientList">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Client</span></a>
@@ -415,6 +417,26 @@
     <!-- pdf library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.3/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.dataTables.js"></script>
+
+    <!-- JSZip (for Excel export) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <!-- pdfmake (for PDF export) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+    <!-- Buttons HTML5 (for Excel, PDF, Print export) -->
+    <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.print.min.js"></script>
+
     <script>
 
         function resetRoleForm() {
@@ -442,11 +464,29 @@
 
         $(function () {
             table = $('#dataTable').DataTable({
-                "scrollX": true,
-                "paging": true,
-                "searching": true,
-                "info": true,
-                "lengthChange": true
+                layout: {
+                    topStart: {
+                        "buttons": [
+                            {
+                                extend: 'excelHtml5',
+                                text: 'Excel',
+                                title: 'UsersRoleList',
+                                exportOptions: {
+                                    columns: ':not(:last-child)'
+                                }
+                            },
+                            {
+                                extend: 'pdfHtml5',
+                                text: 'PDF',
+                                title: 'UsersRoleList',
+                                exportOptions: {
+                                    columns: ':not(:last-child)'
+                                }
+                            }
+                        ]
+                    }
+                }
+
             });
 
             fetchDataAndPopulate();

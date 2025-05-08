@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
 const JWE_SECRET_KEY = "secretKey";
 
-auth = (token) => {
+exports.auth = (token) => {
 	return new Promise((resolve, reject) => {
 		jwt.verify(token, JWE_SECRET_KEY, (err, decoded) => {
 			if (err) reject("Invalid token");

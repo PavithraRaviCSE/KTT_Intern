@@ -9,18 +9,19 @@ const checkIfLoggedIn = (req, res, next) => {
         return next();
     }
     if (controller.auth(token)) {
-        res.sendFile("index");
+        res.sendFile(path.join(__dirname, "../views/dashboard.html"));
+
     }
     else {
         next();
     }
 };
 
-router.get("/", checkIfLoggedIn, (req, res) => {
+router.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../views/login.html"));
 });
 router.get("/logout", controller.logout);
-router.get("/login", checkIfLoggedIn, (req, res) => {
+router.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "../views/login.html"));
 });
 
