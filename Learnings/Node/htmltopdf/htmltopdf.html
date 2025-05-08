@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
+    </script>
+</head>
+
+<body>
+
+    <div id="content">
+
+        <p>THis is sample html to pdf conversion </p>
+    </div>
+
+
+
+    <script>
+        window.onload = function () {
+            const element = document.getElementById('content');
+            const options = {
+                margin: 1,
+                filename: 'my-document.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+
+            html2pdf().set(options).from(element).save();
+
+
+        }
+    </script>
+</body>
+
+</html>
