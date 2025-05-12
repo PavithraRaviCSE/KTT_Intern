@@ -1,0 +1,151 @@
+-- sql joins
+
+select * from test;
+create table test(age Integer check(age > 0));
+insert into test values (1);
+--insert into test values (-1);
+
+--insert into test values ("sdfhskdf");
+--insert into test values (1. 'sfsdf'); -- syntax error at or near sfsdf
+
+
+alter table test add column hobbies text[];
+alter table test drop column age;
+alter table test add column name varchar(50);
+
+
+insert into test values ('{"playing cricket", "painting", "cooking"}'),(
+  '{"listening music", "dancing", "singing"}');
+
+select * from test;
+
+
+
+-- data types
+
+-- ****************************************numberic********************************************
+
+--small int
+--select pg_typeof(6000000::smallint); error
+select pg_typeof(5::smallint);
+-- integer
+select pg_typeof(5);
+select pg_typeof(-5);
+--bigint
+select pg_typeof(345435345345345345);
+-- numeric 
+select pg_typeof(5.4343);
+select pg_typeof(1.23456789::decimal);
+--double precision(float 8)
+select pg_typeof('Infinity'::double precision);
+select pg_typeof(1.23456789::double precision);
+--real
+select pg_typeof(1.23456789::real);
+select pg_typeof('nan'::real);
+
+
+--********************************monetary types********************************
+select pg_typeof('45353412.4545345343453434'::money);
+
+
+--********************************character types******************************
+select  pg_typeof('sdffdfsdf'::varchar); -- no sizelimit  20 characters
+select pg_typeof('423ssdfsdsdf'::text); -- no size limit
+select pg_typeof('423ssdfsdsdf'::character);
+select pg_typeof('423ssdfsdsdf'::character varying);
+select pg_typeof('423ssdfsdsdf'::bpchar); 
+
+--**********************************binary type************************************
+select '\xDEADBEEF'::bytea;
+select pg_typeof('\xDEADBEEF'::bytea);
+SET bytea_output = 'hex';
+SELECT 'abc \153\154\155 \052\251\124'::bytea;
+
+
+--********************************bytea*******************************************
+create table files (filename text, data bytea);
+INSERT INTO files (filename, data)
+SELECT 'sample.txt', decode('48656c6c6f20576f726c64', 'hex');
+select * from files;
+
+select E'\\110\\145\\154\\154\\157'::bytea; -- escape format
+select E'\\x48656c6c6f'::bytea; -- hexa
+
+
+--********************************date and time*******************************************
+select   pg_typeof('2003-01-04');
+select  pg_typeof('12:20:00');
+select timestamp '2003-01-04 12:30:00';
+select timestamptz '2003-01-04 12:30:00+05:30';
+select interval '1 day';
+select current_date - interval '1 day';
+select current_date;
+select current_time; 
+select current_timestamp, CURRENT_TIMESTAMP AT TIME ZONE 'IST';
+
+--****************************************boolean*****************************************
+select true;
+select false;
+select pg_typeof(FALSE);
+select boolean '1';
+select boolean 'yes';
+select boolean 'on';
+
+select boolean '0';
+select boolean 'no';
+select boolean 'off';
+
+select null::boolean;
+
+--****************************************enum*********************************************
+create type days as enum ('s','m','t','w','th','fr','sat');
+
+create table enumexample(workingdays days);
+insert into enumexample values('m');
+select * from enumexample;
+
+alter type days rename to week_days;
+alter type week_days add value 'sun';
+CREATE TYPE new_days AS ENUM ('m', 't', 'w', 'th', 'fr', 'sat');
+select enumlabel from pg_enum where enumtypid  = 'new_days'::regtype;
+drop type new_days;
+-- serial (auto increment)
+create table smallserialexample (id smallserial) -- 1 to 32767  2bytes
+create table serialexample (id serial) -- 	1 to 2147483647  4bytes
+create table bigserialexample (id bigserial) -- 1 to 9223372036854775807  8bytes
+
+-- textsearch
+alter table test add column testsearchexample tsvector;
+select * from test;
+update test set testsearchexample  = to_tsvector('english', 'hello, world, java, python') where  'playing cricket' = any(hobbies);
+select * from test where testsearchexample @@ to_tsquery('english', 'java|python');
+
+
+
+--********************************Json *************************
+select pg_typeof('{"name":"pavi"}'::json);
+select json_example->>'name' as name from (select '{"name":"pavi"}'::json as json_example);
+select '[1,2,3,4,5]'::json;
+--******************************jsonb***************************
+select '["foo", "bar", "baz"]'::jsonb ? 'bar';
+select '["foo", "bar"]'::jsonb @> '"bar"'::jsonb;
+select '{"name": "pavi"}'::jsonb @> '{"name":"pavi"}'::jsonb; 
+
+-- type conversion
+select cast ('123' as INTEGER);
+select '123'::integer;
+select '0'::Bigint;
+--select 'sdfsdf':: integer;
+--select '-Infinity'::integer;
+--select '0'::integer;
+select '-Infinity'::double precision;
+select 'Infinity'::double precision;
+
+
+
+
+
+
+
+
+
