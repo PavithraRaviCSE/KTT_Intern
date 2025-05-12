@@ -1,0 +1,76 @@
+select * from student;
+select * from course;
+select * from student_courses;
+
+-- sql joints
+	-- inner joins
+	
+	select student.*, course.course_name from student join student_courses  on student.id = student_courses.student_id
+	inner join course on course.course_id = student_courses.course_id;
+	
+	select student.*, course.course_name from student join student_courses  on student.id = student_courses.student_id
+	inner join course  on course.course_id = student_courses.course_id where course.course_name = 'Physics';
+	
+	select count(student.*) from student inner join student_courses on student.id = student_courses.student_id inner join course on course.course_id = student_courses.course_id where course.course_name = 'Physics';
+
+	--left join
+	select student.*, course.course_name from student left join student_courses  on student.id = student_courses.student_id
+	inner join course  on course.course_id = student_courses.course_id where course.course_name = 'Physics';
+	
+	--right join
+	select student.*, course.course_name from student right join student_courses  on student.id = student_courses.student_id
+	inner join course  on course.course_id = student_courses.course_id where course.course_name = 'Physics';
+	
+	--self join
+	CREATE TABLE employee (
+    emp_id SERIAL PRIMARY KEY,
+    emp_name VARCHAR(50) NOT NULL,
+    manager_id INT,
+    department VARCHAR(100),
+    salary DECIMAL(10, 2),
+    FOREIGN KEY (manager_id) REFERENCES employee(emp_id)
+);
+
+INSERT INTO employee (emp_name, manager_id, department, salary) VALUES
+('Amit Sharma', NULL, 'Engineering', 70000),
+('Priya Patel', 1, 'Marketing', 55000),
+('Rajesh Gupta', 1, 'Engineering', 60000),
+('Neha Verma', 2, 'Sales', 48000),
+('Sandeep Singh', 2, 'HR', 45000),
+('Radhika Iyer', 2, 'Engineering', 53000),
+('Vikram Rao', 3, 'Engineering', 62000),
+('Meera Joshi', 3, 'Sales', 47000),
+('Kunal Desai', 4, 'Marketing', 49000),
+('Pooja Reddy', 4, 'HR', 46000);
+	select * from employee;
+
+
+INSERT INTO employee (emp_name, manager_id, department, salary) VALUES
+('Sharma', 4, 'HR', 46000)
+	
+	select e.emp_name as employees, m.emp_name as manager from employee e join employee m on e.manager_id = m.emp_id;
+
+	
+
+--subquery
+	
+	--scalar subquery
+    select * from customer;
+	select *  from orders;
+	
+	select o.customerId, o.amount from orders o where o.amount > (select avg(o2.amount) from orders o2 where o.customerId = o2.customerId);
+
+   
+-- views
+
+create view sc as
+select student.*, course.course_name 
+from student
+inner join student_courses  on student.id = student_courses.student_id
+inner join course on course.course_id = student_courses.course_id;
+
+
+select * from sc;
+
+select * from sc where course_name = 'Mathematics';
+select count(*) from sc where course_name in ('Mathematics', 'Physics');
