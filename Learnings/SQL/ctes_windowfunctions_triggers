@@ -1,0 +1,170 @@
+-- customer and orders
+
+select *  from customer;
+select * from orders;
+
+
+-- CTEs common table expressions
+
+with customerorder  as 
+(select 
+        c.customerid,
+        c.fullname,
+        o.orderid,
+        o.amount,
+        o.status
+    from customer c inner join orders o on c.CustomerId = o.customerId)
+select count(*) from customerorder where customerId = 1;
+
+
+
+with customerorder  as 
+(select 
+        c.customerid,
+        c.fullname,
+        o.orderid,
+        o.amount,
+        o.status
+    from customer c inner join orders o on c.CustomerId = o.customerId)
+    select fullname, sum(amount) as total_spent
+    from customerorder 
+    group by customerid
+    
+    order by total_spent desc;
+    
+--recursive common table expression
+
+    with recursive number_seq as(
+    select 1 as  num
+    union all
+    select num+1
+    from number_seq
+    where num < 10
+    )
+    select *  from number_seq;
+    
+    
+-- window function
+    
+   select *  from employee;
+    
+   --avg, sum, count with over function
+   select emp_name,salary, avg(salary) over(partition by department) as averagesalary from  employee;
+   select emp_name, department , salary , sum(salary) over (partition by department) as total_salary_in_dept from employee;
+   select emp_name, department , count(*) over (partition by department) as emp_count_in_dept from employee;
+  
+   --lag lead
+   select emp_name, department,salary ,lag(salary) over (partition by department) as emp_count_in_dept from employee;
+   select emp_name, department,salary ,lag(salary,2,0) over (partition by department) as emp_count_in_dept from employee;
+   select emp_name, department,salary ,lead(salary) over (partition by department) as emp_count_in_dept from employee;
+   select emp_name, department,salary ,lead(salary, 2,0) over (partition by department order by salary desc) as emp_count_in_dept from employee;
+  
+   -- ranking functions 
+   select emp_name, department,salary, row_number() over(partition by department order by salary desc)  from  employee;
+   select emp_name, department,salary, rank() over(partition by department order by salary desc)  from  employee;
+   select emp_name, department,salary, dense_rank() over(partition by department)  from  employee;
+   select emp_name, department,salary,row_number() over(partition by department order by salary desc),  rank() over(partition by department order by salary desc),dense_rank()  over(partition by department order by salary desc)  from  employee;
+
+   
+--grant
+   
+   --user creation
+   
+   create USER pavi with password '1234';
+   grant insert on test to pavi;
+   
+   select *  from test;
+   insert into test (hobbies) values ('{1,2,3,4}'); 
+   delete from test where'1' = any("hobbies");
+   
+   
+--index
+   
+    select * from employee;
+    select * from orders;
+   
+        --create index
+			   --btree index
+			   create index emp_salery_index on employee (salary);
+			   
+			   -- hash
+			   create index emp_id_index on employee using hash(emp_id);
+			   
+			   -- geometric type
+			   --gist generalized search tree
+			   -- sp-git space partitioned gist
+			   
+			   --gin (generalized inverted index)
+			   create index emp_name_index on employee using gin(to_tsvector('english',emp_name));
+			   
+			   --BRIN block range index (timestamps)
+			   create index id_brin on orders using brin (orderid);
+		   
+        --alter index
+		   		alter index emp_salery_index rename to emp_salary_index_new;
+	    
+	     --delete index
+	       		drop index emp_salary_index_new;
+	    
+	    
+	    --view index
+	    select * from pg_indexes where schemaname = 'public';
+	    select tablename, indexname from pg_indexes where schemaname = 'public' and tablename = 'employee';
+
+   
+
+	--clustered index
+	    create  index emp_index on employee(emp_name);
+	    cluster employee using emp_index;
+	
+	
+
+-- triggers
+	
+	select * from customer;
+	select * from orders;
+	
+	
+	
+	--insert trigger
+		create or replace function fix_order_date()
+		returns trigger as $$
+		begin
+			if new.orderdate > current_date then
+			new.orderdate = current_date;
+		    end if;
+		
+			return new;
+		end;
+		$$ LANGUAGE plpgsql;
+		
+		create trigger customer_insert_trigger 
+		before insert on orders  --after insert 
+		for each row
+		execute function fix_order_date();
+		
+	--delete trigger
+		create or replace function delete_on_cascade()
+		returns trigger as $$
+		begin
+			update orders
+			set customerId = null
+			where customerId = old.customerId;
+		
+			return old;
+		end;
+		$$ language plpgsql;
+		
+	
+		create trigger customer_insert_trigger 
+		before delete on customer  --before delete
+		for each row
+		execute function delete_on_cascade();
+	
+	drop trigger customer_insert_trigger on customer;
+	
+	
+	
+	insert into orders(customerid, orderdate, amount, status) values (5, date('2025-10-10'), 1000, 'Delivered');
+	delete from customer where customerid = 2;
+	
