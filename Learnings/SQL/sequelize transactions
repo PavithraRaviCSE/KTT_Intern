@@ -1,0 +1,9 @@
+Isolation Level	Dirty Read	Non-Repeatable Read	Phantom Read
+READ UNCOMMITTED	✅	✅	✅
+READ COMMITTED	❌	✅	✅
+REPEATABLE READ	❌	❌	✅
+SERIALIZABLE	❌	❌	❌
+
+
+
+Managed transactions and unmanaged transactiosn, cls, locks , hooks, isolation levels
