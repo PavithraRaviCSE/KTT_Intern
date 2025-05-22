@@ -16,10 +16,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DECIMAL(12, 2),
             allowNull: false
         },
-        taxAmount: {
-            type: DataTypes.DECIMAL(12, 2),
-            allowNull: false
-        },
         gstAmount: {
             type: DataTypes.DECIMAL(12, 2),
             allowNull: false
