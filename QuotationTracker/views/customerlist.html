@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>customers</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.3.0/css/dataTables.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.2.3/css/buttons.dataTables.css">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard">
+
+                <div class="sidebar-brand-text mx-3">QT</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" href="dashboard">
+
+                    <span>Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+
+
+
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+
+                    <span>Master</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="userrolelist">UserRoles</a>
+                        <a class="collapse-item" href="userlist">Users</a>
+                        <a class="collapse-item" href="customerlist">Customers</a>
+                        <a class="collapse-item" href="itemlist">Items</a>
+
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Login Screens:</h6>
+                        <a class="collapse-item" href="login">Login</a>
+                        <a class="collapse-item" href="register.html">Register</a>
+
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Other Pages:</h6>
+                        <a class="collapse-item" href="404.html">404 Page</a>
+                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                    </div>
+                </div>
+            </li>
+
+
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item active">
+                <a class="nav-link" href="/api/quotationMaster">
+                    
+                    <span>Quotations</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <form class="form-inline">
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </form>
+
+                    <!-- Topbar Search -->
+                    <!--  <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form> -->
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span id="loggedInUser" class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas
+                                    McGee</span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                               
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                            <h6 class="m-0 font-weight-bold text-primary">Customers</h6>
+
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#createCustomerModal">
+                                Add <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Customer Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>GST Number</th>
+                                            <th>Address</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <!-- Customer rows will be dynamically populated here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+                <!-- End of Main Content -->
+
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- ***************************************************** Modals*****************************************************-->
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="logout" id="logoutBtn">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="createCustomerModal" tabindex="-1" role="dialog"
+            aria-labelledby="createCustomerModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form id="createCustomerForm" class="modal-content needs-validation">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createCustomerModalLabel">Add New Customer</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                onclick="resetCreateCustomerForm()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <!-- Customer Name -->
+                            <div class="form-group">
+                                <label for="customerName">Customer Name<span style=" color:red">*</span></label>
+                                <input type="text" class="form-control" id="customerName" name="customerName" required
+                                    pattern="^[a-zA-Z\s]{2,}$"
+                                    title="First letter must be capital and name must be at least 2 characters long.">
+                                <span id="customerNameErrorSpan" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="customerEmail">Email<span style=" color:red">*</span></label>
+                                <input type="email" class="form-control"
+                                    pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" id="customerEmail"
+                                    name="customerEmail" required>
+                                <span id="customerEmailErrorSpan" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="form-group">
+                                <label for="customerPhone">Phone<span style=" color:red">*</span></label>
+                                <input type="text" class="form-control" id="customerPhone" name="customerPhone" required
+                                    pattern="^(?!.*(\d)\1{9})([6-9]\d{9})$"
+                                    title="Enter a valid 10-digit phone number starting with 6, 7, 8, or 9. Repetitive numbers like 0000000000 are not allowed.">
+                                <span id="customerPhoneErrorSpan" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="form-group">
+                                <label for="customerAddress">Address<span style=" color:red">*</span></label>
+                                <textarea class="form-control" id="customerAddress" name="customerAddress" rows="3"
+                                    required></textarea>
+                            </div>
+
+                            <!-- GST Number -->
+                            <div class="form-group">
+                                <label for="gstNumber">GST Number<span style=" color:red">*</span></label>
+                                <input type="text" class="form-control" id="gstNumber" name="gstNumber" required
+                                    pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[0-9]{1}$"
+                                    title="Enter a valid GST number in the format: 12ABCDE1234F1Z5">
+                                <span id="customerGstNumberErrorSpan" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                onclick="resetCreateCustomerForm()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Create Customer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm Delete</h5>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this Customer?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button id="confirmDeleteBtn" type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Update Customer Modal -->
+        <div class="modal fade" id="updateCustomerModal" tabindex="-1" role="dialog"
+            aria-labelledby="updateCustomerModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form id="updateCustomerForm" class="modal-content needs-validation">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="updateCustomerModalLabel">Update Customer</h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                onclick="hideAndRemoveCustomerErrorSpans()" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <input type="text" class="form-control" id="updateCustomerId" hidden>
+
+                            <!-- First Name -->
+                            <div class="form-group">
+                                <label for="updateCustomerName">Customer Name</label>
+                                <input type="text" class="form-control" id="updateCustomerName" required
+                                    pattern="^[a-zA-Z0-9&()@.\-',\s]+$" title="">
+                                <span id="updatecustomerNameErrorSpan" class="text-danger small"></span>
+
+                            </div>
+
+
+                            <!-- ^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ -->
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="updateCustomerEmail">Email</label>
+                                <input type="email" class="form-control" id="updateCustomerEmail"
+                                    pattern="^[^@]+@[^@]+\.[^@]+$" required title="Enter a valid email.">
+                                <span id="updatecustomerEmailErrorSpan" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="form-group">
+                                <label for="updateCustomerPhone">Phone</label>
+                                <input type="text" class="form-control" id="updateCustomerPhone" required
+                                    pattern="^(?!.*(\d)\1{9})([6-9]\d{9})$"
+                                    title="Enter a valid 10-digit phone number starting with 6, 7, 8, or 9. Repetitive numbers like 0000000000 are not allowed.">
+                                <span id="updatecustomerPhoneErrorSpan" class="text-danger small"></span>
+                            </div>
+
+                            <!-- GST Number -->
+                            <div class="form-group">
+                                <label for="updateCustomerGstNumber">GST Number</label>
+                                <input type="text" class="form-control" id="updateCustomerGstNumber"
+                                    pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[0-9]{1}$"
+                                    title="Enter a valid GST number in the format: 12ABCDE1234F1Z5">
+                                <span id="updatecustomerGstNumberErrorSpan" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="form-group">
+                                <label for="updateCustomerAddress">Address<span style=" color:red">*</span></label>
+                                <textarea class="form-control" id="updateCustomerAddress" name="customerAddress"
+                                    rows="3" required></textarea>
+                            </div>
+
+
+                            <!-- Status -->
+                            <div class="form-group">
+                                <label for="updateCustomerStatus">Status</label>
+                                <select id="updateCustomerStatus" class="form-control" required>
+                                    <option value="">Select status</option>
+                                    <option value="1">Active</option>
+                                    <option value="2">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                onclick="hideAndRemoveCustomerErrorSpans()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+
+        <!-- Bootstrap core JavaScript-->
+        <script src="/vendor/jquery/jquery.min.js"></script>
+        <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script src="/js/sb-admin-2.min.js"></script>
+
+        <!-- Page level plugins -->
+        <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+        <!-- Page level custom scripts -->
+        <!-- <script src="/js/demo/datatables-demo.js"></script> -->
+
+        <!-- pdf library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+        <!-- DataTables JS -->
+        <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.2.3/js/dataTables.buttons.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.dataTables.js"></script>
+
+        <!-- JSZip (for Excel export) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+        <!-- pdfmake (for PDF export) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+        <!-- Buttons HTML5 (for Excel, PDF, Print export) -->
+        <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.2.3/js/buttons.print.min.js"></script>
+
+
+        <script>
+
+
+            let authToken;
+            document.addEventListener("DOMContentLoaded", async function () {
+                authToken = sessionStorage.getItem("auth_token");
+                if (!authToken) {
+                    window.location.href = "login";
+                } else {
+                    authToken = JSON.parse(authToken);
+                    let user = authToken.userName;
+                    document.getElementById("loggedInUser").textContent = user;
+                }
+
+                $('#createUserModal').on('show.bs.modal', function () {
+                    console.log("create model is called.");
+                    populateRoles('UserRoleId');
+                });
+
+            });
+
+
+
+            // *************************DATA TABLE****************************
+
+            let table;
+
+            $(function () {
+                table = $('#dataTable').DataTable({
+                    layout: {
+                        topStart: {
+                            "buttons": [
+                                {
+                                    extend: 'excelHtml5',  // Excel export
+                                    text: 'Excel',
+                                    title: 'CustomerList',
+                                    exportOptions: {
+                                        columns: ':not(:last-child)'  // Exclude the last column
+                                    }
+                                },
+                                {
+                                    extend: 'pdfHtml5',  // PDF export
+                                    text: 'PDF',
+                                    title: 'CustomerList',
+                                    exportOptions: {
+                                        columns: ':not(:last-child)'  // Exclude the last column
+                                    }
+                                }
+                            ]
+                        }
+                    }
+
+                });
+
+                fetchCustomerDataAndPopulate();
+            });
+
+            async function fetchCustomerDataAndPopulate() {
+                try {
+                    const response = await fetch("/api/customers");
+                    const data = await response.json();
+
+                    console.log("Fetched customer data:", data);
+
+                    // Clear previous data
+                    table.clear();
+
+                    const allRows = data.customers.map(customer => {
+                        let { id, name, email, phone, gstNumber, address, status } = customer;
+
+                        statusstring = (status == 1) ? "Active" : "Inactive";
+
+                        const updateBtn = `<button class="btn btn-sm btn-primary" onclick="showUpdateCustomerModal(
+                ${id}, '${name}', '${email}', '${phone}', '${gstNumber}','${address}', ${status}
+            )"><i class="fas fa-pen"></i></button>`;
+
+                        const deleteBtn = `<button class="btn btn-sm btn-danger" onclick="showDeleteCustomerModal(${id})">
+                <i class="fas fa-trash-alt"></i></button>`;
+
+                        const actionBtns = `
+                <div class="d-flex flex-wrap justify-content-start">
+                    <div class="mr-2 mb-2">${updateBtn}</div>
+                    <div class="mr-2 mb-2">${deleteBtn}</div>
+                </div>`;
+
+                        return [id, name, email, phone, gstNumber, address, statusstring, actionBtns];
+                    });
+
+                    console.log("All row data:", allRows);
+
+                    table.rows.add(allRows).draw();  // Add all rows at once and draw once
+                } catch (error) {
+                    console.error('Error fetching customers:', error);
+                }
+            }
+
+            function showUpdateCustomerModal(id, name, email, phone, gstNumber, address, status) {
+
+                document.getElementById("updateCustomerId").value = id;
+                document.getElementById("updateCustomerName").value = name;
+                document.getElementById("updateCustomerEmail").value = email;
+                document.getElementById("updateCustomerPhone").value = phone;
+                document.getElementById("updateCustomerGstNumber").value = gstNumber;
+                document.getElementById("updateCustomerAddress").value = address;
+                document.getElementById("updateCustomerStatus").value = status;
+
+                console.log("status: ,", status);
+
+
+                $('#updateCustomerModal').modal('show');
+            }
+
+
+            async function populateRoles(id) {
+                try {
+                    const response = await fetch('/api/userroles');
+                    const data = await response.json();
+
+                    console.log("populateRoles is called.....");
+
+
+                    console.log("res: ", data);
+
+                    if (Array.isArray(data.data) && data.data.length > 0) {
+                        const selectElement = document.getElementById(id);
+
+                        console.log("response data: ", data.data);
+
+                        selectElement.innerHTML = '';
+
+                        const defaultOption = document.createElement('option');
+                        defaultOption.value = '';
+                        defaultOption.textContent = '-- Select Role --';
+                        selectElement.appendChild(defaultOption);
+
+                        data.data.forEach(role => {
+                            const option = document.createElement('option');
+                            option.value = role.id;
+                            option.textContent = role.name;
+                            selectElement.appendChild(option);
+                        });
+                    } else {
+                        console.error("Failed to load roles or no roles found.");
+                    }
+                } catch (error) {
+                    console.error("Error fetching roles:", error);
+                }
+            }
+
+            function getStatusInt(status) {
+                return (status === 'Active') ? 1 : 2;
+            } function getStatusString(status) {
+                return (status === 1) ? 'Active' : 'Inactive';
+            }
+
+            document.getElementById('updateCustomerForm').addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const id = document.getElementById('updateCustomerId').value;
+                const name = document.getElementById('updateCustomerName').value;
+                const email = document.getElementById('updateCustomerEmail').value;
+                const phone = document.getElementById('updateCustomerPhone').value;
+                const gstNumber = document.getElementById('updateCustomerGstNumber').value;
+                const address = document.getElementById('updateCustomerAddress').value;
+                const status = document.getElementById('updateCustomerStatus').value;
+
+
+                const data = {
+                    name,
+                    email,
+                    phone,
+                    gstNumber,
+                    address,
+                    status
+                };
+
+                console.log("status: ...", status);
+
+
+                hideAndRemoveCustomerErrorSpans();
+
+                try {
+                    const response = await fetch(`/api/customers/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok && result.errors) {
+                        result.errors.forEach(error => {
+                            if (error.field === 'email') {
+
+                                document.getElementById('updatecustomerEmailErrorSpan').innerText = error.error;
+                                document.getElementById('updateCustomerEmail').classList.add('is-invalid');
+                            }
+                            else if (error.field === 'name') {
+                                document.getElementById('updatecustomerNameErrorSpan').innerText = error.error;
+                                document.getElementById('updateCustomerName').classList.add('is-invalid');
+                            }
+                            else if (error.field === 'phone') {
+                                document.getElementById('updatecustomerPhoneErrorSpan').innerText = error.error;
+                                document.getElementById('updateCustomerPhone').classList.add('is-invalid');
+                            } else if (error.field === 'gstNumber') {
+                                document.getElementById('updatecustomerGstNumberErrorSpan').innerText = error.error;
+                                document.getElementById('updateCustomerGstNumber').classList.add('is-invalid');
+                            }
+                            console.log(error.field, error.error);
+                        });
+                    }
+
+                    else {
+                        table.clear().draw();
+                        await fetchCustomerDataAndPopulate();
+                        $('#updateCustomerModal').modal('hide');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert("Error: " + error.message);
+                }
+            });
+
+
+            function hideandremoveErrorSpan() {
+                document.getElementById('updateUserName').classList.remove('is-invalid');
+                document.getElementById('updateEmail').classList.remove('is-invalid');
+                document.getElementById('updatePhone').classList.remove('is-invalid');
+
+            }
+
+            let deleteId = null;
+
+            // Show the delete confirmation modal and store the ID
+            async function showDeleteCustomerModal(id) {
+                deleteId = id;
+                $('#deleteModal').modal('show');
+            }
+
+            // Handle deletion when the user confirms
+            document.getElementById('confirmDeleteBtn').addEventListener('click', async function () {
+                try {
+                    const response = await fetch(`/api/customers/${deleteId}`, { method: 'DELETE' });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error("Delete failed:", errorData);
+                        alert("Failed to delete the customer. Please try again.");
+                        return;
+                    }
+
+                    table.clear().draw();
+                    await fetchCustomerDataAndPopulate();
+                    $('#deleteModal').modal('hide');
+                } catch (error) {
+                    console.error("Error during deletion:", error);
+                    alert("Something went wrong. Please try again later.");
+                }
+            });
+
+            // *************************************************************************************************
+
+            const currentPath = window.location.pathname.split("/").pop();
+
+            const collapseUtilities = document.getElementById("collapseUtilities");
+            const masterToggle = document.querySelector('a[data-target="#collapseUtilities"]');
+
+            if (["userrolelist", "userlist", "customerlist", "itemlist"].includes(currentPath)) {
+                if (collapseUtilities && masterToggle) {
+                    collapseUtilities.classList.add("show");
+                    masterToggle.classList.remove("collapsed");
+                    masterToggle.setAttribute("aria-expanded", "true");
+                }
+
+                const collapseItems = collapseUtilities.querySelectorAll(".collapse-item");
+                collapseItems.forEach(link => {
+                    if (link.getAttribute("href") === currentPath) {
+                        link.classList.add("active");
+                    }
+                });
+            }
+
+            const navLinks = document.querySelectorAll(".nav-link[href]");
+            navLinks.forEach(link => {
+                const linkPath = link.getAttribute("href");
+                if (linkPath === currentPath) {
+                    link.classList.add("active");
+                }
+            });
+
+
+            // *****************************************Modals*********************************************************************************
+
+            document.getElementById("createCustomerForm").addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                const customerData = {
+                    name: document.getElementById("customerName").value.trim(),
+                    email: document.getElementById("customerEmail").value.trim(),
+                    phone: document.getElementById("customerPhone").value.trim(),
+                    address: document.getElementById("customerAddress").value.trim(),
+                    gstNumber: document.getElementById("gstNumber").value.trim()
+                };
+
+                console.log("Customer Data:", customerData);
+
+                try {
+                    const response = await fetch("/api/customers", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(customerData)
+                    });
+
+                    const result = await response.json();
+
+                    ["customerNameErrorSpan", "customerEmailErrorSpan", "customerPhoneErrorSpan", "customerGstNumberErrorSpan"].forEach(id => {
+                        document.getElementById(id).innerText = "";
+                    });
+
+                    if (response.ok && result.status) {
+                        $('#createCustomerModal').modal('hide');
+                        resetCreateCustomerForm();
+                        table.clear().draw();
+                        await fetchCustomerDataAndPopulate();
+                    } else if (result.errors) {
+                        result.errors.forEach(err => {
+                            const spanId = "customer" + err.field.charAt(0).toUpperCase() + err.field.slice(1) + "ErrorSpan";
+                            const errorSpan = document.getElementById(spanId);
+                            console.log(spanId);
+
+                            if (errorSpan) {
+                                errorSpan.innerText = err.error;
+                            }
+                        });
+                    } else {
+                        alert("Failed to create customer: " + (result.message || "Unknown error"));
+                    }
+                } catch (error) {
+                    console.error("Error creating customer:", error);
+                    alert("Error creating customer.");
+                }
+            });
+
+
+            function resetCreateCustomerForm() {
+                document.getElementById("createCustomerForm").reset();
+                document.getElementById("customerEmailErrorSpan").textContent = "";
+                document.getElementById("customerNameErrorSpan").textContent = "";
+                document.getElementById("customerPhoneErrorSpan").textContent = "";
+                document.getElementById("customerGstNumberErrorSpan").textContent = "";
+            }
+            function hideAndRemoveCustomerErrorSpans() {
+                const errorSpanIds = [
+                    "updatecustomerEmailErrorSpan",
+                    "updatecustomerNameErrorSpan",
+                    "updatecustomerPhoneErrorSpan",
+                    "updatecustomerGstNumberErrorSpan"
+                ];
+
+                errorSpanIds.forEach(id => {
+                    const span = document.getElementById(id);
+                    if (span) {
+                        span.innerText = "";
+
+                    }
+                });
+
+                const formInputs = document.querySelectorAll('#updateCustomerModal .form-control');
+                formInputs.forEach(input => {
+                    input.classList.remove('is-invalid');
+                });
+            }
+
+
+
+            document.getElementById('logoutBtn').addEventListener('click', async function (e) {
+                e.preventDefault();
+
+                try {
+                    const authToken = sessionStorage.getItem('auth_token');
+
+                    if (authToken) {
+                        const response = await fetch('/api/logout', {
+                            method: 'GET',
+
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('Failed to logout from the backend');
+                        }
+                        const data = await response.json();
+                        sessionStorage.removeItem('auth_token');
+                        window.location.href = 'login';
+                    }
+
+
+                } catch (error) {
+                    console.error('Error during logout:', error);
+                    alert('An error occurred. Please try again later.');
+                }
+            });
+
+
+
+
+
+        </script>
+</body>
+
+</html>
