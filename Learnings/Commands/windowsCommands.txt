@@ -1,0 +1,24 @@
+echo text > filename.txt	Create a new file with content
+echo text >> filename.txt	Append text to the file
+type filename.txt	Display contents of the file
+copy file1.txt file2.txt	Copy file1 to file2
+move file1.txt D:\Folder\	Move file to another location
+del filename.txt	Delete a file
+
+mkdir dirname	Create a new directory
+rmdir dirname or rd dirname	Remove a directory (must be empty)
+rmdir /S dirname	Remove directory and all contents
+ren oldname newname or rename oldname newname	Rename a file or directory
+cd dirname	Change to a directory
+cd ..	go to parent directory
+cd /	Go to the root directory
+dir	List files and folders
+dir /a	Show all files, including hidden
+dir /A:H	Show only hidden files
+dir /A:-H	Show only non-hidden files
+
+
+cls	Clear the command prompt screen
+exit	Exit the command prompt
+help	Show all available CMD commands
+help 
