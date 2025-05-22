@@ -1,33 +1,38 @@
-const createUserRoleModel = require('./userrole.js');
-const createUserModel = require('./user.js');
-
-const { Sequelize, DataTypes } = require("sequelize");
+const fs = require('fs');
+const path = require('path');
+const { Sequelize, DataTypes } = require('sequelize');
 
 const sequelize = new Sequelize('QuotationTracker', 'postgres', 'Password', {
-  host: "localhost",
-  dialect: "postgres"
+  host: 'localhost',
+  dialect: 'postgres',
 });
 
 const models = {};
+const modelsDir = __dirname; 
+console.log('Loading models dynamically...');
 
-console.log("model index is called.........");
+fs.readdirSync(modelsDir)
+  .filter(file => file.endsWith('.js') && file !== 'index.js')
+  .forEach(file => {
+    const modelPath = path.join(modelsDir, file);
+    const createModel = require(modelPath);
+    const model = createModel(sequelize, DataTypes);
+    models[model.name] = model;
+  });
 
-models.UserRole = createUserRoleModel(sequelize, DataTypes);
-models.User = createUserModel(sequelize, DataTypes);
+Object.keys(models).forEach(modelName => {
+  if (models[modelName].associate) {
+    models[modelName].associate(models);
+  }
+});
 
-if (models.UserRole.associate) {
-  models.UserRole.associate(models);
-}
-if (models.User.associate) {
-  models.User.associate(models);
-}
-
+models.sequelize = sequelize;
 models.sync = async function () {
   try {
     await sequelize.sync({ force: false });
     console.log('Database synced successfully.');
   } catch (err) {
-    console.error('Failed to sync database:', err);
+    console.error(' Failed to sync database:', err);
   }
 };
 
