@@ -5,21 +5,36 @@ const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
 const JWE_SECRET_KEY = "secretKey";
 
-exports.auth = (token) => {
+auth = (token) => {
+	console.log("auth called...");
+	
 	return new Promise((resolve, reject) => {
 		jwt.verify(token, JWE_SECRET_KEY, (err, decoded) => {
-			if (err) reject("Invalid token");
-			else resolve(decoded);
+			if (err) {
+				console.log("token rejected: " ,  err);
+				reject("Invalid token");
+			}
+			else {
+				console.log("decoded: " ,  decoded);
+				resolve(decoded);
+			}
 		});
 	});
 };
 
 exports.authUser = async (req, res, next) => {
 	const token = req.cookies.auth_token;
+	console.log("logged used token: ",token);
+	
 	if (!token) return res.status(401).send({ status: false, error: 'No token provided. Please login first.' });
 
 	try {
+		
+		console.log("token decoding....");
 		const decoded = await auth(token);
+
+		console.log("token decoded successfully....");
+		
 		req.user = decoded;
 		next();
 	} catch (err) {
