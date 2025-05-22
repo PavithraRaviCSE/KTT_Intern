@@ -33,8 +33,7 @@ exports.getById = async (req, res) => {
         console.error("Get userRole by ID error:", error);
         return res.status(500).send({ status: false, error: error.message });
     }
-};
-exports.update = async (req, res) => {
+}; exports.update = async (req, res) => {
     try {
         const { id } = req.params;
         const { name, status } = req.body;
@@ -49,10 +48,9 @@ exports.update = async (req, res) => {
             return res.status(404).send({ status: false, error: "User role not found" });
         }
 
-        // Check for duplicate role name (excluding current record)
         const existingRole = await UserRole.findOne({
             where: {
-                name,
+                name: { [Op.iLike]: name },
                 id: { [Op.ne]: id }
             }
         });
@@ -78,11 +76,14 @@ exports.create = async (req, res) => {
             return res.status(400).send({ status: false, error: "Role name is required" });
         }
 
-        const existingRole = await UserRole.findOne({ where: { name } });
+        // Check for duplicate role name (case-insensitive)
+        const existingRole = await UserRole.findOne({
+            where: {
+                name: { [Op.iLike]: name } // Case-insensitive check
+            }
+        });
 
         if (existingRole) {
-            console.log("user role is already extis: ", existingRole);
-
             return res.status(409).send({ status: false, error: "Role name already exists" });
         }
 
