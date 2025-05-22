@@ -1,68 +1,131 @@
 const models = require('../../models/index.js');
 const { Op, where, fn, col } = require('sequelize');
 
-// Get all quotation headers
+// Get all quotation details
 exports.get = async (req, res) => {
     try {
-        const headers = await models.QoHeader.findAll({
+        const details = await models.QoDetail.findAll({
             attributes: [
                 'id',
-                'qoNumber',
-                'CustomerId',
-                'qoDate',
-                'expiryDate',
-                'subTotal',
-                'taxAmount',
+                'QoHeaderId',
+                'ItemId',
+                'desc',
+                'quantity',
+                'unitPrice',
                 'discount',
+                'gstPercentage',
                 'gstAmount',
-                'totalAmount',
-                'status'
+                'totalAmount'
             ],
-            include: [{
-                model: models.Customer,
-                attributes: ['name']  
-            }]
+            include: [
+                {
+                    model: models.Item,
+                    attributes: ['name'] // assuming Item has a name
+                },
+                {
+                    model: models.QoHeader,
+                    attributes: ['qoNumber'] // optional
+                }
+            ]
         });
 
-        if (!headers.length) {
-            return res.status(404).send({ status: false, message: "No quotations found" });
+        if (!details.length) {
+            return res.status(404).send({ status: false, message: "No quotation details found" });
         }
 
-        return res.status(200).send({ status: true, data: headers });
+        return res.status(200).send({ status: true, data: details });
 
     } catch (error) {
-        console.error("Fetch quotation headers error:", error);
+        console.error("Fetch quotation details error:", error);
         return res.status(500).send({ status: false, error: error.message });
     }
 };
+
 // Get quotation header by ID
+// Get quotation detail by ID
 exports.getById = async (req, res) => {
     try {
-        const quotation = await models.QuotationHeader.findByPk(req.params.id);
-        if (!quotation) {
-            return res.status(404).send({ status: false, error: 'Quotation not found' });
+        const detail = await models.QoDetail.findByPk(req.params.id);
+        if (!detail) {
+            return res.status(404).send({ status: false, error: 'Quotation detail not found' });
         }
-        res.status(200).send({ status: true, quotation });
+        res.status(200).send({ status: true, data: detail });
     } catch (error) {
-        console.error("Get quotation by ID error:", error);
+        console.error("Get quotation detail by ID error:", error);
         res.status(500).send({ status: false, error: error.message });
     }
 };
 
-// Validation for fields
-const validateFields = ({ customerId, quotationDate, expiryDate }) => {
-    const errors = [];
+exports.getByQHId = async (req, res) => {
+    try {
+        const details = await models.QoDetail.findAll({
+            where: { QoHeaderId: req.params.id },
+            attributes: ['id', 'quantity', 'desc','unitPrice','discount','gstPercentage','gstAmount', 'totalAmount'],
+            include: [
+                {
+                    model: models.Item,
+                    as: 'Item',
+                    attributes: ['id', 'name']
+                }
+            ]
+        });
 
-    customerId = customerId?.trim();
+        if (!details.length) {
+            return res.status(404).send({ status: false, error: 'No quotation items found for this ID' });
+        }
 
-    if (!customerId) errors.push({ field: 'customerId', error: 'Customer name is required.' });
-    if (!quotationDate) errors.push({ field: 'quotationDate', error: 'Quotation date is required.' });
-    if (!expiryDate) errors.push({ field: 'expiryDate', error: 'Expiry date is required.' });
+        const data = details.map(d => ({
+            id: d.id,
+            ItemId: d.Item.id,
+            ItemName: d.Item.name,
+            desc:d.desc,
+            quantity: d.quantity,
+            discount:d.discount,
+            unitPrice: d.unitPrice,
+            gstPercentage: d.gstPercentage,
+            gstAmount: d.gstAmount,
+            totalAmount: d.totalAmount
+        }));
 
-    return { errors, data: { customerId, quotationDate, expiryDate } };
+        res.status(200).send({ status: true, data });
+    } catch (error) {
+        console.error('Get quotation detail by ID error:', error);
+        res.status(500).send({ status: false, error: error.message });
+    }
 };
 
-// Create quotation header
+
+const validateFields = ({ QoHeaderId, ItemId, desc, quantity, unitPrice, discount, gstPercentage, gstAmount, totalAmount }) => {
+    const errors = [];
+
+    if (!QoHeaderId) errors.push({ field: 'QoHeaderId', error: 'Quotation header ID is required.' });
+    if (!ItemId) errors.push({ field: 'ItemId', error: 'Item ID is required.' });
+    if (!desc) errors.push({ field: 'desc', error: 'Description is required.' });
+    if (isNaN(quantity) || quantity <= 0) errors.push({ field: 'quantity', error: 'Quantity must be a positive number.' });
+    if (!unitPrice) errors.push({ field: 'unitPrice', error: 'Unit price is required.' });
+    if (discount === undefined) errors.push({ field: 'discount', error: 'Discount is required.' });
+    if (gstPercentage === undefined) errors.push({ field: 'gstPercentage', error: 'GST percentage is required.' });
+    if (gstAmount === undefined) errors.push({ field: 'gstAmount', error: 'Get amount is required.' });
+    if (totalAmount === undefined) errors.push({ field: 'totalAmount', error: 'Total amount is required.' });
+
+    return {
+        errors,
+        data: {
+            QoHeaderId,
+            ItemId,
+            desc,
+            quantity,
+            unitPrice,
+            discount,
+            gstPercentage,
+            gstAmount,
+            totalAmount
+        }
+    };
+};
+
+
+// Create quotation detail
 exports.create = async (req, res) => {
     try {
         const loggedUser = req.user;
@@ -77,53 +140,55 @@ exports.create = async (req, res) => {
             updatedBy: { id: userId, name: userName }
         };
 
-        const newQuotation = await models.QuotationHeader.create({
+        const newDetail = await models.QoDetail.create({
             ...data,
             user
         });
 
-        return res.status(201).send({ status: true, message: "Quotation created successfully", data: newQuotation });
+        return res.status(201).send({ status: true, message: "Quotation detail created successfully", data: newDetail });
 
     } catch (error) {
-        console.error("Create quotation error:", error);
+        console.error("Create quotation detail error:", error);
         return res.status(500).send({ status: false, error: error.message });
     }
 };
 
-// Update quotation header
+// Update quotation detail
 exports.update = async (req, res) => {
     try {
-        const quotationId = req.params.id;
-        const quotation = await models.QuotationHeader.findByPk(quotationId);
-        if (!quotation) return res.status(404).send({ status: false, error: "Quotation not found" });
+        const detailId = req.params.id;
+        const detail = await models.QoDetail.findByPk(detailId);
+        if (!detail) return res.status(404).send({ status: false, error: "Quotation detail not found" });
 
         const { errors, data } = validateFields(req.body);
         if (errors.length) return res.status(400).send({ status: false, errors });
 
-        await quotation.update({
+        await detail.update({
             ...data
         });
 
-        return res.status(200).send({ status: true, message: "Quotation updated successfully", data: quotation });
+        return res.status(200).send({ status: true, message: "Quotation detail updated successfully", data: detail });
 
     } catch (error) {
-        console.error("Update quotation error:", error);
+        console.error("Update quotation detail error:", error);
         return res.status(500).send({ status: false, error: error.message });
     }
 };
 
-// Delete quotation header
+
+// Delete quotation detail
 exports.delete = async (req, res) => {
     try {
-        const quotation = await models.QuotationHeader.findByPk(req.params.id);
-        if (!quotation) {
-            return res.status(404).send({ status: false, error: "Quotation not found" });
+        const detail = await models.QoDetail.findByPk(req.params.id);
+        if (!detail) {
+            return res.status(404).send({ status: false, error: "Quotation detail not found" });
         }
 
-        await quotation.destroy();
-        res.status(200).send({ status: true, message: "Quotation deleted successfully" });
+        await detail.destroy();
+        res.status(200).send({ status: true, message: "Quotation detail deleted successfully" });
     } catch (error) {
-        console.error("Delete quotation error:", error);
+        console.error("Delete quotation detail error:", error);
         res.status(500).send({ status: false, error: error.message });
     }
 };
+
