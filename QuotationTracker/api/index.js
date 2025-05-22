@@ -8,8 +8,8 @@ router.use("/users", require("./users/index.js"));
 router.use("/userroles", require("./userroles/index.js"));
 router.use("/customers", require("./customers/index.js"));
 router.use("/items", require("./items/index.js"));
-router.use("/qoheaders", require("./qoheaders/index.js"));
-router.use("/qodetail", require("./qodetail/index.js"));
+router.use("/quotations", require("./qoheaders/index.js"));
+// router.use("/qodetail", require("./qodetail/index.js"));
 
 
 
