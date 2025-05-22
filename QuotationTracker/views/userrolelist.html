@@ -68,8 +68,11 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="userrolelist">User Roles</a>
+                        <a class="collapse-item" href="userrolelist">UserRoles</a>
                         <a class="collapse-item" href="userlist">Users</a>
+                        <a class="collapse-item" href="customerlist">Customers</a>
+                        <a class="collapse-item" href="itemlist">Items</a>
+
 
                     </div>
                 </div>
@@ -101,9 +104,9 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item active">
-                <a class="nav-link" href="/api/clientList">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Client</span></a>
+                <a class="nav-link" href="/api/quotationMaster">
+                    
+                    <span>Quotations</span></a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -188,18 +191,7 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
+                               
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -326,7 +318,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="roleName">User Role</label>
+                            <label for="roleName">User Role<span style=" color:red">*</span></label>
                             <input type="text" class="form-control" id="roleName" name="roleName"
                                 placeholder="Enter role" required pattern="^[A-Z][a-zA-Z]{1,}$"
                                 title="Only letters allowed. Must start with a capital letter and be at least 2 characters long.">
@@ -396,6 +388,11 @@
     </div>
 
 
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -419,7 +416,7 @@
 
 
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.js"></script> -->
 
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
@@ -695,7 +692,7 @@
         const collapseUtilities = document.getElementById("collapseUtilities");
         const masterToggle = document.querySelector('a[data-target="#collapseUtilities"]');
 
-        if (["userrolelist", "userlist"].includes(currentPath)) {
+        if (["userrolelist", "userlist", "customerlist", "itemlist"].includes(currentPath)) {
             if (collapseUtilities && masterToggle) {
                 collapseUtilities.classList.add("show");
                 masterToggle.classList.remove("collapsed");
@@ -718,70 +715,6 @@
             }
         });
 
-        // *************************************Download*********************************
-        // Download CSV (Excel)
-        $('#downloadCsv').on('click', function (e) {
-            e.preventDefault();
-            const data = table.data().toArray();
-
-            const csvRows = [
-                ['ID', 'Name', 'Status'].join(','), // Header row
-                ...data.map(row => {
-                    const id = row[0];
-                    const roleName = `"${String(row[1]).replace(/"/g, '""')}"`; // Safely escape quotes
-                    const status = row[2];
-
-                    console.log(id, roleName, status);
-
-                    return [id, roleName, status].join(',');
-                })
-            ];
-
-            const csvString = csvRows.join('\n');
-            console.log(csvString);
-
-            const blob = new Blob([csvString], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.setAttribute('href', url);
-            a.setAttribute('download', 'User_roles_list.csv');
-            a.click();
-            window.URL.revokeObjectURL(url);
-        });
-
-
-        // Download PDF
-        $('#downloadPdf').on('click', function (e) {
-            e.preventDefault();
-
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            doc.setFontSize(16);
-            doc.text('User Roles List', 10, 10);
-            doc.setFontSize(12);
-
-            const data = table.data().toArray(); // array of arrays
-            let y = 20;
-            console.log("data for pdf", data);
-
-
-            // Header
-            doc.text('ID  |  Role Name  |  Status', 10, y);
-            y += 5;
-            doc.line(10, y, 200, y);
-            y += 10;
-
-            // Rows
-            data.forEach(row => {
-                const id = row[0];
-                const roleName = row[1];
-                const status = row[2];
-                doc.text(`${id}  |  ${roleName}  |  ${status}`, 10, y);
-                y += 10;
-            });
-
-            doc.save('User_roles_list.pdf');
-        });
 
     </script>
 </body>
