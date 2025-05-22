@@ -68,8 +68,10 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="userrolelist">User Roles</a>
+                        <a class="collapse-item" href="userrolelist">UserRoles</a>
                         <a class="collapse-item" href="userlist">Users</a>
+                        <a class="collapse-item" href="customerlist">Customers</a>
+                        <a class="collapse-item" href="itemlist">Items</a>
 
                     </div>
                 </div>
@@ -101,9 +103,9 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item active">
-                <a class="nav-link" href="/api/clientList">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Client</span></a>
+                <a class="nav-link" href="/api/quotationMaster">
+                    
+                    <span>Quotations</span></a>
             </li>
 
             <!-- Divider -->
@@ -189,18 +191,7 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
+                               
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -222,14 +213,7 @@
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
                             <h6 class="m-0 font-weight-bold text-primary">Users </h6>
 
-                            <!-- <button type="button" class="btn btn-primary btn-round dropdown-toggle "
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-download"></i> Download
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#" id="downloadCsv">Download Excel</a>
-                                <a class="dropdown-item" href="#" id="downloadPdf">Download PDF</a>
-                            </div> -->
+                            
                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#createUserModal">
                                 Add <i class="fas fa-plus"></i>
@@ -241,9 +225,9 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>FirstName</th>
-                                            <th>LastName</th>
-                                            <th>userName</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>User Name</th>
                                             <th>Role</th>
                                             <th>Email</th>
                                             <th>Phone</th>
@@ -308,33 +292,7 @@
         </div>
     </div>
 
-    <!-- // userRoleModal
-    <div class="modal fade" id="userRoleModal" tabindex="-1" role="dialog" aria-labelledby="userRoleModalLabel"
-        aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog " role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="userRoleModalLabel">Add User Role</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="userRoleForm">
-                        <div class="form-group">
-                            <label for="roleName">User Role</label>
-                            <input type="text" class="form-control" id="roleName" name="roleName"
-                                placeholder="Enter role" required>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer ">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" id="addRoleBtn" class="btn btn-primary">Add</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
+
 
 
     <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModalLabel"
@@ -353,7 +311,7 @@
                     <div class="modal-body">
                         <!-- User Role -->
                         <div class="form-group">
-                            <label for="UserRoleId">User Role</label>
+                            <label for="UserRoleId">User Role<span style=" color:red">*</span></label>
                             <select id="UserRoleId" name="UserRoleId" class="form-control" required>
                                 <option value="">Select role</option>
                             </select>
@@ -361,7 +319,7 @@
 
                         <!-- First Name -->
                         <div class="form-group">
-                            <label for="firstName">First Name</label>
+                            <label for="firstName">First Name<span style=" color:red">*</span></label>
                             <input type="text" class="form-control" id="firstName" name="firstName" required
                                 pattern="^[A-Z][a-zA-Z]{1,}$"
                                 title="First letter must be capital and at least 2 characters long.">
@@ -369,7 +327,7 @@
 
                         <!-- Last Name -->
                         <div class="form-group">
-                            <label for="lastName">Last Name</label>
+                            <label for="lastName">Last Name<span style=" color:red">*</span></label>
                             <input type="text" class="form-control" id="lastName" name="lastName" required
                                 pattern="^[A-Z][a-zA-Z]{1,}$"
                                 title="First letter must be capital and at least 2 characters long.">
@@ -377,7 +335,7 @@
 
                         <!-- Username -->
                         <div class="form-group">
-                            <label for="userName">Username</label>
+                            <label for="userName">Username<span style=" color:red">*</span></label>
                             <input type="text" class="form-control" id="userName" name="userName" required
                                 pattern="^[a-zA-Z][a-zA-Z0-9]{3,15}$"
                                 title="Username must start with a letter and be 4–16 characters long.">
@@ -386,7 +344,7 @@
 
                         <!-- Password -->
                         <div class="form-group">
-                            <label for="password">Password</label>
+                            <label for="password">Password<span style=" color:red">*</span></label>
                             <input type="password" class="form-control" id="password" name="password" required
                                 pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
                                 title="Password must be at least 6 characters and contain at least one letter and one number.">
@@ -394,14 +352,14 @@
 
                         <!-- Email -->
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email">Email<span style=" color:red">*</span></label>
                             <input type="email" class="form-control" id="email" name="email" required>
                             <span id="emailErrorSpan" class="text-danger small"></span>
                         </div>
 
                         <!-- Phone -->
                         <div class="form-group">
-                            <label for="phone">Phone</label>
+                            <label for="phone">Phone<span style=" color:red">*</span></label>
                             <input type="text" class="form-control" id="phone" name="phone" required
                                 pattern="^(?!.*(\d)\1{9})([6-9]\d{9})$"
                                 title="Enter a valid 10-digit phone number starting with 6, 7, 8, or 9. Repetitive numbers like 0000000000 are not allowed.">
@@ -536,6 +494,10 @@
 
 
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -555,8 +517,6 @@
 
     <!-- pdf library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
@@ -834,7 +794,7 @@
         const collapseUtilities = document.getElementById("collapseUtilities");
         const masterToggle = document.querySelector('a[data-target="#collapseUtilities"]');
 
-        if (["userrolelist", "userlist"].includes(currentPath)) {
+        if (["userrolelist", "userlist", "customerlist", "itemlist"].includes(currentPath)) {
             if (collapseUtilities && masterToggle) {
                 collapseUtilities.classList.add("show");
                 masterToggle.classList.remove("collapsed");
