@@ -1,0 +1,955 @@
+Server [localhost]: localhost
+Database [postgres]: postgres
+Port [5432]: 5432
+Username [postgres]: postgres
+Password for user postgres:
+
+psql (17.4)
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# \d
+Did not find any relations.
+postgres=# \d adventureworks
+Did not find any relation named "adventureworks".
+postgres=# \d QuotationTracker
+Did not find any relation named "QuotationTracker".
+postgres=# \du
+                             List of roles
+ Role name |                         Attributes
+-----------+------------------------------------------------------------
+ nive      |
+ pavi      | Create role, Create DB
+ postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS
+ test      | Cannot login
+
+
+postgres=# \dd
+         Object descriptions
+ Schema | Name | Object | Description
+--------+------+--------+-------------
+(0 rows)
+
+
+postgres=# \d postgres
+Did not find any relation named "postgres".
+postgres=# \d postgre
+Did not find any relation named "postgre".
+postgres=# \dp QuotationTracker
+                            Access privileges
+ Schema | Name | Type | Access privileges | Column privileges | Policies
+--------+------+------+-------------------+-------------------+----------
+(0 rows)
+
+
+postgres=# \dp "Users";
+                            Access privileges
+ Schema | Name | Type | Access privileges | Column privileges | Policies
+--------+------+------+-------------------+-------------------+----------
+(0 rows)
+
+
+postgres=# \c AdventureWorks;
+connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "AdventureWorks" does not exist
+Previous connection kept
+postgres=# \c Adventureworks
+You are now connected to database "Adventureworks" as user "postgres".
+Adventureworks=# select * from sales;
+ERROR:  relation "sales" does not exist
+LINE 1: select * from sales;
+                      ^
+Adventureworks=# select * from "sales"
+Adventureworks-# ;
+ERROR:  relation "sales" does not exist
+LINE 1: select * from "sales"
+                      ^
+Adventureworks=# select * from sales.salesperson
+Adventureworks-# ;
+ businessentityid | territoryid | salesquota | bonus | commissionpct |   salesytd   | saleslastyear |               rowguid                |    modifieddate
+------------------+-------------+------------+-------+---------------+--------------+---------------+--------------------------------------+---------------------
+              274 |             |            |     0 |             0 |  559697.5639 |             0 | 48754992-9ee0-4c0e-8c94-9451604e3e02 | 2010-12-28 00:00:00
+              275 |           2 |     300000 |  4100 |         0.012 | 3763178.1787 |  1750406.4785 | 1e0a7274-3064-4f58-88ee-4c6586c87169 | 2011-05-24 00:00:00
+              276 |           4 |     250000 |  2000 |         0.015 | 4251368.5497 |  1439156.0291 | 4dd9eee4-8e81-4f8c-af97-683394c1f7c0 | 2011-05-24 00:00:00
+              277 |           3 |     250000 |  2500 |         0.015 | 3189418.3662 |  1997186.2037 | 39012928-bfec-4242-874d-423162c3f567 | 2011-05-24 00:00:00
+              278 |           6 |     250000 |   500 |          0.01 | 1453719.4653 |  1620276.8966 | 7a0ae1ab-b283-40f9-91d1-167abf06d720 | 2011-05-24 00:00:00
+              279 |           5 |     300000 |  6700 |          0.01 |  2315185.611 |  1849640.9418 | 52a5179d-3239-4157-ae29-17e868296dc0 | 2011-05-24 00:00:00
+              280 |           1 |     250000 |  5000 |          0.01 | 1352577.1325 |   1927059.178 | be941a4a-fb50-4947-bda4-bb8972365b08 | 2011-05-24 00:00:00
+              281 |           4 |     250000 |  3550 |          0.01 | 2458535.6169 |  2073505.9999 | 35326ddb-7278-4fef-b3ba-ea137b69094e | 2011-05-24 00:00:00
+              282 |           6 |     250000 |  5000 |         0.015 | 2604540.7172 |  2038234.6549 | 31fd7fc1-dc84-4f05-b9a0-762519eacacc | 2011-05-24 00:00:00
+              283 |           1 |     250000 |  3500 |         0.012 | 1573012.9383 |  1371635.3158 | 6bac15b2-8ffb-45a9-b6d5-040e16c2073f | 2011-05-24 00:00:00
+              284 |           1 |     300000 |  3900 |         0.019 | 1576562.1966 |             0 | ac94ec04-a2dc-43e3-8654-dd0c546abc17 | 2012-09-23 00:00:00
+              285 |             |            |     0 |             0 |  172524.4512 |             0 | cfdbef27-b1f7-4a56-a878-0221c73bae67 | 2013-03-07 00:00:00
+              286 |           9 |     250000 |  5650 |         0.018 | 1421810.9242 |  2278548.9776 | 9b968777-75dc-45bd-a8df-9cdaa72839e1 | 2013-05-23 00:00:00
+              287 |             |            |     0 |             0 |   519905.932 |             0 | 1dd1f689-df74-4149-8600-59555eef154b | 2012-04-09 00:00:00
+              288 |           8 |     250000 |    75 |         0.018 | 1827066.7118 |  1307949.7917 | 224bb25a-62e3-493e-acaf-4f8f5c72396a | 2013-05-23 00:00:00
+              289 |          10 |     250000 |  5150 |          0.02 | 4116871.2277 |  1635823.3967 | 25f6838d-9db4-4833-9ddc-7a24283af1ba | 2012-05-23 00:00:00
+              290 |           7 |     250000 |   985 |         0.016 | 3121616.3202 |  2396539.7601 | f509e3d4-76c8-42aa-b353-90b7b8db08de | 2012-05-23 00:00:00
+(17 rows)
+
+
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=# \list
+                                                    List of databases
+       Name       |  Owner   | Encoding | Locale Provider | Collate | Ctype | Locale | ICU Rules |   Access privileges
+------------------+----------+----------+-----------------+---------+-------+--------+-----------+-----------------------
+ Adventureworks   | postgres | UTF8     | libc            | en-US   | en-US |        |           |
+ QuotationTracker | postgres | UTF8     | libc            | en-US   | en-US |        |           |
+ Test             | postgres | UTF8     | libc            | en-US   | en-US |        |           | =Tc/postgres         +
+                  |          |          |                 |         |       |        |           | postgres=CTc/postgres+
+                  |          |          |                 |         |       |        |           | pavi=CTc/postgres
+ postgres         | postgres | UTF8     | libc            | en-US   | en-US |        |           |
+ sample           | postgres | UTF8     | libc            | en-US   | en-US |        |           |
+ template0        | postgres | UTF8     | libc            | en-US   | en-US |        |           | =c/postgres          +
+                  |          |          |                 |         |       |        |           | postgres=CTc/postgres template1        | postgres | UTF8     | libc        | en-US   | en-US |        |           | =c/postgres          +
+                  |          |          |                 |         |       |        |           | postgres=CTc/postgres test2            | nive     | UTF8     | libc        | en-US   | en-US |        |           |
+ user2            | pavi     | UTF8     | libc            | en-US   | en-US |        |           |
+(9 rows)
+
+
+Adventureworks=# \dt
+Did not find any relations.
+Adventureworks=# \dt *.*
+                                  List of relations
+       Schema       |                 Name                  |    Type     |  Owner
+--------------------+---------------------------------------+-------------+----------
+ humanresources     | department                            | table       | postgres
+ humanresources     | employee                              | table       | postgres
+ humanresources     | employeedepartmenthistory             | table       | postgres
+ humanresources     | employeepayhistory                    | table       | postgres
+ humanresources     | jobcandidate                          | table       | postgres
+ humanresources     | shift                                 | table       | postgres
+ information_schema | sql_features                          | table       | postgres
+ information_schema | sql_implementation_info               | table       | postgres
+ information_schema | sql_parts                             | table       | postgres
+ information_schema | sql_sizing                            | table       | postgres
+ person             | address                               | table       | postgres
+ person             | addresstype                           | table       | postgres
+ person             | businessentity                        | table       | postgres
+ person             | businessentityaddress                 | table       | postgres
+ person             | businessentitycontact                 | table       | postgres
+ person             | contacttype                           | table       | postgres
+ person             | countryregion                         | table       | postgres
+ person             | emailaddress                          | table       | postgres
+ person             | password                              | table       | postgres
+ person             | person                                | table       | postgres
+ person             | personphone                           | table       | postgres
+ person             | phonenumbertype                       | table       | postgres
+ person             | stateprovince                         | table       | postgres
+ pg_catalog         | pg_aggregate                          | table       | postgres
+ pg_catalog         | pg_am                                 | table       | postgres
+ pg_catalog         | pg_amop                               | table       | postgres
+ pg_catalog         | pg_amproc                             | table       | postgres
+ pg_catalog         | pg_attrdef                            | table       | postgres
+ pg_catalog         | pg_attribute                          | table       | postgres
+ pg_catalog         | pg_auth_members                       | table       | postgres
+ pg_catalog         | pg_authid                             | table       | postgres
+ pg_catalog         | pg_cast                               | table       | postgres
+ pg_catalog         | pg_class                              | table       | postgres
+ pg_catalog         | pg_collation                          | table       | postgres
+ pg_catalog         | pg_constraint                         | table       | postgres
+ pg_catalog         | pg_conversion                         | table       | postgres
+ pg_catalog         | pg_database                           | table       | postgres
+ pg_catalog         | pg_db_role_setting                    | table       | postgres
+ pg_catalog         | pg_default_acl                        | table       | postgres
+ pg_catalog         | pg_depend                             | table       | postgres
+ pg_catalog         | pg_description                        | table       | postgres
+ pg_catalog         | pg_enum                               | table       | postgres
+ pg_catalog         | pg_event_trigger                      | table       | postgres
+ pg_catalog         | pg_extension                          | table       | postgres
+ pg_catalog         | pg_foreign_data_wrapper               | table       | postgres
+ pg_catalog         | pg_foreign_server                     | table       | postgres
+ pg_catalog         | pg_foreign_table                      | table       | postgres
+ pg_catalog         | pg_index                              | table       | postgres
+ pg_catalog         | pg_inherits                           | table       | postgres
+ pg_catalog         | pg_init_privs                         | table       | postgres
+ pg_catalog         | pg_language                           | table       | postgres
+ pg_catalog         | pg_largeobject                        | table       | postgres
+ pg_catalog         | pg_largeobject_metadata               | table       | postgres
+ pg_catalog         | pg_namespace                          | table       | postgres
+ pg_catalog         | pg_opclass                            | table       | postgres
+ pg_catalog         | pg_operator                           | table       | postgres
+ pg_catalog         | pg_opfamily                           | table       | postgres
+ pg_catalog         | pg_parameter_acl                      | table       | postgres
+ pg_catalog         | pg_partitioned_table                  | table       | postgres
+ pg_catalog         | pg_policy                             | table       | postgres
+ pg_catalog         | pg_proc                               | table       | postgres
+ pg_catalog         | pg_publication                        | table       | postgres
+ pg_catalog         | pg_publication_namespace              | table       | postgres
+ pg_catalog         | pg_publication_rel                    | table       | postgres
+ pg_catalog         | pg_range                              | table       | postgres
+ pg_catalog         | pg_replication_origin                 | table       | postgres
+ pg_catalog         | pg_rewrite                            | table       | postgres
+ pg_catalog         | pg_seclabel                           | table       | postgres
+ pg_catalog         | pg_sequence                           | table       | postgres
+ pg_catalog         | pg_shdepend                           | table       | postgres
+ pg_catalog         | pg_shdescription                      | table       | postgres
+ pg_catalog         | pg_shseclabel                         | table       | postgres
+ pg_catalog         | pg_statistic                          | table       | postgres
+ pg_catalog         | pg_statistic_ext                      | table       | postgres
+ pg_catalog         | pg_statistic_ext_data                 | table       | postgres
+ pg_catalog         | pg_subscription                       | table       | postgres
+ pg_catalog         | pg_subscription_rel                   | table       | postgres
+ pg_catalog         | pg_tablespace                         | table       | postgres
+ pg_catalog         | pg_transform                          | table       | postgres
+ pg_catalog         | pg_trigger                            | table       | postgres
+ pg_catalog         | pg_ts_config                          | table       | postgres
+ pg_catalog         | pg_ts_config_map                      | table       | postgres
+ pg_catalog         | pg_ts_dict                            | table       | postgres
+ pg_catalog         | pg_ts_parser                          | table       | postgres
+ pg_catalog         | pg_ts_template                        | table       | postgres
+ pg_catalog         | pg_type                               | table       | postgres
+ pg_catalog         | pg_user_mapping                       | table       | postgres
+ pg_toast           | pg_toast_1213                         | TOAST table | postgres
+ pg_toast           | pg_toast_1247                         | TOAST table | postgres
+ pg_toast           | pg_toast_1255                         | TOAST table | postgres
+ pg_toast           | pg_toast_1260                         | TOAST table | postgres
+ pg_toast           | pg_toast_1262                         | TOAST table | postgres
+ pg_toast           | pg_toast_1417                         | TOAST table | postgres
+ pg_toast           | pg_toast_1418                         | TOAST table | postgres
+ pg_toast           | pg_toast_14934                        | TOAST table | postgres
+ pg_toast           | pg_toast_14939                        | TOAST table | postgres
+ pg_toast           | pg_toast_14944                        | TOAST table | postgres
+ pg_toast           | pg_toast_14949                        | TOAST table | postgres
+ pg_toast           | pg_toast_2328                         | TOAST table | postgres
+ pg_toast           | pg_toast_2396                         | TOAST table | postgres
+ pg_toast           | pg_toast_2600                         | TOAST table | postgres
+ pg_toast           | pg_toast_2604                         | TOAST table | postgres
+ pg_toast           | pg_toast_2606                         | TOAST table | postgres
+ pg_toast           | pg_toast_2609                         | TOAST table | postgres
+ pg_toast           | pg_toast_2612                         | TOAST table | postgres
+ pg_toast           | pg_toast_2615                         | TOAST table | postgres
+ pg_toast           | pg_toast_2618                         | TOAST table | postgres
+ pg_toast           | pg_toast_2619                         | TOAST table | postgres
+ pg_toast           | pg_toast_2620                         | TOAST table | postgres
+ pg_toast           | pg_toast_2964                         | TOAST table | postgres
+ pg_toast           | pg_toast_3079                         | TOAST table | postgres
+ pg_toast           | pg_toast_3118                         | TOAST table | postgres
+ pg_toast           | pg_toast_3256                         | TOAST table | postgres
+ pg_toast           | pg_toast_3350                         | TOAST table | postgres
+ pg_toast           | pg_toast_3381                         | TOAST table | postgres
+ pg_toast           | pg_toast_3394                         | TOAST table | postgres
+ pg_toast           | pg_toast_3429                         | TOAST table | postgres
+ pg_toast           | pg_toast_3456                         | TOAST table | postgres
+ pg_toast           | pg_toast_3466                         | TOAST table | postgres
+ pg_toast           | pg_toast_3592                         | TOAST table | postgres
+ pg_toast           | pg_toast_3596                         | TOAST table | postgres
+ pg_toast           | pg_toast_3600                         | TOAST table | postgres
+ pg_toast           | pg_toast_41276                        | TOAST table | postgres
+ pg_toast           | pg_toast_41288                        | TOAST table | postgres
+ pg_toast           | pg_toast_41298                        | TOAST table | postgres
+ pg_toast           | pg_toast_41307                        | TOAST table | postgres
+ pg_toast           | pg_toast_41321                        | TOAST table | postgres
+ pg_toast           | pg_toast_41346                        | TOAST table | postgres
+ pg_toast           | pg_toast_41353                        | TOAST table | postgres
+ pg_toast           | pg_toast_41359                        | TOAST table | postgres
+ pg_toast           | pg_toast_41367                        | TOAST table | postgres
+ pg_toast           | pg_toast_41374                        | TOAST table | postgres
+ pg_toast           | pg_toast_41396                        | TOAST table | postgres
+ pg_toast           | pg_toast_41405                        | TOAST table | postgres
+ pg_toast           | pg_toast_41413                        | TOAST table | postgres
+ pg_toast           | pg_toast_41440                        | TOAST table | postgres
+ pg_toast           | pg_toast_41446                        | TOAST table | postgres
+ pg_toast           | pg_toast_41459                        | TOAST table | postgres
+ pg_toast           | pg_toast_41468                        | TOAST table | postgres
+ pg_toast           | pg_toast_41477                        | TOAST table | postgres
+ pg_toast           | pg_toast_41486                        | TOAST table | postgres
+ pg_toast           | pg_toast_41506                        | TOAST table | postgres
+ pg_toast           | pg_toast_41521                        | TOAST table | postgres
+ pg_toast           | pg_toast_41528                        | TOAST table | postgres
+ pg_toast           | pg_toast_41546                        | TOAST table | postgres
+ pg_toast           | pg_toast_41555                        | TOAST table | postgres
+ pg_toast           | pg_toast_41571                        | TOAST table | postgres
+ pg_toast           | pg_toast_41584                        | TOAST table | postgres
+ pg_toast           | pg_toast_41594                        | TOAST table | postgres
+ pg_toast           | pg_toast_41602                        | TOAST table | postgres
+ pg_toast           | pg_toast_41612                        | TOAST table | postgres
+ pg_toast           | pg_toast_41621                        | TOAST table | postgres
+ pg_toast           | pg_toast_41636                        | TOAST table | postgres
+ pg_toast           | pg_toast_41876                        | TOAST table | postgres
+ pg_toast           | pg_toast_41889                        | TOAST table | postgres
+ pg_toast           | pg_toast_41901                        | TOAST table | postgres
+ pg_toast           | pg_toast_41920                        | TOAST table | postgres
+ pg_toast           | pg_toast_41932                        | TOAST table | postgres
+ pg_toast           | pg_toast_41952                        | TOAST table | postgres
+ pg_toast           | pg_toast_41959                        | TOAST table | postgres
+ pg_toast           | pg_toast_41980                        | TOAST table | postgres
+ pg_toast           | pg_toast_41993                        | TOAST table | postgres
+ pg_toast           | pg_toast_42018                        | TOAST table | postgres
+ pg_toast           | pg_toast_42034                        | TOAST table | postgres
+ pg_toast           | pg_toast_42043                        | TOAST table | postgres
+ pg_toast           | pg_toast_42051                        | TOAST table | postgres
+ pg_toast           | pg_toast_42062                        | TOAST table | postgres
+ pg_toast           | pg_toast_42094                        | TOAST table | postgres
+ pg_toast           | pg_toast_42113                        | TOAST table | postgres
+ pg_toast           | pg_toast_43118                        | TOAST table | postgres
+ pg_toast           | pg_toast_43161                        | TOAST table | postgres
+ pg_toast           | pg_toast_6000                         | TOAST table | postgres
+ pg_toast           | pg_toast_6100                         | TOAST table | postgres
+ pg_toast           | pg_toast_6106                         | TOAST table | postgres
+ pg_toast           | pg_toast_6243                         | TOAST table | postgres
+ pg_toast           | pg_toast_826                          | TOAST table | postgres
+ production         | billofmaterials                       | table       | postgres
+ production         | culture                               | table       | postgres
+ production         | document                              | table       | postgres
+ production         | illustration                          | table       | postgres
+ production         | location                              | table       | postgres
+ production         | product                               | table       | postgres
+ production         | productcategory                       | table       | postgres
+ production         | productcosthistory                    | table       | postgres
+ production         | productdescription                    | table       | postgres
+ production         | productdocument                       | table       | postgres
+ production         | productinventory                      | table       | postgres
+ production         | productlistpricehistory               | table       | postgres
+ production         | productmodel                          | table       | postgres
+ production         | productmodelillustration              | table       | postgres
+ production         | productmodelproductdescriptionculture | table       | postgres
+ production         | productphoto                          | table       | postgres
+ production         | productproductphoto                   | table       | postgres
+ production         | productreview                         | table       | postgres
+ production         | productsubcategory                    | table       | postgres
+ production         | scrapreason                           | table       | postgres
+ production         | transactionhistory                    | table       | postgres
+ production         | transactionhistoryarchive             | table       | postgres
+ production         | unitmeasure                           | table       | postgres
+ production         | workorder                             | table       | postgres
+ production         | workorderrouting                      | table       | postgres
+ purchasing         | productvendor                         | table       | postgres
+ purchasing         | purchaseorderdetail                   | table       | postgres
+ purchasing         | purchaseorderheader                   | table       | postgres
+ purchasing         | shipmethod                            | table       | postgres
+ purchasing         | vendor                                | table       | postgres
+ sales              | countryregioncurrency                 | table       | postgres
+ sales              | creditcard                            | table       | postgres
+ sales              | currency                              | table       | postgres
+ sales              | currencyrate                          | table       | postgres
+ sales              | customer                              | table       | postgres
+ sales              | personcreditcard                      | table       | postgres
+ sales              | salesorderdetail                      | table       | postgres
+ sales              | salesorderheader                      | table       | postgres
+ sales              | salesorderheadersalesreason           | table       | postgres
+ sales              | salesperson                           | table       | postgres
+ sales              | salespersonquotahistory               | table       | postgres
+ sales              | salesreason                           | table       | postgres
+ sales              | salestaxrate                          | table       | postgres
+ sales              | salesterritory                        | table       | postgres
+ sales              | salesterritoryhistory                 | table       | postgres
+ sales              | shoppingcartitem                      | table       | postgres
+ sales              | specialoffer                          | table       | postgres
+ sales              | specialofferproduct                   | table       | postgres
+ sales              | store                                 | table       | postgres
+(225 rows)
+
+
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=# select *  from sales.store;
+ businessentityid |                   name                    | salespersonid |                                                                                                                       demographics |               rowguid                |      modifieddate
+------------------+-------------------------------------------+---------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+-------------------------
+              292 | Next-Door Bike Store                      |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BM</BusinessType><YearOpened>1996</YearOpened><Specialty>Mountain</Specialty><SquareFeet>21000</SquareFeet><Brands>2</Brands><Internet>ISDN</Internet><NumberEmployees>13</NumberEmployees></StoreSurvey> | a22517e3-848d-4ebe-b9d9-7437f3432304 | 2014-09-12 11:15:07.497
+              294 | Professional Sales and Service            |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1991</YearOpened><Specialty>Touring</Specialty><SquareFeet>18000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>14</NumberEmployees></StoreSurvey> | b50ca50b-c601-4a13-b07e-2c63862d71b4 | 2014-09-12 11:15:07.497
+              296 | Riders Company                            |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BM</BusinessType><YearOpened>1999</YearOpened><Specialty>Road</Specialty><SquareFeet>21000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>15</NumberEmployees></StoreSurvey> | 337c3688-1339-4e1a-a08a-b54b23566e49 | 2014-09-12 11:15:07.497
+              298 | The Bike Mechanics                        |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BM</BusinessType><YearOpened>1994</YearOpened><Specialty>Mountain</Specialty><SquareFeet>18000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>ployees></StoreSurvey>         | 7894f278-f0c8-4d16-bd75-213fdbf13023 | 2014-09-12 11:15:07.497
+              300 | Nationwide Supply                         |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1987</YearOpened><Specialty>Touring</Specialty><SquareFeet>21000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>17</NumberEmployees></StoreSurvey> | c3fc9705-a8c4-4f3a-9550-eb2fa4b7b64d | 2014-09-12 11:15:07.497
+              302 | Area Bike Accessories                     |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1982</YearOpened><Specialty>Road</Specialty><SquareFeet>9000</SquareFeet><Brands>AW</Brands><Internet>T2</Internet><NumberEmployees>8</NumberEmployees></StoreSurvey> | 368be6dd-30e5-49bb-9a86-71fd49c58f4e | 2014-09-12 11:15:07.497
+              304 | Bicycle Accessories and Kits              |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BM</BusinessType><YearOpened>1990</YearOpened><Specialty>Mountain</Specialty><SquareFeet>7000</SquareFeet><Brands>AW</Brands><Internet>T1</Internet><NumberEmployees>9</NumberEmployees></StoreSurvey> | 35f40636-5105-49d5-869e-27e231189150 | 2014-09-12 11:15:07.497
+              306 | Clamps & Brackets Co.                     |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BM</BusinessType><YearOpened>1985</YearOpened><Specialty>Mountain</Specialty><SquareFeet>17000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>10</NumberEmployees></StoreSurvey> | 64d06bfc-d060-405c-8c60-c067fe7c67df | 2014-09-12 11:15:07.497
+              308 | Valley Bicycle Specialists                |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>OS</BusinessType><YearOpened>1979</YearOpened><Specialty>Mountain</Specialty><SquareFeet>72000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>66</NumberEmployees></StoreSurvey> | 59386b0c-652e-4668-b44b-4e1711793330 | 2014-09-12 11:15:07.497
+              310 | New Bikes Company                         |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Security</BankName><BusinessType>OS</BusinessType><YearOpened>1974</YearOpened><Specialty>Road</Specialty><SquareFeet>39000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>40</NumberEmployees></StoreSurvey> | 47e4b6bd-5cd1-45a3-a231-79d930381c56 | 2014-09-12 11:15:07.497
+              312 | Vinyl and Plastic Goods Corporation       |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>OS</BusinessType><YearOpened>1980</YearOpened><Specialty>Mountain</Specialty><SquareFeet>41000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>43</NumberEmployees></StoreSurvey> | dc610525-e373-49b1-b786-ea040ec25c06 | 2014-09-12 11:15:07.497
+              314 | Top of the Line Bikes                     |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1986</YearOpened><Specialty>Touring</Specialty><SquareFeet>40000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>46</NumberEmployees></StoreSurvey> | e290e93f-a980-4ba3-86c3-9858f15c8a6d | 2014-09-12 11:15:07.497
+              316 | Fun Toys and Bikes                        |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BM</BusinessType><YearOpened>1973</YearOpened><Specialty>Touring</Specialty><SquareFeet>6000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>2</NumberEmployees></StoreSurvey> | 6cdcf941-4192-49c7-994a-5adba534e095 | 2014-09-12 11:15:07.497
+              318 | Great Bikes                               |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BM</BusinessType><YearOpened>1981</YearOpened><Specialty>Mountain</Specialty><SquareFeet>10000</SquareFeet><Brands>4+</Brands><Internet>T3</Internet><NumberEmployees>3</NumberEmployees></StoreSurvey> | 956fbc35-5e0d-4175-8045-e0be380ba340 | 2014-09-12 11:15:07.497
+              320 | Metropolitan Sales and Rental             |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1976</YearOpened><Specialty>Road</Specialty><SquareFeet>6000</SquareFeet><Brands>AW</Brands><Internet>T1</Internet><NumberEmployees>4</NumberEmployees></StoreSurvey> | 0cb4fef2-5047-40f7-8848-b59f7a3f3eec | 2014-09-12 11:15:07.497
+              322 | Irregulars Outlet                         |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BM</BusinessType><YearOpened>1984</YearOpened><Specialty>Mountain</Specialty><SquareFeet>7000</SquareFeet><Brands>AW</Brands><Internet>DSL</Internet><NumberEmployees>5</NumberEmployees></StoreSurvey> | cde66279-83d8-4340-a83c-e86e15514ac4 | 2014-09-12 11:15:07.497
+              324 | Valley Toy Store                          |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BM</BusinessType><YearOpened>1979</YearOpened><Specialty>Mountain</Specialty><SquareFeet>9000</SquareFeet><Brands>2</Brands><Internet>T1</Internet><NumberEmployees>6</NumberEmployees></StoreSurvey> | 6a1bea56-dcb7-45cf-8c92-3705e12eb2aa | 2014-09-12 11:15:07.497
+              326 | Worthwhile Activity Store                 |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BM</BusinessType><YearOpened>1987</YearOpened><Specialty>Mountain</Specialty><SquareFeet>8000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>7</NumberEmployees></StoreSurvey> | bad63717-99bd-4581-8160-0f1723be42cb | 2014-09-12 11:15:07.497
+              328 | Purchase Mart                             |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>United Security</BankName><BusinessType>OS</BusinessType><YearOpened>1992</YearOpened><Specialty>Touring</Specialty><SquareFeet>38000</SquareFeet><Brands>3</Brands><Internet>ISDN</Internet><NumberEmployees>49</NumberEmployees></StoreSurvey> | a3140349-57a3-46aa-bf32-d7f4753a06d6 | 2014-09-12 11:15:07.497
+              330 | Major Sport Suppliers                     |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>OS</BusinessType><YearOpened>1998</YearOpened><Specialty>Mountain</Specialty><SquareFeet>68000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>52</NumberEmployees></StoreSurvey> | 3b5f8572-43b0-42f5-86ff-e379d0769f28 | 2014-09-12 11:15:07.497
+              332 | Family's Favorite Bike Shop               |           278 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BM</BusinessType><YearOpened>1997</YearOpened><Specialty>Mountain</Specialty><SquareFeet>21000</SquareFeet><Brands>3</Brands><Internet>ISDN</Internet><NumberEmployees>18</NumberEmployees></StoreSurvey> | 712df7b6-a6e4-4059-a1b8-6d39a80ab712 | 2014-09-12 11:15:07.497
+              334 | Global Plaza                              |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BM</BusinessType><YearOpened>1975</YearOpened><Specialty>Mountain</Specialty><SquareFeet>19000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>19</NumberEmployees></StoreSurvey> | 9a1e91d8-509b-4d96-bd77-7427c7f0c47b | 2014-09-12 11:15:07.497
+              336 | Imported and Domestic Cycles              |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BM</BusinessType><YearOpened>2000</YearOpened><Specialty>Road</Specialty><SquareFeet>24000</SquareFeet><Brands>2</Brands><Internet>T1</Internet><NumberEmployees>20</NumberEmployees></StoreSurvey> | 25c229c0-4e7a-42d2-acb1-a2118361b2f1 | 2014-09-12 11:15:07.497
+              338 | Systematic Sales                          |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>OS</BusinessType><YearOpened>1999</YearOpened><Specialty>Touring</Specialty><SquareFeet>73000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>55</NumberEmployees></StoreSurvey> | df9126a5-9c95-44a2-a31f-f759ea33eea7 | 2014-09-12 11:15:07.497
+              340 | eCommerce Bikes                           |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1999</YearOpened><Specialty>Mountain</Specialty><SquareFeet>69000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>58</NumberEmployees></StoreSurvey> | 1ec47823-4b39-4609-aaec-6ee68cc74f81 | 2014-09-12 11:15:07.497
+              342 | Mountain Toy Store                        |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BM</BusinessType><YearOpened>2000</YearOpened><Specialty>Road</Specialty><SquareFeet>18000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>17</NumberEmployees></StoreSurvey> | 52efc841-97c5-4ac1-b707-fa3717b0bc48 | 2014-09-12 11:15:07.497
+              344 | Retail Sales and Service                  |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BM</BusinessType><YearOpened>1994</YearOpened><Specialty>Road</Specialty><SquareFeet>18000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>14</NumberEmployees></StoreSurvey> | 38f9be1b-9137-4e4e-985d-06f6c5e02330 | 2014-09-12 11:15:07.497
+              346 | Designated Distributors                   |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Security</BankName><BusinessType>OS</BusinessType><YearOpened>1979</YearOpened><Specialty>Road</Specialty><SquareFeet>72000</SquareFeet><Brands>4+</Brands><Internet>T2</Internet><NumberEmployees>61</NumberEmployees></StoreSurvey> | 5dc17a1c-f618-4b6e-bea2-bff96ca6ba8b | 2014-09-12 11:15:07.497
+              348 | Bold Bike Accessories                     |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>OS</BusinessType><YearOpened>1999</YearOpened><Specialty>Mountain</Specialty><SquareFeet>72000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>58</NumberEmployees></StoreSurvey> | ac7a83f1-196b-4bbf-a6e0-3165d4c84454 | 2014-09-12 11:15:07.497
+              350 | Twin Cycles                               |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BM</BusinessType><YearOpened>1988</YearOpened><Specialty>Touring</Specialty><SquareFeet>21000</SquareFeet><Brands>AW</Brands><Internet>T1</Internet><NumberEmployees>11</NumberEmployees></StoreSurvey> | 4e917578-1942-4bab-8e63-932052fdacec | 2014-09-12 11:15:07.497
+              352 | Tiny Bike Boutique                        |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1978</YearOpened><Specialty>Road</Specialty><SquareFeet>6000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>4</NumberEmployees></StoreSurvey> | 1d65dd5a-a7c8-4ac1-a2b6-76ad4a5946bd | 2014-09-12 11:15:07.497
+              354 | Acclaimed Bicycle Company                 |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1979</YearOpened><Specialty>Touring</Specialty><SquareFeet>73000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>61</NumberEmployees></StoreSurvey> | e71ac59c-b228-49f2-acc2-077aa5dfc9db | 2014-09-12 11:15:07.497
+              356 | Serious Cycles                            |           278 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>United Security</BankName><BusinessType>OS</BusinessType><YearOpened>1996</YearOpened><Specialty>Mountain</Specialty><SquareFeet>71000</SquareFeet><Brands>4+</Brands><Internet>ISDN</Internet><NumberEmployees>64</NumberEmployees></StoreSurvey> | 8036d3b1-1c8d-43bf-b913-d17ee0d755af | 2014-09-12 11:15:07.497
+              358 | Quality Bike Sales                        |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>OS</BusinessType><YearOpened>1991</YearOpened><Specialty>Touring</Specialty><SquareFeet>74000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>67</NumberEmployees></StoreSurvey> | 55ec3545-a751-4a37-944e-b5df36219e11 | 2014-09-12 11:15:07.497
+              360 | Novelty Bikes                             |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>OS</BusinessType><YearOpened>1993</YearOpened><Specialty>Touring</Specialty><SquareFeet>74000</SquareFeet><Brands>4+</Brands><Internet>ISDN</Internet><NumberEmployees>70</NumberEmployees></StoreSurvey> | cd239474-966c-4474-97a9-25d52289ed52 | 2014-09-12 11:15:07.497
+              362 | Distinctive Cycles Sales & Service        |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>OS</BusinessType><YearOpened>1995</YearOpened><Specialty>Mountain</Specialty><SquareFeet>75000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>79</NumberEmployees></StoreSurvey> | 7e5da4c4-23b4-4bd2-8037-b2be46e41c83 | 2014-09-12 11:15:07.497
+              364 | Leading Bike Distributors                 |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BS</BusinessType><YearOpened>1978</YearOpened><Specialty>Road</Specialty><SquareFeet>18000</SquareFeet><Brands>3</Brands><Internet>T1</Internet><NumberEmployees>13</NumberEmployees></StoreSurvey> | 0c0b95fd-1934-4dd9-bc1c-8c1e2bf07ebc | 2014-09-12 11:15:07.497
+              366 | Activity Center                           |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BS</BusinessType><YearOpened>1971</YearOpened><Specialty>Road</Specialty><SquareFeet>37000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>37</NumberEmployees></StoreSurvey> | f579e604-b602-4d67-ab88-130df07753f0 | 2014-09-12 11:15:07.497
+              368 | Brightwork Company                        |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BS</BusinessType><YearOpened>1979</YearOpened><Specialty>Mountain</Specialty><SquareFeet>36000</SquareFeet><Brands>4+</Brands><Internet>ISDN</Internet><NumberEmployees>38</NumberEmployees></StoreSurvey> | 6f4273ae-583c-4219-9e0b-2f3cd44a4000 | 2014-09-12 11:15:07.497
+              370 | Resale Services                           |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BM</BusinessType><YearOpened>1988</YearOpened><Specialty>Mountain</Specialty><SquareFeet>21000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>16</NumberEmployees></StoreSurvey> | 7c7076c8-2ab9-4810-bbca-b126fc811e32 | 2014-09-12 11:15:07.497
+              372 | The Gear Store                            |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1982</YearOpened><Specialty>Mountain</Specialty><SquareFeet>21000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>14</NumberEmployees></StoreSurvey> | 03e77d8a-62b6-41ee-b081-7ec3e60c9a3e | 2014-09-12 11:15:07.497
+              374 | Immense Manufacturing Company             |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1998</YearOpened><Specialty>Touring</Specialty><SquareFeet>76000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>73</NumberEmployees></StoreSurvey> | f948f121-09c9-46d4-a783-63ead859a044 | 2014-09-12 11:15:07.497
+              376 | Extended Bike Sales                       |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Security</BankName><BusinessType>OS</BusinessType><YearOpened>1990</YearOpened><Specialty>Mountain</Specialty><SquareFeet>73000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>76</NumberEmployees></StoreSurvey> | 9e550241-b6cb-4e95-96a2-f3bef46016df | 2014-09-12 11:15:07.497
+              378 | Pedaling Components                       |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BS</BusinessType><YearOpened>1988</YearOpened><Specialty>Touring</Specialty><SquareFeet>36000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>35</NumberEmployees></StoreSurvey> | 24dd7af1-d347-44cb-96fa-14b9ce5c83a8 | 2014-09-12 11:15:07.497
+              380 | Workout Emporium                          |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1976</YearOpened><Specialty>Touring</Specialty><SquareFeet>39000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>36</NumberEmployees></StoreSurvey> | 649db09e-3aa4-4275-880c-7853b3395e51 | 2014-09-12 11:15:07.497
+              382 | Work and Play Association                 |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BM</BusinessType><YearOpened>1976</YearOpened><Specialty>Road</Specialty><SquareFeet>22000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>12</NumberEmployees></StoreSurvey> | e5353da7-cb02-4c26-acd3-1c42050d4bb9 | 2014-09-12 11:15:07.497
+              384 | Seaside Bike Works                        |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BM</BusinessType><YearOpened>1970</YearOpened><Specialty>Touring</Specialty><SquareFeet>19000</SquareFeet><Brands>3</Brands><Internet>T1</Internet><NumberEmployees>10</NumberEmployees></StoreSurvey> | 4c85c347-c9c0-4e6d-b290-19970f0adea0 | 2014-09-12 11:15:07.497
+              386 | Nice Bikes                                |           278 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1975</YearOpened><Specialty>Road</Specialty><SquareFeet>9000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>8</NumberEmployees></StoreSurvey> | 9fa1609c-9a36-4282-bc80-a562332def1b | 2014-09-12 11:15:07.497
+              388 | Remarkable Bike Store                     |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BS</BusinessType><YearOpened>1972</YearOpened><Specialty>Road</Specialty><SquareFeet>17000</SquareFeet><Brands>3</Brands><Internet>T2</Internet><NumberEmployees>10</NumberEmployees></StoreSurvey> | f2dcd314-506d-47f1-8cd0-6017c40c96ab | 2014-09-12 11:15:07.497
+              390 | Road-Way Mart                             |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BS</BusinessType><YearOpened>1998</YearOpened><Specialty>Mountain</Specialty><SquareFeet>26000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>27</NumberEmployees></StoreSurvey> | b0a08902-2c39-4a50-86e5-86e98c7b2597 | 2014-09-12 11:15:07.497
+              392 | Small Cycle Store                         |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BS</BusinessType><YearOpened>1971</YearOpened><Specialty>Road</Specialty><SquareFeet>25000</SquareFeet><Brands>3</Brands><Internet>T1</Internet><NumberEmployees>28</NumberEmployees></StoreSurvey> | c1cdcf27-3fa6-4bf9-a5ca-baeefc8fb8e0 | 2014-09-12 11:15:07.497
+              394 | Blue-Ribbon Bike Company                  |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BM</BusinessType><YearOpened>1970</YearOpened><Specialty>Touring</Specialty><SquareFeet>9000</SquareFeet><Brands>AW</Brands><Internet>T1</Internet><NumberEmployees>6</NumberEmployees></StoreSurvey> | 096b2c5d-14e5-4bda-94e1-3e5c01d906c4 | 2014-09-12 11:15:07.497
+              396 | Flawless Bike Shop                        |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BM</BusinessType><YearOpened>1978</YearOpened><Specialty>Road</Specialty><SquareFeet>10000</SquareFeet><Brands>3</Brands><Internet>T2</Internet><NumberEmployees>4</NumberEmployees></StoreSurvey> | 71aea07e-95c4-4c44-a919-01b5008639d3 | 2014-09-12 11:15:07.497
+              398 | Grand Bicycle Stores                      |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BM</BusinessType><YearOpened>1973</YearOpened><Specialty>Mountain</Specialty><SquareFeet>10000</SquareFeet><Brands>AW</Brands><Internet>ISDN</Internet><NumberEmployees>2</NumberEmployees></StoreSurvey> | 6def5808-13ca-4784-9f4e-1a1ffb1905d9 | 2014-09-12 11:15:07.497
+              400 | Exertion Activities Club                  |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1984</YearOpened><Specialty>Touring</Specialty><SquareFeet>38000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>32</NumberEmployees></StoreSurvey> | ac060b37-154b-4f3f-a06e-918b7ea75bb1 | 2014-09-12 11:15:07.497
+              402 | Impromptu Trips                           |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BS</BusinessType><YearOpened>1978</YearOpened><Specialty>Mountain</Specialty><SquareFeet>37000</SquareFeet><Brands>4+</Brands><Internet>ISDN</Internet><NumberEmployees>33</NumberEmployees></StoreSurvey> | 16255726-8647-401a-9de9-ab524a839804 | 2014-09-12 11:15:07.497
+              404 | Margie's Travel                           |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BS</BusinessType><YearOpened>1972</YearOpened><Specialty>Mountain</Specialty><SquareFeet>35000</SquareFeet><Brands>2</Brands><Internet>T1</Internet><NumberEmployees>34</NumberEmployees></StoreSurvey> | 9d71ff30-1bc5-4f0b-bd7b-3618b58634e9 | 2014-09-12 11:15:07.497
+              406 | Kickstand Sellers                         |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1981</YearOpened><Specialty>Mountain</Specialty><SquareFeet>8000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>3</NumberEmployees></StoreSurvey> | f6f76f14-09d5-4b11-bad6-e3bff76ac761 | 2014-09-12 11:15:07.497
+              408 | Nearest Bike Store                        |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BM</BusinessType><YearOpened>1976</YearOpened><Specialty>Touring</Specialty><SquareFeet>8000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>4</NumberEmployees></StoreSurvey> | aac48ead-3e12-4431-89c4-964406a7a94d | 2014-09-12 11:15:07.497
+              410 | Fast Bike Works                           |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BS</BusinessType><YearOpened>1971</YearOpened><Specialty>Touring</Specialty><SquareFeet>25000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>28</NumberEmployees></StoreSurvey> | d09c875e-114a-4d24-a68b-aed21ee23494 | 2014-09-12 11:15:07.497
+              412 | Gasless Cycle Shop                        |           278 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BS</BusinessType><YearOpened>2001</YearOpened><Specialty>Road</Specialty><SquareFeet>24000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>29</NumberEmployees></StoreSurvey> | 824b931b-5f27-407c-81ad-00ff7bc886f1 | 2014-09-12 11:15:07.497
+              414 | Lubricant and Grease Suppliers            |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BS</BusinessType><YearOpened>1996</YearOpened><Specialty>Mountain</Specialty><SquareFeet>37000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>30</NumberEmployees></StoreSurvey> | 4047a571-c602-4433-956c-c6af7366bf22 | 2014-09-12 11:15:07.497
+              416 | Teen Discount Store                       |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BM</BusinessType><YearOpened>1994</YearOpened><Specialty>Mountain</Specialty><SquareFeet>18000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>16</NumberEmployees></StoreSurvey> | a22c02a3-37c8-402a-932f-bc8dd75bea87 | 2014-09-12 11:15:07.497
+              418 | Transportation Options                    |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BM</BusinessType><YearOpened>1987</YearOpened><Specialty>Mountain</Specialty><SquareFeet>20000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>17</NumberEmployees></StoreSurvey> | 7cbea615-beca-44c6-8c74-cb1541faefa6 | 2014-09-12 11:15:07.497
+              420 | Capital Riding Supplies                   |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>OS</BusinessType><YearOpened>1986</YearOpened><Specialty>Mountain</Specialty><SquareFeet>39000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>46</NumberEmployees></StoreSurvey> | 7ea9a2a5-753c-4df2-93f6-ab81f5a4c135 | 2014-09-12 11:15:07.497
+              422 | Bike Boutique                             |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1992</YearOpened><Specialty>Road</Specialty><SquareFeet>41000</SquareFeet><Brands>4+</Brands><Internet>ISDN</Internet><NumberEmployees>49</NumberEmployees></StoreSurvey> | 81eda8db-5162-424f-ba36-6cb6770cd064 | 2014-09-12 11:15:07.497
+              424 | Bikes Anyone?                             |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BS</BusinessType><YearOpened>1996</YearOpened><Specialty>Touring</Specialty><SquareFeet>27000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>22</NumberEmployees></StoreSurvey> | 6368f18b-afcf-4008-9611-99458c02c985 | 2014-09-12 11:15:07.497
+              426 | Cross-town Parts Shop                     |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1990</YearOpened><Specialty>Road</Specialty><SquareFeet>23000</SquareFeet><Brands>2</Brands><Internet>T1</Internet><NumberEmployees>19</NumberEmployees></StoreSurvey> | dfed9777-d43c-497d-86d4-14407e43c535 | 2014-09-12 11:15:07.497
+              428 | Finer Cycle Shop                          |           278 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BS</BusinessType><YearOpened>1984</YearOpened><Specialty>Mountain</Specialty><SquareFeet>20000</SquareFeet><Brands>4+</Brands><Internet>ISDN</Internet><NumberEmployees>16</NumberEmployees></StoreSurvey> | 52b4d514-b45e-4bf6-821b-f972b738d732 | 2014-09-12 11:15:07.497
+              430 | Center Cycle Shop                         |           280 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BM</BusinessType><YearOpened>2000</YearOpened><Specialty>Road</Specialty><SquareFeet>25000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>20</NumberEmployees></StoreSurvey> | 8e153f0c-275c-42ca-98df-adefb90ab587 | 2014-09-12 11:15:07.497
+              432 | Bulk Discount Store                       |           289 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BM</BusinessType><YearOpened>2000</YearOpened><Specialty>Road</Specialty><SquareFeet>21000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>17</NumberEmployees></StoreSurvey> | e26b0754-871a-49ad-a21b-5e58d7e804ed | 2014-09-12 11:15:07.497
+              434 | Country Parts Shop                        |           290 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1994</YearOpened><Specialty>Road</Specialty><SquareFeet>21000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>14</NumberEmployees></StoreSurvey> | 9b88e8ed-c244-484d-8c4f-89f59570ebea | 2014-09-12 11:15:07.497
+              436 | Second Bike Shop                          |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BM</BusinessType><YearOpened>2000</YearOpened><Specialty>Road</Specialty><SquareFeet>21000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>19</NumberEmployees></StoreSurvey> | 20838797-ec33-4328-bdc0-99190729be4a | 2014-09-12 11:15:07.497
+              438 | First-Rate Outlet                         |           278 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BM</BusinessType><YearOpened>2000</YearOpened><Specialty>Road</Specialty><SquareFeet>26000</SquareFeet><Brands>3</Brands><Internet>T1</Internet><NumberEmployees>20</NumberEmployees></StoreSurvey> | 7642e78c-f447-4f9d-b8cb-e6bb467db663 | 2014-09-12 11:15:07.497
+              440 | Juvenile Sports Equipment                 |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BM</BusinessType><YearOpened>1994</YearOpened><Specialty>Mountain</Specialty><SquareFeet>20000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>18</NumberEmployees></StoreSurvey> | 74b38bf4-113c-42ec-8e72-7e4b35e5bc55 | 2014-09-12 11:15:07.497
+              442 | Another Bicycle Company                   |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BM</BusinessType><YearOpened>1973</YearOpened><Specialty>Touring</Specialty><SquareFeet>6000</SquareFeet><Brands>AW</Brands><Internet>DSL</Internet><NumberEmployees>2</NumberEmployees></StoreSurvey> | 4280c0d5-6765-4add-a679-f341d27c0ecf | 2014-09-12 11:15:07.497
+              444 | Fourth Bike Store                         |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BM</BusinessType><YearOpened>1981</YearOpened><Specialty>Touring</Specialty><SquareFeet>9000</SquareFeet><Brands>AW</Brands><Internet>T1</Internet><NumberEmployees>3</NumberEmployees></StoreSurvey> | e8623c2d-ccbf-497a-8147-6574abe11b19 | 2014-09-12 11:15:07.497
+              446 | Rodeway Bike Store                        |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1976</YearOpened><Specialty>Mountain</Specialty><SquareFeet>7000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>4</NumberEmployees></StoreSurvey> | 4f971590-8c1f-4b22-808e-5917b6fab7ec | 2014-09-12 11:15:07.497
+              448 | Traction Tire Company                     |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1990</YearOpened><Specialty>Mountain</Specialty><SquareFeet>39000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>31</NumberEmployees></StoreSurvey> | 6324fad5-6bc4-4715-85bc-a86c49e527f8 | 2014-09-12 11:15:07.497
+              450 | Unsurpassed Bikes                         |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BS</BusinessType><YearOpened>1984</YearOpened><Specialty>Touring</Specialty><SquareFeet>39000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>32</NumberEmployees></StoreSurvey> | 9bc34c8e-3856-4197-8013-f5e6c7aedb48 | 2014-09-12 11:15:07.497
+              452 | Field Trip Inc                            |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BS</BusinessType><YearOpened>1978</YearOpened><Specialty>Road</Specialty><SquareFeet>35000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>33</NumberEmployees></StoreSurvey> | 5276b793-128a-49f0-b822-d338c6b92fdc | 2014-09-12 11:15:07.497
+              454 | Tire Company                              |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1983</YearOpened><Specialty>Road</Specialty><SquareFeet>37000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>45</NumberEmployees></StoreSurvey> | f875272b-6629-4832-9e45-f3e8e6dd8963 | 2014-09-12 11:15:07.497
+              456 | Uncompromising Quality Co                 |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BS</BusinessType><YearOpened>1991</YearOpened><Specialty>Touring</Specialty><SquareFeet>39000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>46</NumberEmployees></StoreSurvey> | 058f1615-0267-4b7c-8e53-96101059cade | 2014-09-12 11:15:07.497
+              458 | Metallic Paint and Overcoat Co            |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BS</BusinessType><YearOpened>1971</YearOpened><Specialty>Road</Specialty><SquareFeet>26000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>28</NumberEmployees></StoreSurvey> | e06866f7-c659-4952-a1ec-d2b42f80613a | 2014-09-12 11:15:07.497
+              460 | Pro Sporting Goods                        |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>OS</BusinessType><YearOpened>1972</YearOpened><Specialty>Mountain</Specialty><SquareFeet>79000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>90</NumberEmployees></StoreSurvey> | 5a1ee7a6-2fd6-45c8-9b0d-41991049cdea | 2014-09-12 11:15:07.497
+              462 | Sporting Goods and Bicycle Shop           |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1977</YearOpened><Specialty>Road</Specialty><SquareFeet>78000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>91</NumberEmployees></StoreSurvey> | 93d4a3a7-d111-4113-859e-5b253dd9d943 | 2014-09-12 11:15:07.497
+              464 | Odometers and Accessories Company         |           278 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Security</BankName><BusinessType>OS</BusinessType><YearOpened>1987</YearOpened><Specialty>Touring</Specialty><SquareFeet>76000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>92</NumberEmployees></StoreSurvey> | 47e77224-11e5-4ab9-bc23-cd122f9c281d | 2014-09-12 11:15:07.497
+              466 | Scratch-Resistant Finishes Company        |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1984</YearOpened><Specialty>Mountain</Specialty><SquareFeet>21000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>16</NumberEmployees></StoreSurvey> | 5f85023b-d708-4d44-b1a2-927a21c4cbbb | 2014-09-12 11:15:07.497
+              468 | Topnotch Bikes                            |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BS</BusinessType><YearOpened>1978</YearOpened><Specialty>Mountain</Specialty><SquareFeet>22000</SquareFeet><Brands>2</Brands><Internet>T3</Internet><NumberEmployees>13</NumberEmployees></StoreSurvey> | 69a76a96-12fc-4b67-9655-c578e6b02933 | 2014-09-12 11:15:07.497
+              470 | Unicycles, Bicycles, and Tricycles        |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BS</BusinessType><YearOpened>1972</YearOpened><Specialty>Touring</Specialty><SquareFeet>17000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>10</NumberEmployees></StoreSurvey> | 58f17106-c637-44ce-b352-164e1ad7c41d | 2014-09-12 11:15:07.497
+              472 | Safe Cycles Shop                          |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Security</BankName><BusinessType>OS</BusinessType><YearOpened>1998</YearOpened><Specialty>Mountain</Specialty><SquareFeet>72000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>73</NumberEmployees></StoreSurvey> | 828d8f6d-95c6-4fdc-9888-45672fec0e11 | 2014-09-12 11:15:07.497
+              474 | Number 1 Supply                           |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>OS</BusinessType><YearOpened>1990</YearOpened><Specialty>Road</Specialty><SquareFeet>75000</SquareFeet><Brands>4+</Brands><Internet>ISDN</Internet><NumberEmployees>76</NumberEmployees></StoreSurvey> | a4d7720a-57dd-4084-bfc6-b49cd3367ffe | 2014-09-12 11:15:07.497
+              476 | Industrial Supplies                       |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1995</YearOpened><Specialty>Touring</Specialty><SquareFeet>73000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>79</NumberEmployees></StoreSurvey> | 706a4161-4e67-41e1-a31b-2be9fbf864f3 | 2014-09-12 11:15:07.497
+              478 | Golf and Cycle Store                      |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1978</YearOpened><Specialty>Mountain</Specialty><SquareFeet>75000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>86</NumberEmployees></StoreSurvey> | 68c1f86e-f581-4aea-afa4-b0c03eaf1f13 | 2014-09-12 11:15:07.497
+              480 | Front Runner Bikes                        |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Security</BankName><BusinessType>OS</BusinessType><YearOpened>1983</YearOpened><Specialty>Touring</Specialty><SquareFeet>77000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>87</NumberEmployees></StoreSurvey> | 0e549387-9dc1-4f37-89af-34faaeb7cfaf | 2014-09-12 11:15:07.497
+              482 | Favorite Toy Distributor                  |           290 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>OS</BusinessType><YearOpened>1975</YearOpened><Specialty>Touring</Specialty><SquareFeet>77000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>88</NumberEmployees></StoreSurvey> | d4352e50-aa19-434c-a515-694e42b3c4bf | 2014-09-12 11:15:07.497
+              484 | World Bike Discount Store                 |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1979</YearOpened><Specialty>Road</Specialty><SquareFeet>39000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>38</NumberEmployees></StoreSurvey> | e73e6b44-3824-4c98-a7b1-796f1f1e0de8 | 2014-09-12 11:15:07.497
+              486 | Global Sporting Goods                     |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BS</BusinessType><YearOpened>1974</YearOpened><Specialty>Road</Specialty><SquareFeet>36000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>39</NumberEmployees></StoreSurvey> | df54deb4-58d4-4d01-9288-3f4a14f346b5 | 2014-09-12 11:15:07.497
+              488 | Historic Bicycle Sales                    |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BS</BusinessType><YearOpened>1982</YearOpened><Specialty>Mountain</Specialty><SquareFeet>38000</SquareFeet><Brands>2</Brands><Internet>T1</Internet><NumberEmployees>40</NumberEmployees></StoreSurvey> | ef4de775-b406-45c4-a6dd-9b0b4815fdbf | 2014-09-12 11:15:07.497
+              490 | Commuter Bicycle Store                    |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BM</BusinessType><YearOpened>1987</YearOpened><Specialty>Touring</Specialty><SquareFeet>22000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>17</NumberEmployees></StoreSurvey> | 326d145a-2c37-4f02-aa83-350132148316 | 2014-09-12 11:15:07.497
+              492 | Coalition Bike Company                    |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BM</BusinessType><YearOpened>1997</YearOpened><Specialty>Mountain</Specialty><SquareFeet>23000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>18</NumberEmployees></StoreSurvey> | 137fea4b-320d-4676-a548-8efcf1f6b36b | 2014-09-12 11:15:07.497
+              494 | Travel Systems                            |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1975</YearOpened><Specialty>Road</Specialty><SquareFeet>21000</SquareFeet><Brands>4+</Brands><Internet>T2</Internet><NumberEmployees>19</NumberEmployees></StoreSurvey> | 18203555-d7ae-4da4-a9fc-316d73435120 | 2014-09-12 11:15:07.497
+              496 | Grease and Oil Products Company           |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BS</BusinessType><YearOpened>1979</YearOpened><Specialty>Road</Specialty><SquareFeet>36000</SquareFeet><Brands>4+</Brands><Internet>T2</Internet><NumberEmployees>38</NumberEmployees></StoreSurvey> | 458ad954-8f14-43b4-be03-b994cac60358 | 2014-09-12 11:15:07.497
+              498 | Moderately-Priced Bikes Store             |           280 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BS</BusinessType><YearOpened>1974</YearOpened><Specialty>Mountain</Specialty><SquareFeet>39000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>39</NumberEmployees></StoreSurvey> | 05fd9119-a72e-4042-b2ce-cb512247db27 | 2014-09-12 11:15:07.497
+              500 | Toy Manufacturing Inc                     |           278 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1977</YearOpened><Specialty>Road</Specialty><SquareFeet>40000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>41</NumberEmployees></StoreSurvey> | 4984efd9-0788-450a-a4ac-019899744287 | 2014-09-12 11:15:07.497
+              502 | Eighty Toy Stores                         |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BS</BusinessType><YearOpened>1985</YearOpened><Specialty>Road</Specialty><SquareFeet>37000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>42</NumberEmployees></StoreSurvey> | 9664e5a8-7584-410b-b610-ad49368d670e | 2014-09-12 11:15:07.497
+              504 | Economy Bikes Company                     |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BS</BusinessType><YearOpened>1980</YearOpened><Specialty>Mountain</Specialty><SquareFeet>41000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>43</NumberEmployees></StoreSurvey> | ab32ce06-f2af-4b8a-889a-cfc4db6b150a | 2014-09-12 11:15:07.497
+              506 | Third Bike Store                          |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BS</BusinessType><YearOpened>1988</YearOpened><Specialty>Road</Specialty><SquareFeet>37000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>44</NumberEmployees></StoreSurvey> | a7048720-5bdd-4df4-8685-d14d868ae297 | 2014-09-12 11:15:07.497
+              508 | Atypical Bike Company                     |           290 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BM</BusinessType><YearOpened>2000</YearOpened><Specialty>Road</Specialty><SquareFeet>25000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>20</NumberEmployees></StoreSurvey> | fc920a3a-8bae-403d-99ce-542bf8923fbd | 2014-09-12 11:15:07.497
+              510 | Bikes for Two                             |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BM</BusinessType><YearOpened>1994</YearOpened><Specialty>Mountain</Specialty><SquareFeet>22000</SquareFeet><Brands>3</Brands><Internet>T1</Internet><NumberEmployees>18</NumberEmployees></StoreSurvey> | da5280d3-2e15-4359-a493-c036c0a84ec4 | 2014-09-12 11:15:07.497
+              512 | Metal Processing Company                  |           278 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BS</BusinessType><YearOpened>1986</YearOpened><Specialty>Road</Specialty><SquareFeet>39000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>47</NumberEmployees></StoreSurvey> | e71200e7-e3b5-4a40-bad9-88364de28030 | 2014-09-12 11:15:07.497
+              514 | Widget Bicycle Specialists                |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1994</YearOpened><Specialty>Road</Specialty><SquareFeet>38000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>48</NumberEmployees></StoreSurvey> | 5a49a2fe-09cc-46a7-95f5-e81f346477bb | 2014-09-12 11:15:07.497
+              516 | Initial Bike Company                      |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BM</BusinessType><YearOpened>1996</YearOpened><Specialty>Mountain</Specialty><SquareFeet>19000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>13</NumberEmployees></StoreSurvey> | 0adcf413-2501-4dcb-bb86-01ce9f6d92be | 2014-09-12 11:15:07.497
+              518 | Latest Sports Equipment                   |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1991</YearOpened><Specialty>Mountain</Specialty><SquareFeet>18000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>14</NumberEmployees></StoreSurvey> | afc82a28-1a27-4899-a413-1b4d32a2df11 | 2014-09-12 11:15:07.497
+              520 | Modern Bike Store                         |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BM</BusinessType><YearOpened>1999</YearOpened><Specialty>Road</Specialty><SquareFeet>21000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>15</NumberEmployees></StoreSurvey> | a7008459-efe5-459d-95d9-80f5e5b44132 | 2014-09-12 11:15:07.497
+              522 | Raw Materials Inc                         |           280 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>OS</BusinessType><YearOpened>1998</YearOpened><Specialty>Mountain</Specialty><SquareFeet>74000</SquareFeet><Brands>4+</Brands><Internet>ISDN</Internet><NumberEmployees>73</NumberEmployees></StoreSurvey> | 4575f698-2fa1-409c-866f-0d688251499a | 2014-09-12 11:15:07.497
+              524 | Lots of Bikes Storehouse                  |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1990</YearOpened><Specialty>Mountain</Specialty><SquareFeet>73000</SquareFeet><Brands>2</Brands><Internet>T1</Internet><NumberEmployees>76</NumberEmployees></StoreSurvey> | 91d541e3-6bc1-4921-bc6a-2c13eb3f7c02 | 2014-09-12 11:15:07.497
+              526 | Futuristic Bikes                          |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>United Security</BankName><BusinessType>OS</BusinessType><YearOpened>1995</YearOpened><Specialty>Mountain</Specialty><SquareFeet>77000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>79</NumberEmployees></StoreSurvey> | 41dfd0ba-e78e-4456-95ef-3595d32d7ca1 | 2014-09-12 11:15:07.497
+              528 | Parcel Express Delivery Service           |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BS</BusinessType><YearOpened>1979</YearOpened><Specialty>Road</Specialty><SquareFeet>36000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>38</NumberEmployees></StoreSurvey> | a4daaaf3-0d24-491d-bd6f-3d0413a38f2d | 2014-09-12 11:15:07.497
+              530 | Outdoor Distributors                      |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1974</YearOpened><Specialty>Mountain</Specialty><SquareFeet>36000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>39</NumberEmployees></StoreSurvey> | b7004ace-63fa-4cab-8057-8456750c2dc0 | 2014-09-12 11:15:07.497
+              532 | North Bike Company                        |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BS</BusinessType><YearOpened>1982</YearOpened><Specialty>Road</Specialty><SquareFeet>37000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>40</NumberEmployees></StoreSurvey> | dca8e739-f0fe-490f-990b-2b116d82c77d | 2014-09-12 11:15:07.497
+              534 | Prosperous Tours                          |           289 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1999</YearOpened><Specialty>Road</Specialty><SquareFeet>79000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>99</NumberEmployees></StoreSurvey> | a0ee7b0a-7741-4f37-bdec-8d2206467fce | 2014-09-12 11:15:07.497
+              536 | Nonskid Tire Company                      |           280 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Security</BankName><BusinessType>OS</BusinessType><YearOpened>1999</YearOpened><Specialty>Mountain</Specialty><SquareFeet>80000</SquareFeet><Brands>3</Brands><Internet>T2</Internet><NumberEmployees>100</NumberEmployees></StoreSurvey> | 0e90c627-a250-4dba-b891-b259dbe2ca6b | 2014-09-12 11:15:07.497
+              538 | Amalgamated Parts Shop                    |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>OS</BusinessType><YearOpened>1999</YearOpened><Specialty>Touring</Specialty><SquareFeet>77000</SquareFeet><Brands>4+</Brands><Internet>T3</Internet><NumberEmployees>99</NumberEmployees></StoreSurvey> | 0ce11724-2b7f-4490-94a4-7175f97d6d7f | 2014-09-12 11:15:07.497
+              540 | Metro Bike Works                          |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1999</YearOpened><Specialty>Mountain</Specialty><SquareFeet>77000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>100</NumberEmployees></StoreSurvey> | b555436d-e4be-4352-8144-5064a4d62964 | 2014-09-12 11:15:07.497
+              542 | Best o' Bikes                             |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BS</BusinessType><YearOpened>1972</YearOpened><Specialty>Touring</Specialty><SquareFeet>19000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>10</NumberEmployees></StoreSurvey> | 73dcb69b-0b2e-492a-a8ed-852969c26787 | 2014-09-12 11:15:07.497
+              544 | Painters Bicycle Specialists              |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1998</YearOpened><Specialty>Road</Specialty><SquareFeet>24000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>27</NumberEmployees></StoreSurvey> | 88edc59c-1196-425a-8e7e-2286bf95a214 | 2014-09-12 11:15:07.497
+              546 | Client Discount Store                     |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BM</BusinessType><YearOpened>2000</YearOpened><Specialty>Mountain</Specialty><SquareFeet>24000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>20</NumberEmployees></StoreSurvey> | c7615b39-9562-48dd-a81b-107914a3dd1f | 2014-09-12 11:15:07.497
+              548 | Eastside Sporting Goods                   |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BM</BusinessType><YearOpened>2000</YearOpened><Specialty>Road</Specialty><SquareFeet>19000</SquareFeet><Brands>AW</Brands><Internet>T1</Internet><NumberEmployees>17</NumberEmployees></StoreSurvey> | 03189c8f-84cc-4207-92d4-4da26efdbb17 | 2014-09-12 11:15:07.497
+              550 | Helmets and Cycles                        |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BM</BusinessType><YearOpened>1994</YearOpened><Specialty>Touring</Specialty><SquareFeet>21000</SquareFeet><Brands>4+</Brands><Internet>ISDN</Internet><NumberEmployees>14</NumberEmployees></StoreSurvey> | 0ea0a15a-a2cd-4f25-a833-b31cae39e783 | 2014-09-12 11:15:07.497
+              552 | Requisite Part Supply                     |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1988</YearOpened><Specialty>Road</Specialty><SquareFeet>39000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>35</NumberEmployees></StoreSurvey> | 10e20a63-73cf-4a80-a678-3d829c108d43 | 2014-09-12 11:15:07.497
+              554 | Racks and Security Systems                |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BS</BusinessType><YearOpened>1976</YearOpened><Specialty>Touring</Specialty><SquareFeet>39000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>36</NumberEmployees></StoreSurvey> | 4a3c505a-c5ae-4061-b376-67415efcecbb | 2014-09-12 11:15:07.497
+              556 | Mechanical Products Ltd.                  |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BS</BusinessType><YearOpened>1971</YearOpened><Specialty>Road</Specialty><SquareFeet>38000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>37</NumberEmployees></StoreSurvey> | caad1f0f-e7d6-47e6-a124-788b1a9426f7 | 2014-09-12 11:15:07.497
+              558 | Commendable Bikes                         |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1974</YearOpened><Specialty>Road</Specialty><SquareFeet>37000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>39</NumberEmployees></StoreSurvey> | eb847e4a-b183-4385-8de1-57c39d4d3304 | 2014-09-12 11:15:07.497
+              560 | Online Bike Sellers                       |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BS</BusinessType><YearOpened>1982</YearOpened><Specialty>Mountain</Specialty><SquareFeet>39000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>40</NumberEmployees></StoreSurvey> | 35ebf652-e9fc-490c-902d-304e4d112ed9 | 2014-09-12 11:15:07.497
+              562 | Custom Accessories Company                |           278 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1998</YearOpened><Specialty>Road</Specialty><SquareFeet>79000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>98</NumberEmployees></StoreSurvey> | 77bbddb3-3fc7-4be6-9f90-18083f0ddaf8 | 2014-09-12 11:15:07.497
+              564 | Unusual Bicycle Company                   |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Security</BankName><BusinessType>OS</BusinessType><YearOpened>1999</YearOpened><Specialty>Touring</Specialty><SquareFeet>78000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>99</NumberEmployees></StoreSurvey> | c7b796a1-f605-4236-b784-1d1a2c3f2b7e | 2014-09-12 11:15:07.497
+              566 | Courteous Bicycle Specialists             |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BM</BusinessType><YearOpened>1982</YearOpened><Specialty>Touring</Specialty><SquareFeet>10000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>8</NumberEmployees></StoreSurvey> | 62032f02-08f9-4766-8fc2-9ead345aeec6 | 2014-09-12 11:15:07.497
+              568 | Hobby Store                               |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1976</YearOpened><Specialty>Mountain</Specialty><SquareFeet>6000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>5</NumberEmployees></StoreSurvey> | 4d72976f-7a2f-499d-84ba-ea5fd79d0d14 | 2014-09-12 11:15:07.497
+              570 | Professional Cycle Store                  |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>300000</AnnualSales><AnnualRevenue>30000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BM</BusinessType><YearOpened>1970</YearOpened><Specialty>Mountain</Specialty><SquareFeet>10000</SquareFeet><Brands>2</Brands><Internet>T1</Internet><NumberEmployees>2</NumberEmployees></StoreSurvey> | 8c1f3e35-1a21-4ff8-8256-7433c6591d10 | 2014-09-12 11:15:07.497
+              572 | Bike Universe                             |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BS</BusinessType><YearOpened>1971</YearOpened><Specialty>Mountain</Specialty><SquareFeet>28000</SquareFeet><Brands>4+</Brands><Internet>T2</Internet><NumberEmployees>28</NumberEmployees></StoreSurvey> | 5414845a-db08-45c9-8160-1762390db768 | 2014-09-12 11:15:07.497
+              574 | Fifth Bike Store                          |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BS</BusinessType><YearOpened>2001</YearOpened><Specialty>Road</Specialty><SquareFeet>26000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>25</NumberEmployees></StoreSurvey> | 8db66e19-fc69-45b1-888b-63d253ed6a8f | 2014-09-12 11:15:07.497
+              576 | Independent Outlet                        |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BS</BusinessType><YearOpened>1996</YearOpened><Specialty>Road</Specialty><SquareFeet>25000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>22</NumberEmployees></StoreSurvey> | d888b41f-0f06-4e08-b871-b4fd6f9e22cf | 2014-09-12 11:15:07.497
+              578 | Rambling Tours                            |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BS</BusinessType><YearOpened>1990</YearOpened><Specialty>Touring</Specialty><SquareFeet>19000</SquareFeet><Brands>3</Brands><Internet>T3</Internet><NumberEmployees>19</NumberEmployees></StoreSurvey> | 59763192-45a0-42f9-a4f2-8ecf595db261 | 2014-09-12 11:15:07.497
+              580 | Farthest Bike Store                       |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>United Security</BankName><BusinessType>OS</BusinessType><YearOpened>1987</YearOpened><Specialty>Touring</Specialty><SquareFeet>74000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>80</NumberEmployees></StoreSurvey> | 0e3f4f5a-5dee-4b0a-a5a5-c524f74156ea | 2014-09-12 11:15:07.497
+              582 | Excellent Bikes                           |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>OS</BusinessType><YearOpened>1992</YearOpened><Specialty>Touring</Specialty><SquareFeet>75000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>81</NumberEmployees></StoreSurvey> | cbc9be9e-5422-411c-b3ef-a301be4ae107 | 2014-09-12 11:15:07.497
+              584 | Curbside Universe                         |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>OS</BusinessType><YearOpened>1984</YearOpened><Specialty>Road</Specialty><SquareFeet>73000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>82</NumberEmployees></StoreSurvey> | 3c49dde5-c64c-4456-8b4a-aa9e1ecc9c2f | 2014-09-12 11:15:07.497
+              586 | Alternative Vehicles                      |           280 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BS</BusinessType><YearOpened>1983</YearOpened><Specialty>Road</Specialty><SquareFeet>41000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>45</NumberEmployees></StoreSurvey> | a8c079a5-40cb-4707-b88d-25b0ffa42664 | 2014-09-12 11:15:07.497
+              588 | Channel Outlet                            |           289 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BS</BusinessType><YearOpened>1991</YearOpened><Specialty>Touring</Specialty><SquareFeet>40000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>46</NumberEmployees></StoreSurvey> | 70703845-fb8a-40a5-974f-d54b46943647 | 2014-09-12 11:15:07.497
+              590 | Full Sports Supply                        |           290 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1986</YearOpened><Specialty>Mountain</Specialty><SquareFeet>38000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>47</NumberEmployees></StoreSurvey> | 8cff03dd-d8ec-4595-92c2-91b5e97957a3 | 2014-09-12 11:15:07.497
+              592 | Retail Mall                               |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>OS</BusinessType><YearOpened>1977</YearOpened><Specialty>Road</Specialty><SquareFeet>79000</SquareFeet><Brands>4+</Brands><Internet>ISDN</Internet><NumberEmployees>91</NumberEmployees></StoreSurvey> | 7da72678-7f78-49f9-981d-29f073c024ce | 2014-09-12 11:15:07.497
+              594 | Racing Store                              |           290 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1987</YearOpened><Specialty>Road</Specialty><SquareFeet>78000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>92</NumberEmployees></StoreSurvey> | 87eacf60-34f0-444a-8291-db255fe388d2 | 2014-09-12 11:15:07.497
+              596 | Metro Metals Co.                          |           289 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Security</BankName><BusinessType>OS</BusinessType><YearOpened>1974</YearOpened><Specialty>Touring</Specialty><SquareFeet>77000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>93</NumberEmployees></StoreSurvey> | fa71e13b-b051-4f12-a280-f69ecd6af1db | 2014-09-12 11:15:07.497
+              598 | Sheet Metal Manufacturing                 |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BM</BusinessType><YearOpened>1997</YearOpened><Specialty>Road</Specialty><SquareFeet>19000</SquareFeet><Brands>3</Brands><Internet>T1</Internet><NumberEmployees>17</NumberEmployees></StoreSurvey> | a909c7ed-04a5-4138-ab83-c9e739aa28ae | 2014-09-12 11:15:07.497
+              600 | Thorough Parts and Repair Services        |           280 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1975</YearOpened><Specialty>Road</Specialty><SquareFeet>22000</SquareFeet><Brands>2</Brands><Internet>T1</Internet><NumberEmployees>18</NumberEmployees></StoreSurvey> | 6a32068c-6a79-43cf-a443-57841ed98990 | 2014-09-12 11:15:07.497
+              602 | Uttermost Bike Shop                       |           289 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BM</BusinessType><YearOpened>2000</YearOpened><Specialty>Road</Specialty><SquareFeet>20000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>19</NumberEmployees></StoreSurvey> | 24f1c5f8-093a-426c-87ce-8fa9af9fac33 | 2014-09-12 11:15:07.497
+              604 | Mechanical Sports Center                  |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BS</BusinessType><YearOpened>1995</YearOpened><Specialty>Road</Specialty><SquareFeet>40000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>40</NumberEmployees></StoreSurvey> | 739999fe-97eb-4f89-ba26-a34771d9af65 | 2014-09-12 11:15:07.497
+              606 | Speedometer Sales                         |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1995</YearOpened><Specialty>Road</Specialty><SquareFeet>39000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>37</NumberEmployees></StoreSurvey> | 56c01043-10b4-487e-8d55-48c1268bce1d | 2014-09-12 11:15:07.497
+              608 | Two-Wheeled Transit Company               |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BS</BusinessType><YearOpened>1983</YearOpened><Specialty>Mountain</Specialty><SquareFeet>38000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>34</NumberEmployees></StoreSurvey> | d03c1cea-5d48-4dd1-98d6-87d06c1f33a1 | 2014-09-12 11:15:07.497
+              610 | Mountain Emporium                         |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BS</BusinessType><YearOpened>1998</YearOpened><Specialty>Mountain</Specialty><SquareFeet>37000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>31</NumberEmployees></StoreSurvey> | 3b74778c-9e53-47d0-83ef-6438b9b77427 | 2014-09-12 11:15:07.497
+              612 | Metro Cycle Shop                          |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1989</YearOpened><Specialty>Mountain</Specialty><SquareFeet>74000</SquareFeet><Brands>3</Brands><Internet>T1</Internet><NumberEmployees>83</NumberEmployees></StoreSurvey> | 43be0e08-95b3-4cfe-b5fe-7c9a7270ffba | 2014-09-12 11:15:07.497
+              614 | Outdoor Sporting Goods                    |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Security</BankName><BusinessType>OS</BusinessType><YearOpened>1981</YearOpened><Specialty>Touring</Specialty><SquareFeet>74000</SquareFeet><Brands>3</Brands><Internet>ISDN</Internet><NumberEmployees>84</NumberEmployees></StoreSurvey> | 689b5679-a37f-40c9-9f90-e4ce21785e20 | 2014-09-12 11:15:07.497
+              616 | Tread Industries                          |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>OS</BusinessType><YearOpened>1986</YearOpened><Specialty>Mountain</Specialty><SquareFeet>77000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>85</NumberEmployees></StoreSurvey> | 3e476935-5369-472e-9a52-b58a8b985c34 | 2014-09-12 11:15:07.497
+              618 | Petroleum Products Distributors           |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1978</YearOpened><Specialty>Touring</Specialty><SquareFeet>78000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>86</NumberEmployees></StoreSurvey> | 7d0c6ba8-2a0a-4663-b359-6b9606f5d652 | 2014-09-12 11:15:07.497
+              620 | Tandem Bicycle Store                      |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Security</BankName><BusinessType>OS</BusinessType><YearOpened>1986</YearOpened><Specialty>Mountain</Specialty><SquareFeet>37000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>46</NumberEmployees></StoreSurvey> | b6437d59-886a-4aa2-8463-62bbfb9e0c65 | 2014-09-12 11:15:07.497
+              622 | Bikes and Motorbikes                      |           278 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>OS</BusinessType><YearOpened>1992</YearOpened><Specialty>Road</Specialty><SquareFeet>40000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>49</NumberEmployees></StoreSurvey> | bafcdf3f-29c8-43aa-8cf0-72943126c76c | 2014-09-12 11:15:07.497
+              624 | Budget Toy Store                          |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1998</YearOpened><Specialty>Mountain</Specialty><SquareFeet>71000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>52</NumberEmployees></StoreSurvey> | 96e67a92-f1fc-4de6-9e7e-8745feb429bd | 2014-09-12 11:15:07.497
+              626 | Camping and Sports Store                  |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>OS</BusinessType><YearOpened>1987</YearOpened><Specialty>Touring</Specialty><SquareFeet>77000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>80</NumberEmployees></StoreSurvey> | 50d6f597-0639-458f-8a28-7bf45551e116 | 2014-09-12 11:15:07.497
+              628 | Ace Bicycle Supply                        |           290 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>OS</BusinessType><YearOpened>1992</YearOpened><Specialty>Mountain</Specialty><SquareFeet>73000</SquareFeet><Brands>3</Brands><Internet>T1</Internet><NumberEmployees>81</NumberEmployees></StoreSurvey> | 25f54cc0-9d2a-4c75-a92d-c92290ea49c7 | 2014-09-12 11:15:07.497
+              630 | Rural Department Store                    |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BS</BusinessType><YearOpened>1990</YearOpened><Specialty>Touring</Specialty><SquareFeet>35000</SquareFeet><Brands>3</Brands><Internet>T1</Internet><NumberEmployees>31</NumberEmployees></StoreSurvey> | 004ea91c-fcd4-4973-87ef-9059c6e20bb5 | 2014-09-12 11:15:07.497
+              632 | Sports Commodities                        |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1984</YearOpened><Specialty>Mountain</Specialty><SquareFeet>37000</SquareFeet><Brands>2</Brands><Internet>T1</Internet><NumberEmployees>32</NumberEmployees></StoreSurvey> | 43106fac-7b87-4da1-9df8-cb286247f070 | 2014-09-12 11:15:07.497
+              634 | Riverside Company                         |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BS</BusinessType><YearOpened>1978</YearOpened><Specialty>Road</Specialty><SquareFeet>38000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>33</NumberEmployees></StoreSurvey> | c4db8c32-4f6d-426b-a9ac-e1221fbded9f | 2014-09-12 11:15:07.497
+              636 | Bicycle Exporters                         |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BS</BusinessType><YearOpened>1972</YearOpened><Specialty>Touring</Specialty><SquareFeet>39000</SquareFeet><Brands>2</Brands><Internet>T2</Internet><NumberEmployees>34</NumberEmployees></StoreSurvey> | a6898ae5-ffa3-4b47-a0f7-f8bf151b72aa | 2014-09-12 11:15:07.497
+              638 | Responsible Bike Dealers                  |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BS</BusinessType><YearOpened>1989</YearOpened><Specialty>Mountain</Specialty><SquareFeet>40000</SquareFeet><Brands>2</Brands><Internet>T1</Internet><NumberEmployees>49</NumberEmployees></StoreSurvey> | fe70ecfc-edbb-41ed-910d-8dd39c87e25d | 2014-09-12 11:15:07.497
+              640 | Western Bike Supplies                     |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BS</BusinessType><YearOpened>1994</YearOpened><Specialty>Road</Specialty><SquareFeet>38000</SquareFeet><Brands>3</Brands><Internet>T1</Internet><NumberEmployees>48</NumberEmployees></StoreSurvey> | 4b1e8035-515e-4be1-84d9-a81ce67ee44f | 2014-09-12 11:15:07.497
+              642 | Advanced Bike Components                  |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>OS</BusinessType><YearOpened>1974</YearOpened><Specialty>Road</Specialty><SquareFeet>38000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>40</NumberEmployees></StoreSurvey> | 42bdf4b8-bff2-4a04-b0d3-ebb5896025ce | 2014-09-12 11:15:07.497
+              644 | Aerobic Exercise Company                  |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1980</YearOpened><Specialty>Road</Specialty><SquareFeet>40000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>43</NumberEmployees></StoreSurvey> | 690b6d1f-f71e-4bb8-b87d-baeb505135ef | 2014-09-12 11:15:07.497
+              646 | Rural Sporting Goods                      |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BM</BusinessType><YearOpened>1985</YearOpened><Specialty>Road</Specialty><SquareFeet>20000</SquareFeet><Brands>4+</Brands><Internet>T2</Internet><NumberEmployees>10</NumberEmployees></StoreSurvey> | adb430fb-d23b-4a4c-9146-65193a80b9e0 | 2014-09-12 11:15:07.497
+              648 | Corner Bicycle Supply                     |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1993</YearOpened><Specialty>Road</Specialty><SquareFeet>17000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>11</NumberEmployees></StoreSurvey> | d899d5f5-48e6-4d2f-a13b-dbe0a43f251d | 2014-09-12 11:15:07.497
+              650 | Distance Bikes                            |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BM</BusinessType><YearOpened>1988</YearOpened><Specialty>Road</Specialty><SquareFeet>20000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>12</NumberEmployees></StoreSurvey> | 7a341a16-8c5b-4a18-84ab-9ef05241d721 | 2014-09-12 11:15:07.497
+              652 | Westside Plaza                            |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>United Security</BankName><BusinessType>OS</BusinessType><YearOpened>1989</YearOpened><Specialty>Touring</Specialty><SquareFeet>74000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>83</NumberEmployees></StoreSurvey> | 06abc249-ec49-45d1-b84e-98352ce995d7 | 2014-09-12 11:15:07.497
+              654 | Ultimate Bike Shop                        |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>OS</BusinessType><YearOpened>1981</YearOpened><Specialty>Mountain</Specialty><SquareFeet>78000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>84</NumberEmployees></StoreSurvey> | d23b2b5f-d58a-4ade-a204-0082f50e32ba | 2014-09-12 11:15:07.497
+              656 | Outstanding Cycles                        |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>OS</BusinessType><YearOpened>1986</YearOpened><Specialty>Touring</Specialty><SquareFeet>78000</SquareFeet><Brands>4+</Brands><Internet>ISDN</Internet><NumberEmployees>85</NumberEmployees></StoreSurvey> | 039e021a-8084-4bf1-9e4f-51583ca75867 | 2014-09-12 11:15:07.497
+              658 | Vigorous Sports Store                     |           289 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1984</YearOpened><Specialty>Road</Specialty><SquareFeet>73000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>82</NumberEmployees></StoreSurvey> | 3fe5afd2-fe6a-4b66-8ba9-e7cc25e0e9c4 | 2014-09-12 11:15:07.497
+              660 | Sports Merchandise                        |           280 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Security</BankName><BusinessType>OS</BusinessType><YearOpened>1989</YearOpened><Specialty>Touring</Specialty><SquareFeet>73000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>83</NumberEmployees></StoreSurvey> | 3e12da24-cd4e-4552-aa4f-dc45bc432972 | 2014-09-12 11:15:07.497
+              662 | Fitness Toy Store                         |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>OS</BusinessType><YearOpened>1981</YearOpened><Specialty>Road</Specialty><SquareFeet>75000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>84</NumberEmployees></StoreSurvey> | fa2486e8-99b6-4832-9edf-1f86f1399cfc | 2014-09-12 11:15:07.497
+              664 | Casual Bicycle Store                      |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1985</YearOpened><Specialty>Mountain</Specialty><SquareFeet>18000</SquareFeet><Brands>2</Brands><Internet>T3</Internet><NumberEmployees>10</NumberEmployees></StoreSurvey> | ef495883-01e1-46a0-aca4-f41dd60bcfc1 | 2014-09-12 11:15:07.497
+              666 | Fitness Discount Store                    |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BM</BusinessType><YearOpened>1993</YearOpened><Specialty>Touring</Specialty><SquareFeet>19000</SquareFeet><Brands>AW</Brands><Internet>DSL</Internet><NumberEmployees>11</NumberEmployees></StoreSurvey> | 9ab6652a-8949-4ff5-aa99-2e7252bfd359 | 2014-09-12 11:15:07.497
+              668 | General Cycle Storehouse                  |           278 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BM</BusinessType><YearOpened>1988</YearOpened><Specialty>Mountain</Specialty><SquareFeet>20000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>12</NumberEmployees></StoreSurvey> | 90cc4967-1a64-4f9c-b282-7917af63d9ad | 2014-09-12 11:15:07.497
+              670 | Fitness Cycling                           |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BM</BusinessType><YearOpened>1988</YearOpened><Specialty>Mountain</Specialty><SquareFeet>18000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>16</NumberEmployees></StoreSurvey> | 6f3ac326-f2fe-4bff-bf5a-ab67ad72a076 | 2014-09-12 11:15:07.497
+              672 | Good Bike Shop                            |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BM</BusinessType><YearOpened>1982</YearOpened><Specialty>Road</Specialty><SquareFeet>19000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>14</NumberEmployees></StoreSurvey> | d39bc672-bb52-4eb7-939f-b3986ec7a5ca | 2014-09-12 11:15:07.497
+              674 | Imaginary Toys                            |           280 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BM</BusinessType><YearOpened>1976</YearOpened><Specialty>Touring</Specialty><SquareFeet>20000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>12</NumberEmployees></StoreSurvey> | 4c6992a0-dc3e-4a96-9bbb-9239135c29df | 2014-09-12 11:15:07.497
+              676 | Inexpensive Parts Shop                    |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1972</YearOpened><Specialty>Mountain</Specialty><SquareFeet>35000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>34</NumberEmployees></StoreSurvey> | 7d6588fc-efb7-4851-a9ce-f4c71e494709 | 2014-09-12 11:15:07.497
+              678 | Nuts and Bolts Mfg.                       |           278 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BS</BusinessType><YearOpened>1988</YearOpened><Specialty>Mountain</Specialty><SquareFeet>37000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>35</NumberEmployees></StoreSurvey> | f5b50576-9c84-4125-af94-ebcc49d8be9e | 2014-09-12 11:15:07.497
+              680 | Principal Bicycle Supply                  |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BS</BusinessType><YearOpened>1976</YearOpened><Specialty>Road</Specialty><SquareFeet>39000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>36</NumberEmployees></StoreSurvey> | b0bdbe3b-f9f2-4bdd-a74b-9423eca7a815 | 2014-09-12 11:15:07.497
+              682 | Thrilling Bike Tours                      |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BS</BusinessType><YearOpened>1971</YearOpened><Specialty>Touring</Specialty><SquareFeet>37000</SquareFeet><Brands>4+</Brands><Internet>ISDN</Internet><NumberEmployees>37</NumberEmployees></StoreSurvey> | b501d2ca-b083-47ec-a2a0-4341da752f4b | 2014-09-12 11:15:07.497
+              684 | This Area Sporting Goods                  |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1979</YearOpened><Specialty>Mountain</Specialty><SquareFeet>39000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>38</NumberEmployees></StoreSurvey> | fb6331ea-0148-418a-884a-84d1da20ac3c | 2014-09-12 11:15:07.497
+              686 | Full-Service Bike Store                   |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BS</BusinessType><YearOpened>1974</YearOpened><Specialty>Mountain</Specialty><SquareFeet>38000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>39</NumberEmployees></StoreSurvey> | a167f30e-c0f1-49c3-96ce-4e8a2ca3c65c | 2014-09-12 11:15:07.497
+              688 | Plastic Products Manufacturers            |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BS</BusinessType><YearOpened>1982</YearOpened><Specialty>Touring</Specialty><SquareFeet>37000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>40</NumberEmployees></StoreSurvey> | 035fc393-8bf1-4522-9dd7-f7cf3140740a | 2014-09-12 11:15:07.497
+              690 | Kids and Adults Cycle Shop                |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>OS</BusinessType><YearOpened>1974</YearOpened><Specialty>Mountain</Specialty><SquareFeet>75000</SquareFeet><Brands>2</Brands><Internet>T1</Internet><NumberEmployees>93</NumberEmployees></StoreSurvey> | 7f00ee1c-91f3-46dc-8384-cb0317463e70 | 2014-09-12 11:15:07.497
+              692 | Grand Discount Store                      |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>OS</BusinessType><YearOpened>1974</YearOpened><Specialty>Mountain</Specialty><SquareFeet>75000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>94</NumberEmployees></StoreSurvey> | 20148536-7bf7-4a99-a184-2bdf1eb5eb40 | 2014-09-12 11:15:07.497
+              694 | Genuine Bike Shop                         |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>United Security</BankName><BusinessType>OS</BusinessType><YearOpened>1980</YearOpened><Specialty>Road</Specialty><SquareFeet>76000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>95</NumberEmployees></StoreSurvey> | ef74488b-1b77-4148-93ef-a4bc4638c921 | 2014-09-12 11:15:07.497
+              696 | Extreme Riding Supplies                   |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>OS</BusinessType><YearOpened>1986</YearOpened><Specialty>Touring</Specialty><SquareFeet>79000</SquareFeet><Brands>3</Brands><Internet>T1</Internet><NumberEmployees>96</NumberEmployees></StoreSurvey> | 0c1ad971-9999-441a-9bf8-8d95c44489d2 | 2014-09-12 11:15:07.497
+              698 | Bike Rims Company                         |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>OS</BusinessType><YearOpened>1992</YearOpened><Specialty>Road</Specialty><SquareFeet>80000</SquareFeet><Brands>4+</Brands><Internet>T2</Internet><NumberEmployees>97</NumberEmployees></StoreSurvey> | d664a5cb-eb27-422e-8c7e-c81814508c73 | 2014-09-12 11:15:07.497
+              700 | Fleet Bikes                               |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BS</BusinessType><YearOpened>1989</YearOpened><Specialty>Mountain</Specialty><SquareFeet>40000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>49</NumberEmployees></StoreSurvey> | cec2cc52-9fad-4328-a288-c01649dfe106 | 2014-09-12 11:15:07.497
+              702 | Local Hardware Factory                    |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BS</BusinessType><YearOpened>1997</YearOpened><Specialty>Road</Specialty><SquareFeet>41000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>46</NumberEmployees></StoreSurvey> | 16c76410-67e9-4082-bff4-172f287c1f7c | 2014-09-12 11:15:07.497
+              704 | Only Bikes and Accessories                |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BS</BusinessType><YearOpened>1992</YearOpened><Specialty>Mountain</Specialty><SquareFeet>40000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>43</NumberEmployees></StoreSurvey> | af3b1a6a-e60b-4e74-96ea-e55c89f0adf6 | 2014-09-12 11:15:07.497
+              706 | Rental Gallery                            |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1995</YearOpened><Specialty>Mountain</Specialty><SquareFeet>37000</SquareFeet><Brands>4+</Brands><Internet>T2</Internet><NumberEmployees>40</NumberEmployees></StoreSurvey> | 71322a9a-9feb-4c12-947a-e3aeffbfa3e2 | 2014-09-12 11:15:07.497
+              708 | South Bike Company                        |           278 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BS</BusinessType><YearOpened>1995</YearOpened><Specialty>Touring</Specialty><SquareFeet>40000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>37</NumberEmployees></StoreSurvey> | c3346ce3-ca88-4e5b-8a41-05e76abf4fcf | 2014-09-12 11:15:07.497
+              710 | Wonderful Bikes Inc.                      |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BS</BusinessType><YearOpened>1983</YearOpened><Specialty>Road</Specialty><SquareFeet>37000</SquareFeet><Brands>3</Brands><Internet>T1</Internet><NumberEmployees>34</NumberEmployees></StoreSurvey> | 0948efce-69ef-4866-b25e-19ac06159158 | 2014-09-12 11:15:07.497
+              712 | Another Sporting Goods Company            |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1998</YearOpened><Specialty>Road</Specialty><SquareFeet>37000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>31</NumberEmployees></StoreSurvey> | 0945ecb3-8c14-4b65-90b9-9db474085ce8 | 2014-09-12 11:15:07.497
+              714 | Discount Bicycle Specialists              |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BS</BusinessType><YearOpened>1971</YearOpened><Specialty>Road</Specialty><SquareFeet>28000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>28</NumberEmployees></StoreSurvey> | 4833dbbd-77dd-4855-882d-b5bb392f8d83 | 2014-09-12 11:15:07.497
+              716 | Famous Bike Sales and Service             |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BS</BusinessType><YearOpened>2001</YearOpened><Specialty>Road</Specialty><SquareFeet>26000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>25</NumberEmployees></StoreSurvey> | dcb36c79-b15c-4a9e-a169-1490449ea59f | 2014-09-12 11:15:07.497
+              718 | First Supplies                            |           286 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BS</BusinessType><YearOpened>1996</YearOpened><Specialty>Touring</Specialty><SquareFeet>26000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>22</NumberEmployees></StoreSurvey> | 1b118fae-776a-4756-92b0-a7937f0edbae | 2014-09-12 11:15:07.497
+              720 | Machines & Cycles Store                   |           278 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1990</YearOpened><Specialty>Touring</Specialty><SquareFeet>22000</SquareFeet><Brands>2</Brands><Internet>T2</Internet><NumberEmployees>19</NumberEmployees></StoreSurvey> | c5f81c18-5674-480b-8b7d-bc1608e21e8e | 2014-09-12 11:15:07.497
+              722 | Pedals Warehouse                          |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BS</BusinessType><YearOpened>1984</YearOpened><Specialty>Road</Specialty><SquareFeet>20000</SquareFeet><Brands>2</Brands><Internet>T1</Internet><NumberEmployees>16</NumberEmployees></StoreSurvey> | d2dc2451-e8f2-449b-b94c-f6729dcf110c | 2014-09-12 11:15:07.497
+              724 | Two Wheels Cycle Store                    |           276 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BS</BusinessType><YearOpened>1978</YearOpened><Specialty>Road</Specialty><SquareFeet>22000</SquareFeet><Brands>2</Brands><Internet>T1</Internet><NumberEmployees>13</NumberEmployees></StoreSurvey> | a04e78ff-c151-4a8f-921c-1043c85bd74c | 2014-09-12 11:15:07.497
+              726 | Westside Cycle Store                      |           277 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>800000</AnnualSales><AnnualRevenue>80000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1972</YearOpened><Specialty>Road</Specialty><SquareFeet>20000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>10</NumberEmployees></StoreSurvey> | 147f9060-dd41-4810-ab5b-2439c7816feb | 2014-09-12 11:15:07.497
+              728 | Wholesale Bikes                           |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BS</BusinessType><YearOpened>1998</YearOpened><Specialty>Road</Specialty><SquareFeet>27000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>27</NumberEmployees></StoreSurvey> | 57f096c7-5bc4-4f8c-9171-9e03246d5439 | 2014-09-12 11:15:07.497
+              730 | Very Best Sports Supply                   |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1971</YearOpened><Specialty>Road</Specialty><SquareFeet>28000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>28</NumberEmployees></StoreSurvey> | 5a0f3b85-4258-4219-b825-31195034c5c3 | 2014-09-12 11:15:07.497
+              732 | Urban Sports Emporium                     |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1000000</AnnualSales><AnnualRevenue>100000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BS</BusinessType><YearOpened>2001</YearOpened><Specialty>Road</Specialty><SquareFeet>24000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>29</NumberEmployees></StoreSurvey> | ac4ca540-5260-4333-818b-434f3ff000c5 | 2014-09-12 11:15:07.497
+              734 | Superlative Bikes                         |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BS</BusinessType><YearOpened>1996</YearOpened><Specialty>Mountain</Specialty><SquareFeet>36000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>30</NumberEmployees></StoreSurvey> | e2efc4e8-5b3f-47e2-b0a6-be0701b34a05 | 2014-09-12 11:15:07.497
+              736 | Primary Cycle Shop                        |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BS</BusinessType><YearOpened>1977</YearOpened><Specialty>Road</Specialty><SquareFeet>37000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>41</NumberEmployees></StoreSurvey> | 219adf36-cf78-4841-b348-26c2adfb518e | 2014-09-12 11:15:07.497
+              738 | Sixth Bike Store                          |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BS</BusinessType><YearOpened>1985</YearOpened><Specialty>Mountain</Specialty><SquareFeet>37000</SquareFeet><Brands>2</Brands><Internet>T1</Internet><NumberEmployees>42</NumberEmployees></StoreSurvey> | 587834de-cb5c-4c9f-870b-befe343b681b | 2014-09-12 11:15:07.497
+              740 | Touring Services                          |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1980</YearOpened><Specialty>Road</Specialty><SquareFeet>38000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>43</NumberEmployees></StoreSurvey> | 1baa7f8a-c00a-441e-8d40-e06a4aec1c43 | 2014-09-12 11:15:07.497
+              742 | Vehicle Shop                              |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BS</BusinessType><YearOpened>1988</YearOpened><Specialty>Road</Specialty><SquareFeet>38000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>44</NumberEmployees></StoreSurvey> | 08cbc4a5-2bd2-46d5-b0e8-327387559092 | 2014-09-12 11:15:07.497
+              744 | First Department Stores                   |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Security</BankName><BusinessType>BS</BusinessType><YearOpened>1983</YearOpened><Specialty>Mountain</Specialty><SquareFeet>38000</SquareFeet><Brands>3</Brands><Internet>DSL</Internet><NumberEmployees>45</NumberEmployees></StoreSurvey> | 443e7b85-6e6e-440e-97c8-10075b6fbe4a | 2014-09-12 11:15:07.497
+              746 | Grand Sport Boutique                      |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Guardian Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1991</YearOpened><Specialty>Road</Specialty><SquareFeet>39000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>46</NumberEmployees></StoreSurvey> | 96ba60f5-324c-467e-bf10-6259107dbd81 | 2014-09-12 11:15:07.497
+              748 | Major Equipment Co                        |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>BS</BusinessType><YearOpened>1986</YearOpened><Specialty>Touring</Specialty><SquareFeet>37000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>47</NumberEmployees></StoreSurvey> | 7f68af6f-23e9-456a-8ea9-69d130fa09fd | 2014-09-12 11:15:07.497
+              750 | Custom Sales and Service                  |           282 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>BS</BusinessType><YearOpened>1994</YearOpened><Specialty>Road</Specialty><SquareFeet>39000</SquareFeet><Brands>4+</Brands><Internet>DSL</Internet><NumberEmployees>48</NumberEmployees></StoreSurvey> | f6618771-ca58-4681-9f85-9e91d7beac23 | 2014-09-12 11:15:07.497
+              752 | Elemental Sporting Goods                  |           279 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>United Security</BankName><BusinessType>BS</BusinessType><YearOpened>1989</YearOpened><Specialty>Mountain</Specialty><SquareFeet>41000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>49</NumberEmployees></StoreSurvey> | 52581c1d-2510-48ae-9e09-5db1f7c96950 | 2014-09-12 11:15:07.497
+              754 | Distinctive Store                         |           281 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>International Bank</BankName><BusinessType>BS</BusinessType><YearOpened>1997</YearOpened><Specialty>Road</Specialty><SquareFeet>37000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>46</NumberEmployees></StoreSurvey> | 019e92aa-628c-4914-acbc-d540e595e887 | 2014-09-12 11:15:07.497
+              756 | Grand Cycle Store                         |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>1500000</AnnualSales><AnnualRevenue>150000</AnnualRevenue><BankName>Primary Bank &amp; Reserve</BankName><BusinessType>BS</BusinessType><YearOpened>1992</YearOpened><Specialty>Road</Specialty><SquareFeet>41000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>43</NumberEmployees></StoreSurvey> | 1f40d1de-0b48-436c-bf9e-ad6f31629ff3 | 2014-09-12 11:15:07.497
+              758 | Nearby Bike Mall                          |           288 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>United Security</BankName><BusinessType>OS</BusinessType><YearOpened>1983</YearOpened><Specialty>Road</Specialty><SquareFeet>74000</SquareFeet><Brands>2</Brands><Internet>DSL</Internet><NumberEmployees>87</NumberEmployees></StoreSurvey> | d2df815b-b890-4a47-a396-d8ff91914356 | 2014-09-12 11:15:07.497
+              760 | Handy Bike Services                       |           275 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Reserve Security</BankName><BusinessType>OS</BusinessType><YearOpened>1975</YearOpened><Specialty>Mountain</Specialty><SquareFeet>76000</SquareFeet><Brands>4+</Brands><Internet>T1</Internet><NumberEmployees>88</NumberEmployees></StoreSurvey> | f4ae5e4f-8702-419b-9e8e-f82489669453 | 2014-09-12 11:15:07.497
+              762 | Friendly Bike Shop                        |           283 | <StoreSurvey xmlns="http://schemas.microsoft.com/sqlserver/2004/07/adventure-works/StoreSurvey"><AnnualSales>3000000</AnnualSales><AnnualRevenue>300000</AnnualRevenue><BankName>Primary International</BankName><BusinessType>OS</BusinAdventureworks=# select *  from sales.salesperson
+Adventureworks-# ;
+ businessentityid | territoryid | salesquota | bonus | commissionpct |   salesytd   | saleslastyear |               rowguid                |    modifieddate
+------------------+-------------+------------+-------+---------------+--------------+---------------+--------------------------------------+---------------------
+              274 |             |            |     0 |             0 |  559697.5639 |             0 | 48754992-9ee0-4c0e-8c94-9451604e3e02 | 2010-12-28 00:00:00
+              275 |           2 |     300000 |  4100 |         0.012 | 3763178.1787 |  1750406.4785 | 1e0a7274-3064-4f58-88ee-4c6586c87169 | 2011-05-24 00:00:00
+              276 |           4 |     250000 |  2000 |         0.015 | 4251368.5497 |  1439156.0291 | 4dd9eee4-8e81-4f8c-af97-683394c1f7c0 | 2011-05-24 00:00:00
+              277 |           3 |     250000 |  2500 |         0.015 | 3189418.3662 |  1997186.2037 | 39012928-bfec-4242-874d-423162c3f567 | 2011-05-24 00:00:00
+              278 |           6 |     250000 |   500 |          0.01 | 1453719.4653 |  1620276.8966 | 7a0ae1ab-b283-40f9-91d1-167abf06d720 | 2011-05-24 00:00:00
+              279 |           5 |     300000 |  6700 |          0.01 |  2315185.611 |  1849640.9418 | 52a5179d-3239-4157-ae29-17e868296dc0 | 2011-05-24 00:00:00
+              280 |           1 |     250000 |  5000 |          0.01 | 1352577.1325 |   1927059.178 | be941a4a-fb50-4947-bda4-bb8972365b08 | 2011-05-24 00:00:00
+              281 |           4 |     250000 |  3550 |          0.01 | 2458535.6169 |  2073505.9999 | 35326ddb-7278-4fef-b3ba-ea137b69094e | 2011-05-24 00:00:00
+              282 |           6 |     250000 |  5000 |         0.015 | 2604540.7172 |  2038234.6549 | 31fd7fc1-dc84-4f05-b9a0-762519eacacc | 2011-05-24 00:00:00
+              283 |           1 |     250000 |  3500 |         0.012 | 1573012.9383 |  1371635.3158 | 6bac15b2-8ffb-45a9-b6d5-040e16c2073f | 2011-05-24 00:00:00
+              284 |           1 |     300000 |  3900 |         0.019 | 1576562.1966 |             0 | ac94ec04-a2dc-43e3-8654-dd0c546abc17 | 2012-09-23 00:00:00
+              285 |             |            |     0 |             0 |  172524.4512 |             0 | cfdbef27-b1f7-4a56-a878-0221c73bae67 | 2013-03-07 00:00:00
+              286 |           9 |     250000 |  5650 |         0.018 | 1421810.9242 |  2278548.9776 | 9b968777-75dc-45bd-a8df-9cdaa72839e1 | 2013-05-23 00:00:00
+              287 |             |            |     0 |             0 |   519905.932 |             0 | 1dd1f689-df74-4149-8600-59555eef154b | 2012-04-09 00:00:00
+              288 |           8 |     250000 |    75 |         0.018 | 1827066.7118 |  1307949.7917 | 224bb25a-62e3-493e-acaf-4f8f5c72396a | 2013-05-23 00:00:00
+              289 |          10 |     250000 |  5150 |          0.02 | 4116871.2277 |  1635823.3967 | 25f6838d-9db4-4833-9ddc-7a24283af1ba | 2012-05-23 00:00:00
+              290 |           7 |     250000 |   985 |         0.016 | 3121616.3202 |  2396539.7601 | f509e3d4-76c8-42aa-b353-90b7b8db08de | 2012-05-23 00:00:00
+(17 rows)
+
+
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=#
+Adventureworks=# select businessentityid from sales.salesperson where bonus > 3000;
+ businessentityid
+------------------
+              275
+              279
+              280
+              281
+              282
+              283
+              284
+              286
+              289
+(9 rows)
+
+
+Adventureworks=# explain select businessentityid from sales.salesperson where bonus > 3000;
+                        QUERY PLAN
+-----------------------------------------------------------
+ Seq Scan on salesperson  (cost=0.00..1.21 rows=6 width=4)
+   Filter: (bonus > '3000'::numeric)
+(2 rows)
+
+
+Adventureworks=# explain select businessentityid from sales.salesperson where bonus > 3000;
+                        QUERY PLAN
+-----------------------------------------------------------
+ Seq Scan on salesperson  (cost=0.00..1.21 rows=6 width=4)
+   Filter: (bonus > '3000'::numeric)
+(2 rows)
+
+
+Adventureworks=# explain select businessentityid from sales.salesperson where bonus > 3000;
+                        QUERY PLAN
+-----------------------------------------------------------
+ Seq Scan on salesperson  (cost=0.00..1.21 rows=6 width=4)
+   Filter: (bonus > '3000'::numeric)
+(2 rows)
+
+
+Adventureworks=# explain select * from sales.orders;
+ERROR:  relation "sales.orders" does not exist
+LINE 1: explain select * from sales.orders;
+                              ^
+Adventureworks=# explain select * from sales.order
+Adventureworks-# ;
+ERROR:  relation "sales.order" does not exist
+LINE 1: explain select * from sales.order
+                              ^
+Adventureworks=# explain select * from sales.store;
+                        QUERY PLAN
+----------------------------------------------------------
+ Seq Scan on store  (cost=0.00..52.01 rows=701 width=475)
+(1 row)
+
+
+Adventureworks=# explain select name from sales.store;
+                       QUERY PLAN
+---------------------------------------------------------
+ Seq Scan on store  (cost=0.00..52.01 rows=701 width=21)
+(1 row)
+
+
+Adventureworks=# explain select businessentityid from sales.store;
+                       QUERY PLAN
+--------------------------------------------------------
+ Seq Scan on store  (cost=0.00..52.01 rows=701 width=4)
+(1 row)
+
+
+Adventureworks=# CREATE INDEX idx_store_name ON sales.store(name);
+CREATE INDEX
+Adventureworks=# explain select name from sales.store;
+                       QUERY PLAN
+---------------------------------------------------------
+ Seq Scan on store  (cost=0.00..52.01 rows=701 width=21)
+(1 row)
+
+
+Adventureworks=# EXPLAIN SELECT name FROM sales.store WHERE name = 'Riders Company';
+                                    QUERY PLAN
+----------------------------------------------------------------------------------
+ Index Only Scan using idx_store_name on store  (cost=0.28..8.29 rows=1 width=21)
+   Index Cond: (name = 'Riders Company'::text)
+(2 rows)
+
+
+Adventureworks=# EXPLAIN SELECT name FROM sales.store WHERE rouguid = '7894f278-f0c8-4d16-bd75-213fdbf13023';
+ERROR:  column "rouguid" does not exist
+LINE 1: EXPLAIN SELECT name FROM sales.store WHERE rouguid = '7894f2...
+                                                   ^
+HINT:  Perhaps you meant to reference the column "store.rowguid".
+Adventureworks=# EXPLAIN SELECT name FROM sales.store WHERE rowguid = '7894f278-f0c8-4d16-bd75-213fdbf13023';
+                             QUERY PLAN
+--------------------------------------------------------------------
+ Seq Scan on store  (cost=0.00..53.76 rows=1 width=21)
+   Filter: (rowguid = '7894f278-f0c8-4d16-bd75-213fdbf13023'::uuid)
+(2 rows)
+
+
+Adventureworks=# EXPLAIN SELECT name FROM sales.store WHERE name = 'Riders Company';
+                                    QUERY PLAN
+----------------------------------------------------------------------------------
+ Index Only Scan using idx_store_name on store  (cost=0.28..8.29 rows=1 width=21)
+   Index Cond: (name = 'Riders Company'::text)
+(2 rows)
+
+
+Adventureworks=# explain select name from sales.store order by name;
+                          QUERY PLAN
+---------------------------------------------------------------
+ Sort  (cost=85.14..86.90 rows=701 width=21)
+   Sort Key: name
+   ->  Seq Scan on store  (cost=0.00..52.01 rows=701 width=21)
+(3 rows)
+
+
+Adventureworks=# explain select name from sales.store order by name limit 1;
+                                         QUERY PLAN
+--------------------------------------------------------------------------------------------
+ Limit  (cost=0.28..0.58 rows=1 width=21)
+   ->  Index Only Scan using idx_store_name on store  (cost=0.28..214.77 rows=701 width=21)
+(2 rows)
+
+
+Adventureworks=# \dt sales.store;
+         List of relations
+ Schema | Name  | Type  |  Owner
+--------+-------+-------+----------
+ sales  | store | table | postgres
+(1 row)
+
+
+Adventureworks=#
+Adventureworks=# \td store;
+invalid command \td
+Try \? for help.
+Adventureworks=# ?
+Adventureworks-# \d+ store;
+Did not find any relation named "store".
+Adventureworks-# \d+ sales.store;
+                                                                                                             Table "sales.store"
+      Column      |            Type             | Collation | Nullable |      Default       | Storage  | Compression | Stats target |         Description
+------------------+-----------------------------+-----------+----------+--------------------+----------+-------------+--------------+--------------------------------------------------------------------------------------------------------
+ businessentityid | integer                     |           | not null |                    | plain    |             |              | Primary key. Foreign key to Customer.BusinessEntityID. name             | "Name"                      |           | not null |                    | extended |             |              | Name of the store.
+ salespersonid    | integer                     |           |          |                    | plain    |             |              | ID of the sales person assigned to the customer. Foreign key to SalesPerson.BusinessEntityID.
+ demographics     | xml                         |           |          |                    | extended |             |              | Demographic informationg about the store such as the number of employees, annual sales and store type.
+ rowguid          | uuid                        |           | not null | uuid_generate_v1() | plain    |             |              |
+ modifieddate     | timestamp without time zone |           | not null | now()              | plain    |             |              |
+Indexes:
+    "PK_Store_BusinessEntityID" PRIMARY KEY, btree (businessentityid) CLUSTER
+    "idx_store_name" btree (name)
+Foreign-key constraints:
+    "FK_Store_BusinessEntity_BusinessEntityID" FOREIGN KEY (businessentityid) REFERENCES person.businessentity(businessentityid)
+    "FK_Store_SalesPerson_SalesPersonID" FOREIGN KEY (salespersonid) REFERENCES sales.salesperson(businessentityid)
+Referenced by:
+    TABLE "sales.customer" CONSTRAINT "FK_Customer_Store_StoreID" FOREIGN KEY (storeid) REFERENCES sales.store(businessentityid)
+Access method: heap
+
+
+Adventureworks-# select businessentityid from sales.salesperson group by businessentityid;
+ERROR:  syntax error at or near "?"
+LINE 1: ?
+        ^
+Adventureworks=# select businessentityid from sales.salesperson group by businessentityid;
+ businessentityid
+------------------
+              280
+              283
+              287
+              285
+              288
+              286
+              279
+              277
+              290
+              289
+              275
+              284
+              278
+              274
+              282
+              281
+              276
+(17 rows)
+
+
+Adventureworks=# select businessentityid , count(bonous) from sales.salesperson group by businessentityid;
+ERROR:  column "bonous" does not exist
+LINE 1: select businessentityid , count(bonous) from sales.salespers...
+                                        ^
+HINT:  Perhaps you meant to reference the column "salesperson.bonus".
+Adventureworks=# select businessentityid , count(bonus) from sales.salesperson group by businessentityid;
+ businessentityid | count
+------------------+-------
+              280 |     1
+              283 |     1
+              287 |     1
+              285 |     1
+              288 |     1
+              286 |     1
+              279 |     1
+              277 |     1
+              290 |     1
+              289 |     1
+              275 |     1
+              284 |     1
+              278 |     1
+              274 |     1
+              282 |     1
+              281 |     1
+              276 |     1
+(17 rows)
+
+
+Adventureworks=# select businessentityid , sum(bonus) from sales.salesperson group by businessentityid;
+ businessentityid | sum
+------------------+------
+              280 | 5000
+              283 | 3500
+              287 |    0
+              285 |    0
+              288 |   75
+              286 | 5650
+              279 | 6700
+              277 | 2500
+              290 |  985
+              289 | 5150
+              275 | 4100
+              284 | 3900
+              278 |  500
+              274 |    0
+              282 | 5000
+              281 | 3550
+              276 | 2000
+(17 rows)
+
+
+Adventureworks=# explain select businessentityid , sum(bonus) from sales.salesperson group by businessentityid;
+                            QUERY PLAN
+-------------------------------------------------------------------
+ HashAggregate  (cost=1.25..1.47 rows=17 width=36)
+   Group Key: businessentityid
+   ->  Seq Scan on salesperson  (cost=0.00..1.17 rows=17 width=36)
+(3 rows)
+
+
+Adventureworks=# explain analyse select businessentityid , sum(bonus) from sales.salesperson group by businessentityid;
+                                                  QUERY PLAN
+--------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=1.25..1.47 rows=17 width=36) (actual time=0.079..0.087 rows=17 loops=1)
+   Group Key: businessentityid
+   Batches: 1  Memory Usage: 24kB
+   ->  Seq Scan on salesperson  (cost=0.00..1.17 rows=17 width=36) (actual time=0.043..0.045 rows=17 loops=1)
+ Planning Time: 0.207 ms
+ Execution Time: 0.152 ms
+(6 rows)
+
+
+Adventureworks=# \history > my_history.txt
+invalid command \history
+Try \? for help.
+Adventureworks=# /l
+Adventureworks-# ;
+ERROR:  syntax error at or near "/"
+LINE 1: /l
+        ^
+Adventureworks=# \l
+                                                    List of databases
+       Name       |  Owner   | Encoding | Locale Provider | Collate | Ctype | Locale | ICU Rules |   Access privileges
+------------------+----------+----------+-----------------+---------+-------+--------+-----------+-----------------------
+ Adventureworks   | postgres | UTF8     | libc            | en-US   | en-US |        |           |
+ QuotationTracker | postgres | UTF8     | libc            | en-US   | en-US |        |           |
+ Test             | postgres | UTF8     | libc            | en-US   | en-US |        |           | =Tc/postgres         +
+                  |          |          |                 |         |       |        |           | postgres=CTc/postgres+
+                  |          |          |                 |         |       |        |           | pavi=CTc/postgres
+ postgres         | postgres | UTF8     | libc            | en-US   | en-US |        |           |
+ sample           | postgres | UTF8     | libc            | en-US   | en-US |        |           |
+ template0        | postgres | UTF8     | libc            | en-US   | en-US |        |           | =c/postgres          +
+                  |          |          |                 |         |       |        |           | postgres=CTc/postgres
+ template1        | postgres | UTF8     | libc            | en-US   | en-US |        |           | =c/postgres          +
+                  |          |          |                 |         |       |        |           | postgres=CTc/postgres
+ test2            | nive     | UTF8     | libc            | en-US   | en-US |        |           |
+ user2            | pavi     | UTF8     | libc            | en-US   | en-US |        |           |
+(9 rows)
+
+
+Adventureworks=#
