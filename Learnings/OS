@@ -1,0 +1,30 @@
+Types of Operating Systems
+Batch OS – No user interaction, jobs run in batches
+Time-Sharing OS – Many users share the system at once (like college labs)
+Distributed OS – Manages multiple computers like one system
+Real-Time OS – Quick response, used in robots, ATMs
+Mobile OS – For smartphones (Android, iOS)
+
+Real World OS Examples
+Windows
+Windows 10 → Support ends in 2025
+Windows 11 → Latest major release (launched in 2021)
+
+macOS
+Based on BSD (Berkeley Software Distribution)
+Used in Apple laptops and desktops
+
+Linux (kernel only)
+Popular Linux-based OS:
+Ubuntu 
+Fedora 
+Debian
+
+Why Linux is Secure
+Open-source – Anyone can inspect and fix bugs
+Less users – Fewer viruses target it
+Popular in servers – Powers most of the web
+Fast & transparent updates – No hidden patches
+Strict file permissions – Limits unauthorized access
+Smaller target – Less attractive for hackers
+
