@@ -1,0 +1,61 @@
+1  ls
+2  pwd
+3  ls -s
+4  ls -l
+5  ls -al
+6  cd /
+7  pwd
+8  cd ~
+9  touch meow.txt
+10  touch file1.txt file2.txt
+11  touch myfiles{1..5}
+12  touch -d tomorrow myfile24052025  # (Note: this needs `touch` with date support)
+13  echo "hii pavi"
+14  echo "this is first line" > file1.txt
+15  nano newnanofile.txt
+16  vim file1.txt
+17  cat file1.txt
+18  shred file1.txt
+19  mkdir mydirectory
+20  cp file1.txt ./mydirectory/fileCopy.txt
+21  mv myfiles5 mydirectory/movedFile
+22  mv myfiles4 mydirectory
+23  rm file2.txt
+24  mkdir newdir
+25  cd newdir
+26  echo myfile > newfile.txt
+27  cd ~
+28  rm -r newdir
+29  whoami
+30  sudo useradd nive
+31  sudo adduser nive
+32  su nive
+33  sudo passwd nive
+34  finger nive
+35  sudo apt update
+36  sudo apt install finger
+37  man finger
+38  man cat
+39  man man
+40  whatis finger
+41  which finger
+42  whereis finger
+43  curl
+44  wget
+45  zip mydirectory zipdir  # (shows error if zip not installed)
+46  sudo apt install zip
+47  zip -r zipdir.zip mydirectory
+48  zip file1.zip file1.txt
+49  unzip file1.zip
+50  echo "meow" > meow.txt
+51  cat meow.txt
+52  echo "meow meow" >> meow.txt
+53  cp meow.txt meowcp.txt
+54  cat meowcp.txt
+55  cmp meow.txt meowcp.txt
+56  echo "meow meow meow" >> meowcp.txt
+57  diff meow.txt meowcp.txt
+58  echo "meow meow" >> meow.txt
+59  cmp meow.txt meowcp.txt
+60  diff meow.txt meowcp.txt
+61  history
