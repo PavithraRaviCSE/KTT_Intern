@@ -1,0 +1,25 @@
+| **Task**                   | **Windows (CMD/PowerShell)**                  | **Linux (Terminal)**             | **Mac (Terminal)**               |
+| -------------------------- | --------------------------------------------- | -------------------------------- | -------------------------------- |
+| **Show current directory** | `cd` or `Get-Location`                        | `pwd`                            | `pwd`                            |
+| **List files**             | `dir`                                         | `ls`                             | `ls`                             |
+| **Change directory**       | `cd folder`                                   | `cd folder`                      | `cd folder`                      |
+| **Go up one directory**    | `cd ..`                                       | `cd ..`                          | `cd ..`                          |
+| **Create folder**          | `mkdir folder`                                | `mkdir folder`                   | `mkdir folder`                   |
+| **Create file**            | `type nul > file.txt`                         | `touch file.txt`                 | `touch file.txt`                 |
+| **Copy file**              | `copy file1 file2`                            | `cp file1 file2`                 | `cp file1 file2`                 |
+| **Move file / Rename**     | `move file1 file2`                            | `mv file1 file2`                 | `mv file1 file2`                 |
+| **Delete file**            | `del file.txt`                                | `rm file.txt`                    | `rm file.txt`                    |
+| **Delete folder**          | `rmdir /s folder`                             | `rm -r folder`                   | `rm -r folder`                   |
+| **View file content**      | `type file.txt`                               | `cat file.txt`                   | `cat file.txt`                   |
+| **Edit file**              | `notepad file.txt`                            | `nano file.txt` or `vi file.txt` | `nano file.txt` or `vi file.txt` |
+| **Clear screen**           | `cls`                                         | `clear`                          | `clear`                          |
+| **Show running processes** | `tasklist`                                    | `ps aux`                         | `ps aux`                         |
+| **Kill a process**         | `taskkill /PID [pid]`                         | `kill [pid]`                     | `kill [pid]`                     |
+| **Check IP address**       | `ipconfig`                                    | `ifconfig` or `ip a`             | `ifconfig`                       |
+| **Ping website**           | `ping example.com`                            | `ping example.com`               | `ping example.com`               |
+| **Download from URL**      | `Invoke-WebRequest` (PowerShell)              | `wget` or `curl`                 | `curl`                           |
+| **Zip a file**             | `Compress-Archive`                            | `zip`                            | `zip`                            |
+| **Unzip a file**           | `Expand-Archive`                              | `unzip`                          | `unzip`                          |
+| **Show disk usage**        | `wmic logicaldisk get size,freespace,caption` | `df -h`                          | `df -h`                          |
+| **Show history**           | `doskey /history`                             | `history`                        | `history`                        |
+| **Exit terminal**          | `exit`                                        | `exit`                           | `exit`                           |
