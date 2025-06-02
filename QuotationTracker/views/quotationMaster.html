@@ -1477,8 +1477,10 @@ Phone: +91-9876543210
         }
 
         $('#confirmDeleteBtn').click(function () {
+            console.log(deleteId);
+            
             if (deleteId) {
-                fetch(`/ api / quotations / ${deleteId}`, {
+                fetch(`/api/quotations/${deleteId}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
