@@ -7,15 +7,15 @@ const JWE_SECRET_KEY = "secretKey";
 
 auth = (token) => {
 	console.log("auth called...");
-	
+
 	return new Promise((resolve, reject) => {
 		jwt.verify(token, JWE_SECRET_KEY, (err, decoded) => {
 			if (err) {
-				console.log("token rejected: " ,  err);
+				console.log("token rejected: ", err);
 				reject("Invalid token");
 			}
 			else {
-				console.log("decoded: " ,  decoded);
+				console.log("decoded: ", decoded);
 				resolve(decoded);
 			}
 		});
@@ -24,17 +24,17 @@ auth = (token) => {
 
 exports.authUser = async (req, res, next) => {
 	const token = req.cookies.auth_token;
-	console.log("logged used token: ",token);
-	
+	console.log("logged used token: ", token);
+
 	if (!token) return res.status(401).send({ status: false, error: 'No token provided. Please login first.' });
 
 	try {
-		
+
 		console.log("token decoding....");
 		const decoded = await auth(token);
 
 		console.log("token decoded successfully....");
-		
+
 		req.user = decoded;
 		next();
 	} catch (err) {
@@ -152,16 +152,17 @@ exports.getById = async (req, res) => {
 		console.error("get user error: ", error);
 		return res.status(500).send({ status: false, error: error.message });
 	}
-};
-exports.create = async (req, res) => {
+}; exports.create = async (req, res) => {
 	try {
 		const { firstName, lastName, userName, password, email, phone, UserRoleId } = req.body;
 
+		// Ensure all fields are provided
 		if (!firstName || !lastName || !userName || !password || !email || !phone || !UserRoleId) {
 			return res.status(400).send({ status: false, error: "All fields are required." });
 		}
 
-		const existingUser = await models.User.findOne({
+		// Find users that already have the same userName, email, or phone
+		const existingUsers = await models.User.findAll({
 			where: {
 				[Op.or]: [
 					{ userName: req.body.userName },
@@ -171,29 +172,34 @@ exports.create = async (req, res) => {
 			}
 		});
 
+		console.log("Existing users found:", existingUsers);
 		let errors = [];
 
-		if (existingUser) {
+		// Check if the userName, email, or phone already exist
+		existingUsers.forEach(existingUser => {
 			if (existingUser.userName === req.body.userName) {
 				errors.push({
 					field: 'userName',
 					error: 'Username already in use.'
 				});
 			}
+
 			if (existingUser.email === req.body.email) {
 				errors.push({
 					field: 'email',
 					error: 'Email already in use.'
 				});
 			}
+
 			if (existingUser.phone === req.body.phone) {
 				errors.push({
 					field: 'phone',
 					error: 'Phone number already in use.'
 				});
 			}
-		}
+		});
 
+		// If any errors were found, return them
 		if (errors.length > 0) {
 			return res.status(409).send({
 				status: false,
@@ -201,7 +207,7 @@ exports.create = async (req, res) => {
 			});
 		}
 
-
+		// If no errors, hash the password and create the new user
 		const hashedPassword = await bcrypt.hash(password, 10);
 
 		const newUser = await models.User.create({
@@ -214,15 +220,26 @@ exports.create = async (req, res) => {
 			UserRoleId
 		});
 
-		console.log("passwed:", hashedPassword);
-
-		return res.status(201).send({ status: true, message: "User created successfully", data: newUser });
+		// Return success response
+		return res.status(201).send({
+			status: true,
+			message: "User created successfully",
+			data: newUser
+		});
 
 	} catch (error) {
 		console.error("Create user error:", error);
+		// Handle unique constraint violation error
+		if (error instanceof Sequelize.UniqueConstraintError) {
+			return res.status(409).send({
+				status: false,
+				error: error.errors[0].message
+			});
+		}
 		return res.status(500).send({ status: false, error: error.message });
 	}
 };
+
 
 exports.update = async (req, res) => {
 	try {
@@ -275,7 +292,8 @@ exports.update = async (req, res) => {
 		await user.update(userData);
 
 		return res.status(200).send({ status: true, message: "User updated successfully", data: user });
-	} catch (error) {
+	}
+	catch (error) {
 		console.error("Update user error:", error);
 		return res.status(500).send({ status: false, error: error.message });
 	}
