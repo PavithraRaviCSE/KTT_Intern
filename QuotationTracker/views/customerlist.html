@@ -104,7 +104,7 @@
             <!-- Nav Item - Tables -->
             <li class="nav-item active">
                 <a class="nav-link" href="/api/quotationMaster">
-                    
+
                     <span>Quotations</span></a>
             </li>
 
@@ -186,12 +186,12 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span id="loggedInUser" class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas
                                     McGee</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                               
+
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -498,61 +498,102 @@
 
         <script>
 
-
             let authToken;
+            let table;
+
             document.addEventListener("DOMContentLoaded", async function () {
+
+                //authendation
                 authToken = sessionStorage.getItem("auth_token");
                 if (!authToken) {
-                    window.location.href = "login";
-                } else {
-                    authToken = JSON.parse(authToken);
-                    let user = authToken.userName;
-                    document.getElementById("loggedInUser").textContent = user;
+                    window.location.href = "login"; // Redirect to login if no authToken exists
+                    return;
                 }
+                try {
+                    authToken = JSON.parse(authToken);
+                    const { userName, exp } = authToken;
+                    if (exp && Date.now() > exp * 1000) { 
+                        sessionStorage.removeItem("auth_token");
+                        window.location.href = "login";
+                        return;
+                    }
+                    document.getElementById("loggedInUser").textContent = userName;
+                } catch (error) {
+                    sessionStorage.removeItem("auth_token");
+                    window.location.href = "login";
+                }
+
+                $('#customerName, #customerEmail, #customerPhone, #gstNumber').on('input', function () {
+                    const fieldId = $(this).attr('id'); // e.g., customerName
+                    const errorSpanId = '#' + fieldId + 'ErrorSpan'; // e.g., #customerNameErrorSpan
+                    $(errorSpanId).text('');
+                    $(this).removeClass('is-invalid');
+                });
+
 
                 $('#createUserModal').on('show.bs.modal', function () {
                     console.log("create model is called.");
                     populateRoles('UserRoleId');
                 });
 
-            });
+                const currentPath = window.location.pathname.split("/").pop();
+                const collapseUtilities = document.getElementById("collapseUtilities");
+                const masterToggle = document.querySelector('a[data-target="#collapseUtilities"]');
 
+                if (["userrolelist", "userlist", "customerlist", "itemlist"].includes(currentPath)) {
+                    if (collapseUtilities && masterToggle) {
+                        collapseUtilities.classList.add("show");
+                        masterToggle.classList.remove("collapsed");
+                        masterToggle.setAttribute("aria-expanded", "true");
+                    }
 
+                    const collapseItems = collapseUtilities.querySelectorAll(".collapse-item");
+                    collapseItems.forEach(link => {
+                        if (link.getAttribute("href") === currentPath) {
+                            link.classList.add("active");
+                        }
+                    });
+                }
 
-            // *************************DATA TABLE****************************
+                const navLinks = document.querySelectorAll(".nav-link[href]");
+                navLinks.forEach(link => {
+                    const linkPath = link.getAttribute("href");
+                    if (linkPath === currentPath) {
+                        link.classList.add("active");
+                    }
+                });
 
-            let table;
-
-            $(function () {
+                // Initialize DataTable with buttons
                 table = $('#dataTable').DataTable({
                     layout: {
                         topStart: {
-                            "buttons": [
+                            buttons: [
                                 {
-                                    extend: 'excelHtml5',  // Excel export
+                                    extend: 'excelHtml5',
                                     text: 'Excel',
                                     title: 'CustomerList',
                                     exportOptions: {
-                                        columns: ':not(:last-child)'  // Exclude the last column
+                                        columns: ':not(:last-child)'
                                     }
                                 },
                                 {
-                                    extend: 'pdfHtml5',  // PDF export
+                                    extend: 'pdfHtml5',
                                     text: 'PDF',
                                     title: 'CustomerList',
                                     exportOptions: {
-                                        columns: ':not(:last-child)'  // Exclude the last column
+                                        columns: ':not(:last-child)'
                                     }
                                 }
                             ]
                         }
                     }
-
                 });
 
                 fetchCustomerDataAndPopulate();
             });
 
+            //fetch function to get customer data and populate the table
+            //************************************************************************
             async function fetchCustomerDataAndPopulate() {
                 try {
                     const response = await fetch("/api/customers");
@@ -592,22 +633,7 @@
                 }
             }
 
-            function showUpdateCustomerModal(id, name, email, phone, gstNumber, address, status) {
-
-                document.getElementById("updateCustomerId").value = id;
-                document.getElementById("updateCustomerName").value = name;
-                document.getElementById("updateCustomerEmail").value = email;
-                document.getElementById("updateCustomerPhone").value = phone;
-                document.getElementById("updateCustomerGstNumber").value = gstNumber;
-                document.getElementById("updateCustomerAddress").value = address;
-                document.getElementById("updateCustomerStatus").value = status;
-
-                console.log("status: ,", status);
-
-
-                $('#updateCustomerModal').modal('show');
-            }
-
+            //************************************************************************
 
             async function populateRoles(id) {
                 try {
@@ -651,74 +677,136 @@
                 return (status === 1) ? 'Active' : 'Inactive';
             }
 
-            document.getElementById('updateCustomerForm').addEventListener('submit', async function (e) {
+            //**************************************create customer modal***************************************
+            //create customer api
+            $('#createCustomerForm').on('submit', function (e) {
                 e.preventDefault();
 
-                const id = document.getElementById('updateCustomerId').value;
-                const name = document.getElementById('updateCustomerName').value;
-                const email = document.getElementById('updateCustomerEmail').value;
-                const phone = document.getElementById('updateCustomerPhone').value;
-                const gstNumber = document.getElementById('updateCustomerGstNumber').value;
-                const address = document.getElementById('updateCustomerAddress').value;
-                const status = document.getElementById('updateCustomerStatus').value;
-
-
-                const data = {
-                    name,
-                    email,
-                    phone,
-                    gstNumber,
-                    address,
-                    status
+                const customerData = {
+                    name: $('#customerName').val().trim(),
+                    email: $('#customerEmail').val().trim(),
+                    phone: $('#customerPhone').val().trim(),
+                    address: $('#customerAddress').val().trim(),
+                    gstNumber: $('#gstNumber').val().trim()
                 };
 
-                console.log("status: ...", status);
+                console.log("Customer Data:", customerData);
 
+                // Clear any previous errors
+                $('#customerNameErrorSpan, #customerEmailErrorSpan, #customerPhoneErrorSpan, #customerGstNumberErrorSpan').text('');
+                $('#customerName, #customerEmail, #customerPhone, #gstNumber').removeClass('is-invalid');
 
-                hideAndRemoveCustomerErrorSpans();
-
-                try {
-                    const response = await fetch(`/api/customers/${id}`, {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    });
-
-                    const result = await response.json();
-
-                    if (!response.ok && result.errors) {
-                        result.errors.forEach(error => {
-                            if (error.field === 'email') {
-
-                                document.getElementById('updatecustomerEmailErrorSpan').innerText = error.error;
-                                document.getElementById('updateCustomerEmail').classList.add('is-invalid');
-                            }
-                            else if (error.field === 'name') {
-                                document.getElementById('updatecustomerNameErrorSpan').innerText = error.error;
-                                document.getElementById('updateCustomerName').classList.add('is-invalid');
-                            }
-                            else if (error.field === 'phone') {
-                                document.getElementById('updatecustomerPhoneErrorSpan').innerText = error.error;
-                                document.getElementById('updateCustomerPhone').classList.add('is-invalid');
-                            } else if (error.field === 'gstNumber') {
-                                document.getElementById('updatecustomerGstNumberErrorSpan').innerText = error.error;
-                                document.getElementById('updateCustomerGstNumber').classList.add('is-invalid');
-                            }
-                            console.log(error.field, error.error);
-                        });
+                $.ajax({
+                    url: '/api/customers',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(customerData),
+                    success: async function (result) {
+                        if (result.status) {
+                            $('#createCustomerModal').modal('hide');
+                            $('#createCustomerForm')[0].reset();
+                            table.clear().draw();
+                            await fetchCustomerDataAndPopulate();
+                        } else {
+                            alert("Failed to create customer: " + (result.message || "Unknown error"));
+                        }
+                    },
+                    error: function (xhr) {
+                        const response = xhr.responseJSON;
+                        if (response?.errors && Array.isArray(response.errors)) {
+                            response.errors.forEach(err => {
+                                const spanId = '#customer' + err.field.charAt(0).toUpperCase() + err.field.slice(1) + 'ErrorSpan';
+                                const inputId = '#customer' + err.field.charAt(0).toUpperCase() + err.field.slice(1);
+                                $(spanId).text(err.error);
+                                $(inputId).addClass('is-invalid');
+                            });
+                        } else {
+                            console.error("Error creating customer:", xhr.responseText);
+                            alert("Error creating customer.");
+                        }
                     }
-
-                    else {
-                        table.clear().draw();
-                        await fetchCustomerDataAndPopulate();
-                        $('#updateCustomerModal').modal('hide');
-                    }
-                } catch (error) {
-                    console.error(error);
-                    alert("Error: " + error.message);
-                }
+                });
             });
 
+            function resetCreateCustomerForm() {
+                $('#createCustomerForm')[0].reset(); // Reset the form
+                $('#customerEmailErrorSpan').text('');
+                $('#customerNameErrorSpan').text('');
+                $('#customerPhoneErrorSpan').text('');
+                $('#customerGstNumberErrorSpan').text('');
+            }
+
+            //**************************************update customer modal***************************************
+
+            //update customer modal
+            function showUpdateCustomerModal(id, name, email, phone, gstNumber, address, status) {
+
+                document.getElementById("updateCustomerId").value = id;
+                document.getElementById("updateCustomerName").value = name;
+                document.getElementById("updateCustomerEmail").value = email;
+                document.getElementById("updateCustomerPhone").value = phone;
+                document.getElementById("updateCustomerGstNumber").value = gstNumber;
+                document.getElementById("updateCustomerAddress").value = address;
+                document.getElementById("updateCustomerStatus").value = status;
+
+                console.log("status: ,", status);
+
+
+                $('#updateCustomerModal').modal('show');
+            }
+
+            $('#updateCustomerForm').on('submit', function (e) {
+                e.preventDefault();
+
+                const id = $('#updateCustomerId').val();
+                const data = {
+                    name: $('#updateCustomerName').val(),
+                    email: $('#updateCustomerEmail').val(),
+                    phone: $('#updateCustomerPhone').val(),
+                    gstNumber: $('#updateCustomerGstNumber').val(),
+                    address: $('#updateCustomerAddress').val(),
+                    status: $('#updateCustomerStatus').val()
+                };
+
+                // Clear previous error messages and classes
+                $('.error-span').text('');
+                $('.form-control').removeClass('is-invalid');
+
+                $.ajax({
+                    url: `/api/customers/${id}`,
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: async function (result) {
+                        $('#updateCustomerModal').modal('hide');
+                        table.clear().draw();
+                        await fetchCustomerDataAndPopulate();
+                    },
+                    error: function (xhr) {
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            xhr.responseJSON.errors.forEach(error => {
+                                const field = error.field;
+                                const message = error.error;
+                                $(`#updateCustomer${capitalizeFirstLetter(field)}`).addClass('is-invalid');
+                                $(`#updatecustomer${capitalizeFirstLetter(field)}ErrorSpan`).text(message);
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Clear errors on typing
+            ['name', 'email', 'phone', 'gstNumber'].forEach(field => {
+                $(`#updateCustomer${capitalizeFirstLetter(field)}`).on('input', function () {
+                    $(this).removeClass('is-invalid');
+                    $(`#updatecustomer${capitalizeFirstLetter(field)}ErrorSpan`).text('');
+                });
+            });
+
+            // Helper function
+            function capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
 
             function hideandremoveErrorSpan() {
                 document.getElementById('updateUserName').classList.remove('is-invalid');
@@ -727,128 +815,6 @@
 
             }
 
-            let deleteId = null;
-
-            // Show the delete confirmation modal and store the ID
-            async function showDeleteCustomerModal(id) {
-                deleteId = id;
-                $('#deleteModal').modal('show');
-            }
-
-            // Handle deletion when the user confirms
-            document.getElementById('confirmDeleteBtn').addEventListener('click', async function () {
-                try {
-                    const response = await fetch(`/api/customers/${deleteId}`, { method: 'DELETE' });
-
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        console.error("Delete failed:", errorData);
-                        alert("Failed to delete the customer. Please try again.");
-                        return;
-                    }
-
-                    table.clear().draw();
-                    await fetchCustomerDataAndPopulate();
-                    $('#deleteModal').modal('hide');
-                } catch (error) {
-                    console.error("Error during deletion:", error);
-                    alert("Something went wrong. Please try again later.");
-                }
-            });
-
-            // *************************************************************************************************
-
-            const currentPath = window.location.pathname.split("/").pop();
-
-            const collapseUtilities = document.getElementById("collapseUtilities");
-            const masterToggle = document.querySelector('a[data-target="#collapseUtilities"]');
-
-            if (["userrolelist", "userlist", "customerlist", "itemlist"].includes(currentPath)) {
-                if (collapseUtilities && masterToggle) {
-                    collapseUtilities.classList.add("show");
-                    masterToggle.classList.remove("collapsed");
-                    masterToggle.setAttribute("aria-expanded", "true");
-                }
-
-                const collapseItems = collapseUtilities.querySelectorAll(".collapse-item");
-                collapseItems.forEach(link => {
-                    if (link.getAttribute("href") === currentPath) {
-                        link.classList.add("active");
-                    }
-                });
-            }
-
-            const navLinks = document.querySelectorAll(".nav-link[href]");
-            navLinks.forEach(link => {
-                const linkPath = link.getAttribute("href");
-                if (linkPath === currentPath) {
-                    link.classList.add("active");
-                }
-            });
-
-
-            // *****************************************Modals*********************************************************************************
-
-            document.getElementById("createCustomerForm").addEventListener("submit", async function (e) {
-                e.preventDefault();
-
-                const customerData = {
-                    name: document.getElementById("customerName").value.trim(),
-                    email: document.getElementById("customerEmail").value.trim(),
-                    phone: document.getElementById("customerPhone").value.trim(),
-                    address: document.getElementById("customerAddress").value.trim(),
-                    gstNumber: document.getElementById("gstNumber").value.trim()
-                };
-
-                console.log("Customer Data:", customerData);
-
-                try {
-                    const response = await fetch("/api/customers", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(customerData)
-                    });
-
-                    const result = await response.json();
-
-                    ["customerNameErrorSpan", "customerEmailErrorSpan", "customerPhoneErrorSpan", "customerGstNumberErrorSpan"].forEach(id => {
-                        document.getElementById(id).innerText = "";
-                    });
-
-                    if (response.ok && result.status) {
-                        $('#createCustomerModal').modal('hide');
-                        resetCreateCustomerForm();
-                        table.clear().draw();
-                        await fetchCustomerDataAndPopulate();
-                    } else if (result.errors) {
-                        result.errors.forEach(err => {
-                            const spanId = "customer" + err.field.charAt(0).toUpperCase() + err.field.slice(1) + "ErrorSpan";
-                            const errorSpan = document.getElementById(spanId);
-                            console.log(spanId);
-
-                            if (errorSpan) {
-                                errorSpan.innerText = err.error;
-                            }
-                        });
-                    } else {
-                        alert("Failed to create customer: " + (result.message || "Unknown error"));
-                    }
-                } catch (error) {
-                    console.error("Error creating customer:", error);
-                    alert("Error creating customer.");
-                }
-            });
-
-
-            function resetCreateCustomerForm() {
-                document.getElementById("createCustomerForm").reset();
-                document.getElementById("customerEmailErrorSpan").textContent = "";
-                document.getElementById("customerNameErrorSpan").textContent = "";
-                document.getElementById("customerPhoneErrorSpan").textContent = "";
-                document.getElementById("customerGstNumberErrorSpan").textContent = "";
-            }
             function hideAndRemoveCustomerErrorSpans() {
                 const errorSpanIds = [
                     "updatecustomerEmailErrorSpan",
@@ -872,6 +838,38 @@
             }
 
 
+
+            //*************************************delete modal***************************************
+            let deleteId = null;
+
+            // Show the delete modal
+            async function showDeleteCustomerModal(id) {
+                deleteId = id;
+                $('#deleteModal').modal('show');
+            }
+
+            // delete customer api
+            document.getElementById('confirmDeleteBtn').addEventListener('click', async function () {
+                try {
+                    const response = await fetch(`/api/customers/${deleteId}`, { method: 'DELETE' });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error("Delete failed:", errorData);
+                        alert("Failed to delete the customer. Please try again.");
+                        return;
+                    }
+
+                    table.clear().draw();
+                    await fetchCustomerDataAndPopulate();
+                    $('#deleteModal').modal('hide');
+                } catch (error) {
+                    console.error("Error during deletion:", error);
+                    alert("Something went wrong. Please try again later.");
+                }
+            });
+
+            //*************************************logout modal***************************************
 
             document.getElementById('logoutBtn').addEventListener('click', async function (e) {
                 e.preventDefault();
@@ -899,10 +897,6 @@
                     alert('An error occurred. Please try again later.');
                 }
             });
-
-
-
-
 
         </script>
 </body>
