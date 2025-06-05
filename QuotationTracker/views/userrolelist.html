@@ -25,6 +25,25 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.3.0/css/dataTables.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.2.3/css/buttons.dataTables.css">
 
+    <style>
+        #accordionSidebar {
+            position: fixed;
+            top: 56px;
+            /* Push below navbar */
+            left: 0;
+            width: 250px;
+            height: calc(100vh - 56px);
+            overflow-y: auto;
+            z-index: 1030;
+        }
+
+        #content {
+            margin-left: 250px;
+            /* Sidebar width */
+            margin-top: 56px;
+            /* Navbar height */
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -33,7 +52,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion " id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard">
@@ -53,10 +72,6 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider">
-
-
-
-
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
@@ -80,26 +95,6 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider">
-
-
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
-                </div>
-            </li>
-
 
 
             <!-- Nav Item - Tables -->
@@ -126,7 +121,9 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <!-- <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"> -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar shadow"
+                    style="position: fixed; top: 0; left: 0; right: 0; height: 56px; z-index: 1040;">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <form class="form-inline">
@@ -136,30 +133,6 @@
                     </form>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
 
 
 
@@ -227,14 +200,6 @@
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
 
         </div>
         <!-- End of Content Wrapper -->
@@ -419,7 +384,7 @@
                 sessionStorage.removeItem("auth_token");
                 window.location.href = "login";
             }
-            
+
             // Sidebar menu highlight
             const currentPath = window.location.pathname.split("/").pop();
             const $collapseUtilities = $("#collapseUtilities");
@@ -553,11 +518,6 @@
                     contentType: 'application/json',
                     data: JSON.stringify({ name }),
                     success: function (data, textStatus, jqXHR) {
-                        // Conflict error (e.g. role already exists)
-                        if (jqXHR.status === 409) {
-                            $('#createRoleError').text(data.error).removeClass('d-none');
-                            return;
-                        }
 
                         resetCreateUserRoleForm();
                         $('#createUserRoleModal').modal('hide');
@@ -614,13 +574,11 @@
                 contentType: 'application/json',
                 data: JSON.stringify({ name, status }),
                 success: function (data, textStatus, xhr) {
-                    if (xhr.status === 409) {
-                        errorSpan.text(data.error).removeClass('d-none');
-                    } else {
-                        table.clear().draw();
-                        fetchDataAndPopulate();
-                        $('#updateUserRoleModal').modal('hide');
-                    }
+
+                    table.clear().draw();
+                    fetchDataAndPopulate();
+                    $('#updateUserRoleModal').modal('hide');
+
                 },
                 error: function (xhr) {
                     if (xhr.status === 409 && xhr.responseJSON?.error) {
@@ -640,7 +598,7 @@
             $('#updateRoleError').addClass('d-none').text('');
         });
 
-        //**********************delete***********************
+        //*************************************delete***************************************
         //delete role modal called
         function showDeleteUserRoleModal(id) {
             deleteId = id;
@@ -663,7 +621,7 @@
             });
         });
 
-        //logout
+        //******************************logout*************************************
         $('#logoutBtn').on('click', function (e) {
             e.preventDefault();
 
