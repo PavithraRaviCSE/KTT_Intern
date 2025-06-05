@@ -59,54 +59,138 @@ exports.authAdmin = async (req, res, next) => {
 	}
 };
 
+exports.refresh = async (req, res) => {
+	const { refresh_token } = req.body;
+
+	if (!refresh_token) {
+		return res.status(400).send({ status: false, error: 'Refresh token is required' });
+	}
+
+	try {
+		// Verify the refresh token
+		const decoded = jwt.verify(refresh_token, JWE_SECRET_KEY);
+
+		// Check if the refresh token exists in the database
+		const storedToken = await models.RefreshToken.findOne({
+			where: { userId: decoded.id, token: refresh_token, expiresAt: { [Op.gt]: new Date() } }
+		});
+
+		if (!storedToken) {
+			return res.status(401).send({ status: false, error: 'Invalid or expired refresh token' });
+		}
+
+		// Create a new access token
+		const newAccessToken = jwt.sign(
+			{ id: decoded.id, UserRoleId: decoded.UserRoleId, userName: decoded.userName },
+			JWE_SECRET_KEY,
+			{ expiresIn: '1h' }
+		);
+
+		// Send the new access token as a response
+		return res.status(200).json({
+			status: true,
+			message: 'Access token refreshed successfully',
+			auth_token: newAccessToken
+		});
+
+	} catch (error) {
+		console.error("Refresh token error:", error);
+		return res.status(500).send({ status: false, error: error.message });
+	}
+};
+
 exports.login = async (req, res) => {
-	console.log("login called..........");
+	console.log("Login called...");
 	try {
 		const { userName, password } = req.body;
 
+		// Find the user based on userName
 		const user = await models.User.findOne({
 			where: { userName },
 			attributes: ['id', 'userName', 'password', 'UserRoleId']
 		});
 
-		if (!user) return res.status(401).send({ status: false, field: 'userName', error: 'Username not found' });
+		// If the user is not found, send a response
+		if (!user) {
+			return res.status(401).send({ status: false, field: 'userName', error: 'Username not found' });
+		}
 
+		// Validate the password using bcrypt
 		const isPasswordValid = await bcrypt.compare(password, user.password);
-		if (!isPasswordValid) return res.status(401).send({ status: false, field: 'password', error: 'Incorrect password' });
+		if (!isPasswordValid) {
+			return res.status(401).send({ status: false, field: 'password', error: 'Incorrect password' });
+		}
 
-		const token = jwt.sign(
+		// Create a JWT access token with a 1-hour expiration
+		const accessToken = jwt.sign(
 			{ id: user.id, UserRoleId: user.UserRoleId, userName: user.userName },
 			JWE_SECRET_KEY,
 			{ expiresIn: '1h' }
 		);
 
-		res.cookie('auth_token', token, {
+		// Generate a refresh token with a longer expiration (e.g., 7 days)
+		const refreshToken = jwt.sign(
+			{ id: user.id, UserRoleId: user.UserRoleId, userName: user.userName },
+			JWE_SECRET_KEY,
+			{ expiresIn: '7d' }
+		);
+
+		// Store the refresh token in the database (you could also store in Redis, etc.)
+		// await models.RefreshToken.create({
+		// 	userId: user.id,
+		// 	token: refreshToken,
+		// 	expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days expiration
+		// });
+
+		// Send the access token as a cookie
+		res.cookie('auth_token', accessToken, {
 			httpOnly: true,
-			maxAge: 3600000,
-			sameSite: 'Strict',
+			maxAge: 3600000, // 1 hour
+			// sameSite: 'Strict',
 		});
 
-		return res.status(200).json({ status: true, message: 'Login successful', auth_token: token });
+		// Send the refresh token as a response (optional)
+		return res.status(200).json({
+			status: true,
+			message: 'Login successful',
+			auth_token: accessToken
+			// refresh_token: refreshToken // Optional: For client-side to store
+		});
 
 	} catch (err) {
-		console.error(err);
+		console.error("Login error:", err);
 		return res.status(500).send({ status: false, error: err.message });
 	}
 };
 
 exports.logout = async (req, res) => {
 	try {
+		// Get the user ID from the authenticated user (assuming token is decoded somewhere)
+		const userId = req.user.id;
+
+		// // Remove the refresh token from the database
+		// await models.RefreshToken.destroy({
+		// 	where: { userId }
+		// });
+
+		// Clear the auth_token cookie
 		res.clearCookie('auth_token', {
 			httpOnly: true,
 			sameSite: 'Strict',
 			path: '/',
 		});
-		res.status(200).json({ status: true, message: 'Logged out successfully' });
+
+		return res.status(200).json({
+			status: true,
+			message: 'Logged out successfully'
+		});
+
 	} catch (error) {
-		console.error('Error during logout:', error);
-		res.status(500).send({ status: false, error: error.message });
+		console.error("Error during logout:", error);
+		return res.status(500).send({ status: false, error: error.message });
 	}
 };
+
 exports.get = async (req, res) => {
 	try {
 		const usersData = await models.User.findAll({
@@ -128,7 +212,7 @@ exports.get = async (req, res) => {
 			phone: user.phone,
 			status: user.status,
 			userRoleId: user.UserRoleId,
-			userRole: user.UserRole.name || 'Unknown'
+			userRole: user.UserRole?.name || 'Unknown'
 		}));
 
 		res.status(200).json({ status: true, users });
@@ -137,8 +221,6 @@ exports.get = async (req, res) => {
 		return res.status(500).send({ status: false, error: error.message });
 	}
 };
-
-
 
 exports.getById = async (req, res) => {
 	try {
@@ -152,7 +234,9 @@ exports.getById = async (req, res) => {
 		console.error("get user error: ", error);
 		return res.status(500).send({ status: false, error: error.message });
 	}
-}; exports.create = async (req, res) => {
+};
+
+exports.create = async (req, res) => {
 	try {
 		const { firstName, lastName, userName, password, email, phone, UserRoleId } = req.body;
 
