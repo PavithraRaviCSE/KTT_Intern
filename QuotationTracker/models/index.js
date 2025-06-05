@@ -18,6 +18,8 @@ fs.readdirSync(modelsDir)
     const createModel = require(modelPath);
     const model = createModel(sequelize, DataTypes);
     models[model.name] = model;
+    console.log(model.name + ' model loaded successfully.');
+    
   });
 
 Object.keys(models).forEach(modelName => {
