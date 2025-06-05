@@ -24,30 +24,32 @@
 
 <body class="bg-gradient-primary">
 
-    <div class="container">
+    <div class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 100vh;">
 
-        <div class="row justify-content-center">
+        <div class=" row justify-content-center  w-100">
 
-            <div class="col-xl-10 col-lg-12 col-md-9">
+            <div class="col-lg-4 col-md-9">
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 text-gray-900 mb-2">Login</h1>
+                                        <!-- <p class="mb-4">Login to continue</p> -->
                                     </div>
                                     <form class="user" id="userLogin">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="userName"
-                                                aria-describedby="emailHelp" placeholder="Enter Username..." required>
+                                        <div class="form-group form-group-lg">
+                                            <input type="text" class="form-control form-control-user input-lg"
+                                                id="userName" aria-describedby="emailHelp"
+                                                placeholder="Enter Username..." required>
                                             <span class="text-danger ml-1" id="incorrectUser"></span>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="password"
-                                                placeholder="Password" required>
+                                            <input type="password" class="form-control form-control-user input-lg "
+                                                id="password" placeholder="Password" required>
                                             <span class="text-danger ml-2" id="incorrectPass"></span>
 
                                         </div>
@@ -81,11 +83,24 @@
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
 
     <script>
+        const userNameInput = document.getElementById('userName');
+        const passwordInput = document.getElementById('password');
+
+        // Remove error messages and is-invalid class on typing
+        userNameInput.addEventListener('input', () => {
+            userNameInput.classList.remove('is-invalid');
+            document.getElementById('incorrectUser').innerText = "";
+        });
+
+        passwordInput.addEventListener('input', () => {
+            passwordInput.classList.remove('is-invalid');
+            document.getElementById('incorrectPass').innerText = "";
+        });
+
         document.querySelector('form').addEventListener('submit', async function (event) {
             event.preventDefault();
-            const userName = document.getElementById('userName').value;
-            const password = document.getElementById('password').value;
-
+            const userName = userNameInput.value;
+            const password = passwordInput.value;
 
             try {
                 const res = await fetch('/api/login', {
@@ -96,14 +111,15 @@
                     body: JSON.stringify({ userName, password })
                 });
 
+                userNameInput.classList.remove('is-invalid');
+                passwordInput.classList.remove('is-invalid');
                 document.getElementById('incorrectUser').innerText = "";
                 document.getElementById('incorrectPass').innerText = "";
 
                 if (res.ok) {
-                    const data = await res.json(); // Get the response JSON
-                    console.log('Login successful', data.message, data.auth_token);
-
+                    const data = await res.json();
                     const jwtToken = data.auth_token;
+
                     if (jwtToken) {
                         const decoded = jwt_decode(jwtToken);
                         sessionStorage.setItem('auth_token', JSON.stringify(decoded));
@@ -115,24 +131,23 @@
                     const error = await res.json();
 
                     if (error.field === 'userName') {
+                        userNameInput.classList.add('is-invalid');
                         document.getElementById('incorrectUser').innerText = error.error;
-                    } else {
-                        document.getElementById('incorrectUser').innerText = "";
                     }
 
                     if (error.field === 'password') {
+                        passwordInput.classList.add('is-invalid');
                         document.getElementById('incorrectPass').innerText = error.error;
-                    } else {
-                        document.getElementById('incorrectPass').innerText = "";
                     }
                 }
             } catch (err) {
                 console.error("error", err);
+                passwordInput.classList.add('is-invalid');
                 document.getElementById('incorrectPass').innerText = 'Something went wrong.';
             }
-
         });
     </script>
+
 
 
 
