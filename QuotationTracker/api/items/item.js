@@ -42,8 +42,8 @@ const validateItemFields = ({ name, code, unitPrice, gstPercentage }) => {
     if (!code) errors.push({ field: 'code', error: 'Item code is required.' });
     if (unitPrice == null || unitPrice === '') errors.push({ field: 'unitPrice', error: 'Unit price is required.' });
     if (gstPercentage == null || gstPercentage === '') errors.push({ field: 'gstPercentage', error: 'GST percentage is required.' });
-
-    console.log("inputs:   ", name, code.unitPrice, gstPercentage);
+    else(gstPercentage < 0 || gstPercentage > 28) && errors.push({ field: 'gstPercentage', error: 'GST percentage must be between 0 and 28.' });
+        console.log("inputs:   ", name, code.unitPrice, gstPercentage, errors);
 
     return { errors, data: { name, code, unitPrice, gstPercentage } };
 };
@@ -81,6 +81,8 @@ exports.create = async (req, res) => {
         const userId = loggeduser.id;
         const userName = loggeduser.userName;
 
+        console.log("create item req.body ", req.body);
+
         const { errors, data } = validateItemFields(req.body);
         if (errors.length) return res.status(400).send({ status: false, errors });
 
@@ -94,7 +96,7 @@ exports.create = async (req, res) => {
         };
 
 
-        console.log("update item: ", ...data, gstAmount, gstAmount + data.unitPrice);
+        console.log("update item: ", data, gstAmount, gstAmount + data.unitPrice);
 
         const newItem = await models.Item.create({
             ...data,
